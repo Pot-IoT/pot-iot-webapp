@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -63,17 +63,15 @@ export default function SignUp(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
   async function handleSignUp() {
-    let response = await fetch(
-      "//ec2-18-163-118-242.ap-east-1.compute.amazonaws.com:8080/register",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: pwd,
-        }),
-      }
-    );
+    let response = await fetch("//115.29.191.198:8080/register", {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: pwd,
+      }),
+      mode: "no-cors",
+    });
     console.log(response);
     setModalOpen(true);
   }
@@ -156,7 +154,7 @@ export default function SignUp(props) {
           variant="contained"
           color="primary"
           className={classes.modalButton}
-          onClick={() => history.push("/signin")}
+          onClick={() => history.push("/login")}
         >
           OK
         </Button>

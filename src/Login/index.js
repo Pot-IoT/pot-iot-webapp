@@ -56,13 +56,11 @@ export default function Login() {
   const history = useHistory();
 
   async function handleLogin() {
-    let response = await fetch(
-      "//ec2-18-163-118-242.ap-east-1.compute.amazonaws.com:8080/login",
-      {
-        method: "POST",
-        body: JSON.stringify({ email: email, password: pwd }),
-      }
-    );
+    let response = await fetch("//115.29.191.198:8080/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password: pwd }),
+      mode: "no-cors",
+    });
     console.log("response", response);
     history.push("/dashboard");
   }

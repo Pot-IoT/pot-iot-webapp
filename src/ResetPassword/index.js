@@ -68,13 +68,10 @@ export default function ResetPassword(props) {
   const history = useHistory();
   // api is placeholder
   async function handleResetPassword() {
-    let response = await fetch(
-      "//ec2-18-163-118-242.ap-east-1.compute.amazonaws.com:8080/login",
-      {
-        method: "POST",
-        body: JSON.stringify({ oldPassword: oldPwd, newPassword: newPwd }),
-      }
-    );
+    let response = await fetch("//115.29.191.198:8080/login", {
+      method: "POST",
+      body: JSON.stringify({ oldPassword: oldPwd, newPassword: newPwd }),
+    });
     console.log(response);
     setModalOpen(true);
     setTimeout(() => history.push("/signin"), 3000);
