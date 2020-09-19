@@ -1,7 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import HomePage from "./HomePage/index";
-import Dashboard from "./Dashboard/index";
+import HomePage from "./HomePage";
+import Dashboard from "./Dashboard";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import ResetPassword from "./ResetPassword";
 import Devices from "./Devices";
 import "./App.css";
 
@@ -15,6 +18,15 @@ function App() {
           </Route>
           <Route path="/devices">
             <Devices />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="/reset-password">
+            <ResetPassword />
           </Route>
           <Route path="/">
             <HomePage />
