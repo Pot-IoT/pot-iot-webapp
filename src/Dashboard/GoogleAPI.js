@@ -6,7 +6,7 @@ export class MapContainer extends Component {
     const { google, location } = this.props;
     return (
       <Map
-        google={this.props.google}
+        google={google}
         zoom={10}
         containerStyle={{
           maxWidth: "720px",

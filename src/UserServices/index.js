@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
   useRouteMatch,
-  Link,
 } from "react-router-dom";
 // import ChangeUsername from "./ChangeUsername";
 import ForgetPassword from "./ForgetPassword";

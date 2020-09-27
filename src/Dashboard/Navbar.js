@@ -11,10 +11,8 @@ import {
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
-  Search as SearchIcon,
   AccountCircle,
   Notifications as NotificationsIcon,
-  More as MoreIcon,
 } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
