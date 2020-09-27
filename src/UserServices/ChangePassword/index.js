@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ResetPassword(props) {
+export default function ChangePassword(props) {
   const classes = useStyles();
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
@@ -67,10 +67,14 @@ export default function ResetPassword(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
 
-  async function handleResetPassword() {
-    let response = await fetch("//115.29.191.198:8080/login", {
+  const { needOldPwd } = props;
+
+  async function handleChangePassword() {
+    let requestObj = { newPassword: newPwd };
+    if (needOldPwd) requestObj.oldPassword = oldPwd;
+    let response = await fetch("//115.29.191.198:8080/resetPassword", {
       method: "POST",
-      body: JSON.stringify({ oldPassword: oldPwd, newPassword: newPwd }),
+      body: JSON.stringify(requestObj),
     });
     console.log(response);
     setModalOpen(true);
@@ -88,16 +92,18 @@ export default function ResetPassword(props) {
           Reset Password
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="oldPassword"
-            label="Old Password"
-            type="password"
-            onChange={(e) => setOldPwd(e.target.value)}
-          />
+          {needOldPwd && (
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="oldPassword"
+              label="Old Password"
+              type="password"
+              onChange={(e) => setOldPwd(e.target.value)}
+            />
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -123,9 +129,9 @@ export default function ResetPassword(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleResetPassword}
+            onClick={handleChangePassword}
           >
-            Change Password
+            {needOldPwd ? "Change Password" : "Reset Password"}
           </Button>
         </form>
       </div>
@@ -133,7 +139,7 @@ export default function ResetPassword(props) {
         <Copyright />
       </Box>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)} height={250}>
-        <DialogTitle>Password successfully reset!</DialogTitle>
+        <DialogTitle>Password successfully modified!</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Click the button below to go to login page.
