@@ -4,7 +4,7 @@ import HomePage from "./HomePage";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import ResetPassword from "./ResetPassword";
+import UserServices from "./UserServices";
 import Devices from "./Devices";
 import "./App.css";
 
@@ -25,8 +25,8 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
-          <Route path="/reset-password">
-            <ResetPassword />
+          <Route path="/user-services">
+            <UserServices />
           </Route>
           <Route path="/">
             <HomePage />
