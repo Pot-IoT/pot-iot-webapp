@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default (props) => {
   const classes = useStyles();
-  // deviceList will be getting from API call when backend is settled
   const deviceList = [
     { name: "apple", location: { lat: 47.444, lng: -122.176 } },
     { name: "banana", location: { lat: 40.444, lng: -120.176 } },

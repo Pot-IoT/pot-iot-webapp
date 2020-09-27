@@ -66,7 +66,7 @@ export default function ResetPassword(props) {
   const [confirmNewPwd, setConfirmNewPwd] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
-  // api is placeholder
+
   async function handleResetPassword() {
     let response = await fetch("//115.29.191.198:8080/login", {
       method: "POST",

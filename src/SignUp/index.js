@@ -121,7 +121,6 @@ export default function SignUp(props) {
             onChange={(e) => setPwd(e.target.value)}
           />
           <Button
-            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
