@@ -6,7 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import UserServices from "./UserServices";
 import Devices from "./Devices";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (
