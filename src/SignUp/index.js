@@ -53,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
     width: "20%",
     margin: "0 auto 20px",
   },
+  hideErrMsg: {
+    display: "none",
+  },
+  errMsg: {
+    display: "block",
+  },
 }));
 
 export default function SignUp(props) {
@@ -60,8 +66,33 @@ export default function SignUp(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+
+  const [usernameErr, setUsernameErr] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
+  const [pwdErr, setPwdErr] = useState(false);
+  const [confrimPwdErr, setConfirmPwdErr] = useState(false);
+
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,30}$/.test(e.target.value));
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailErr(
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
+    );
+  };
+  const handlePwdChange = (e) => {
+    setPwd(e.target.value);
+    setPwdErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(e.target.value));
+  };
+  const handleConfirmPwdChange = (e) => {
+    setConfirmPwd(e.target.value);
+    setConfirmPwdErr(e.target.value !== pwd);
+  };
   async function handleSignUp() {
     let response = await fetch("//115.29.191.198:8080/register", {
       method: "POST",
@@ -86,28 +117,36 @@ export default function SignUp(props) {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
             label="Username"
             name="username"
             autoFocus
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
+            error={usernameErr}
+            FormHelperTextProps={{
+              className: usernameErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Username has to be a combination of letters and numbers with length between 3 and 30"
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            error={emailErr}
+            FormHelperTextProps={{
+              className: emailErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Please enter a valid email address"
           />
           <TextField
             variant="outlined"
@@ -117,8 +156,27 @@ export default function SignUp(props) {
             name="password"
             label="Password"
             type="password"
-            id="password"
-            onChange={(e) => setPwd(e.target.value)}
+            onChange={handlePwdChange}
+            error={pwdErr}
+            FormHelperTextProps={{
+              className: pwdErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Password has to be a combination of letters and numbers with length between 6 and 20"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Confirm Password"
+            type="password"
+            onChange={handleConfirmPwdChange}
+            error={confrimPwdErr}
+            FormHelperTextProps={{
+              className: confrimPwdErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Passwords don't match"
           />
           <Button
             fullWidth
@@ -126,6 +184,16 @@ export default function SignUp(props) {
             color="primary"
             className={classes.submit}
             onClick={handleSignUp}
+            disabled={
+              usernameErr ||
+              emailErr ||
+              pwdErr ||
+              confrimPwdErr ||
+              username === "" ||
+              email === "" ||
+              pwd === "" ||
+              confirmPwd === ""
+            }
           >
             Sign Up
           </Button>
