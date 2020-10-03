@@ -47,13 +47,26 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  hideErrMsg: {
+    display: "none",
+  },
+  errMsg: {
+    display: "block",
+  },
 }));
 
 export default function ForgetPassword() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailErr(
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
+    );
+  };
   async function handleContinue() {
     let response = await fetch("//115.29.191.198:8080/forgetPassword", {
       method: "POST",
@@ -84,7 +97,12 @@ export default function ForgetPassword() {
             label="Email Address"
             name="email"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            error={emailErr}
+            FormHelperTextProps={{
+              className: emailErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Please enter a valid email address"
           />
           <Button
             fullWidth
@@ -92,6 +110,7 @@ export default function ForgetPassword() {
             color="primary"
             className={classes.submit}
             onClick={handleContinue}
+            disabled={emailErr || email === ""}
           >
             Continue
           </Button>

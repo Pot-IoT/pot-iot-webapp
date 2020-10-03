@@ -171,7 +171,7 @@ export default function ChangePassword(props) {
               oldPwdErr ||
               newPwdErr ||
               confirmNewPwdErr ||
-              oldPwd === "" ||
+              (needOldPwd && oldPwd === "") ||
               newPwd === "" ||
               confirmNewPwd === ""
             }
