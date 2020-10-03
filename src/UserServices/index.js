@@ -9,6 +9,7 @@ import {
 import ForgetPassword from "./ForgetPassword";
 import ChangePassword from "./ChangePassword";
 import ResetPassword from "./ResetPassword.js";
+import ActivationResult from "./ActivationResult";
 
 function App() {
   let match = useRouteMatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path={`${match.url}/change-password`}>
             <ChangePassword needOldPwd={true} />
+          </Route>
+          <Route path={`${match.url}/activation-result`}>
+            <ActivationResult />
           </Route>
         </Switch>
       </Router>
