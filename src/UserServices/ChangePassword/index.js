@@ -57,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "2px",
     backgroundColor: "#fff",
   },
+  hideErrMsg: {
+    display: "none",
+  },
+  errMsg: {
+    display: "block",
+  },
 }));
 
 export default function ChangePassword(props) {
@@ -64,9 +70,25 @@ export default function ChangePassword(props) {
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [confirmNewPwd, setConfirmNewPwd] = useState("");
+
+  const [oldPwdErr, setOldPwdErr] = useState(false);
+  const [newPwdErr, setNewPwdErr] = useState(false);
+  const [confirmNewPwdErr, setConfirmNewPwdErr] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
 
+  const handleOldPwdChange = (e) => {
+    setOldPwd(e.target.value);
+    setOldPwdErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(e.target.value));
+  };
+  const handleNewPwdChange = (e) => {
+    setNewPwd(e.target.value);
+    setNewPwdErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(e.target.value));
+  };
+  const handleConfirmNewPwdChange = (e) => {
+    setConfirmNewPwd(e.target.value);
+    setConfirmNewPwdErr(e.target.value !== newPwd);
+  };
   const { needOldPwd } = props;
 
   async function handleChangePassword() {
@@ -101,7 +123,12 @@ export default function ChangePassword(props) {
               name="oldPassword"
               label="Old Password"
               type="password"
-              onChange={(e) => setOldPwd(e.target.value)}
+              onChange={handleOldPwdChange}
+              error={oldPwdErr}
+              FormHelperTextProps={{
+                className: oldPwdErr ? classes.errMsg : classes.hideErrMsg,
+              }}
+              helperText="Password has to be a combination of letters and numbers with length between 6 and 20"
             />
           )}
           <TextField
@@ -112,7 +139,12 @@ export default function ChangePassword(props) {
             name="newPassword"
             label="New Password"
             type="password"
-            onChange={(e) => setNewPwd(e.target.value)}
+            onChange={handleNewPwdChange}
+            error={newPwdErr}
+            FormHelperTextProps={{
+              className: newPwdErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Password has to be a combination of letters and numbers with length between 6 and 20"
           />
           <TextField
             variant="outlined"
@@ -122,7 +154,12 @@ export default function ChangePassword(props) {
             name="confirmNewPassword"
             label="Confirm New Password"
             type="password"
-            onChange={(e) => setConfirmNewPwd(e.target.value)}
+            onChange={handleConfirmNewPwdChange}
+            error={confirmNewPwdErr}
+            FormHelperTextProps={{
+              className: confirmNewPwdErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="New passwords don't match"
           />
           <Button
             fullWidth
@@ -130,6 +167,14 @@ export default function ChangePassword(props) {
             color="primary"
             className={classes.submit}
             onClick={handleChangePassword}
+            disabled={
+              oldPwdErr ||
+              newPwdErr ||
+              confirmNewPwdErr ||
+              oldPwd === "" ||
+              newPwd === "" ||
+              confirmNewPwd === ""
+            }
           >
             {needOldPwd ? "Change Password" : "Reset Password"}
           </Button>
