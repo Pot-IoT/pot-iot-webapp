@@ -47,14 +47,33 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  hideErrMsg: {
+    display: "none",
+  },
+  errMsg: {
+    display: "block",
+  },
 }));
 
 export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+
+  const [emailErr, setEmailErr] = useState(false);
+  const [pwdErr, setPwdErr] = useState(false);
   const history = useHistory();
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailErr(
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
+    );
+  };
+  const handlePwdChange = (e) => {
+    setPwd(e.target.value);
+    setPwdErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(e.target.value));
+  };
   async function handleLogin() {
     let response = await fetch("//115.29.191.198:8080/login", {
       method: "POST",
@@ -85,7 +104,12 @@ export default function Login() {
             label="Email Address"
             name="email"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            error={emailErr}
+            FormHelperTextProps={{
+              className: emailErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Please enter a valid email address"
           />
           <TextField
             variant="outlined"
@@ -96,18 +120,24 @@ export default function Login() {
             label="Password"
             type="password"
             id="password"
-            onChange={(e) => setPwd(e.target.value)}
+            onChange={handlePwdChange}
+            error={pwdErr}
+            FormHelperTextProps={{
+              className: pwdErr ? classes.errMsg : classes.hideErrMsg,
+            }}
+            helperText="Email and Password don't match"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             onClick={handleLogin}
+            disabled={emailErr || pwdErr || email === "" || pwd === ""}
           >
             Sign In
           </Button>

@@ -140,7 +140,6 @@ export default function SignUp(props) {
             fullWidth
             label="Email Address"
             name="email"
-            autoComplete="email"
             onChange={handleEmailChange}
             error={emailErr}
             FormHelperTextProps={{
