@@ -93,8 +93,8 @@ export default function SignUp(props) {
     setConfirmPwd(e.target.value);
     setConfirmPwdErr(e.target.value !== pwd);
   };
-  async function handleSignUp() {
-    let response = await fetch("//115.29.191.198:8080/register", {
+  function handleSignUp() {
+    fetch("//115.29.191.198:8080/register", {
       method: "POST",
       body: JSON.stringify({
         username: username,
@@ -102,9 +102,27 @@ export default function SignUp(props) {
         password: pwd,
       }),
       // mode: "no-cors",
-    });
-    console.log(response);
-    setModalOpen(true);
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("signupdata", data);
+        if (data.success === true) {
+          setModalOpen(true);
+        } else {
+          switch (data.result.message) {
+            case "EMAIL_DUPLICATE_ERROR":
+              alert("This email address is already registered!");
+              break;
+            case "REGISTRATION_EMAIL_ERROR":
+              alert(
+                "Failed to send activation email. Please enter a valid email address."
+              );
+              break;
+            default:
+              console.log("data", data);
+          }
+        }
+      });
   }
 
   return (

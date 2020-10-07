@@ -67,14 +67,31 @@ export default function ForgetPassword() {
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
     );
   };
-  async function handleContinue() {
-    let response = await fetch("//115.29.191.198:8080/forgetPassword", {
+  function handleContinue() {
+    fetch("//115.29.191.198:8080/forgetPassword", {
       method: "POST",
       body: JSON.stringify({ email: email }),
       // mode: "no-cors",
-    });
-    console.log("response", response);
-    setModalOpen(true);
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("fgpwd data", data);
+        if (data.success === true) setModalOpen(true);
+        else {
+          switch (data.result.message) {
+            case "EMAIL_INVALID_ERROR":
+              alert("Email is not registered or activated yet");
+              break;
+            case "FORGET_PASSWORD_EMAIL_ERROR":
+              alert(
+                "Failed to send reset password email. Please enter a valid email address"
+              );
+              break;
+            default:
+              console.log(("data", data));
+          }
+        }
+      });
   }
 
   return (
