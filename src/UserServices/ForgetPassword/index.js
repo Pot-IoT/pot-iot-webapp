@@ -71,7 +71,7 @@ export default function ForgetPassword() {
     let response = await fetch("//115.29.191.198:8080/forgetPassword", {
       method: "POST",
       body: JSON.stringify({ email: email }),
-      mode: "no-cors",
+      // mode: "no-cors",
     });
     console.log("response", response);
     setModalOpen(true);

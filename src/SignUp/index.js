@@ -101,7 +101,7 @@ export default function SignUp(props) {
         email: email,
         password: pwd,
       }),
-      mode: "no-cors",
+      // mode: "no-cors",
     });
     console.log(response);
     setModalOpen(true);
@@ -198,7 +198,7 @@ export default function SignUp(props) {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link href="/login" variant="body2">
                 {"Already have an account? Sign in"}
               </Link>
             </Grid>

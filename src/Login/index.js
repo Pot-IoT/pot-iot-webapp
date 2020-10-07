@@ -72,16 +72,36 @@ export default function Login() {
   };
   const handlePwdChange = (e) => {
     setPwd(e.target.value);
-    setPwdErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(e.target.value));
   };
-  async function handleLogin() {
-    let response = await fetch("//115.29.191.198:8080/login", {
+  function handleLogin() {
+    fetch("//115.29.191.198:8080/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: pwd }),
-      mode: "no-cors",
-    });
-    console.log("response", response);
-    history.push("/dashboard");
+      // mode: "no-cors",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("success", data);
+        if (data.success === true) {
+          history.push("/dashboard");
+        } else {
+          switch (data.result.message) {
+            case "EMAIL_INVALID_ERROR":
+              alert("Email is not registered.");
+              break;
+            case "ACCOUNT_INACTIVATE_ERROR":
+              alert("Account is not activated.");
+              break;
+            case "WRONG_PASSWORD_ERROR":
+              setPwdErr(true);
+              break;
+            default:
+              console.log("data", data);
+          }
+        }
+      });
   }
 
   return (
@@ -125,7 +145,7 @@ export default function Login() {
             FormHelperTextProps={{
               className: pwdErr ? classes.errMsg : classes.hideErrMsg,
             }}
-            helperText="Email and Password don't match"
+            helperText="Incorrect Password"
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -137,7 +157,7 @@ export default function Login() {
             color="primary"
             className={classes.submit}
             onClick={handleLogin}
-            disabled={emailErr || pwdErr || email === "" || pwd === ""}
+            disabled={emailErr || email === "" || pwd === ""}
           >
             Sign In
           </Button>

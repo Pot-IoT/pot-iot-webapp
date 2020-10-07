@@ -100,7 +100,7 @@ export default function ChangePassword(props) {
     });
     console.log(response);
     setModalOpen(true);
-    setTimeout(() => history.push("/signin"), 3000);
+    setTimeout(() => history.push("/login"), 3000);
   }
 
   return (
@@ -194,7 +194,7 @@ export default function ChangePassword(props) {
           variant="contained"
           color="primary"
           className={classes.modalButton}
-          onClick={() => history.push("/signin")}
+          onClick={() => history.push("/login")}
         >
           Login
         </Button>
