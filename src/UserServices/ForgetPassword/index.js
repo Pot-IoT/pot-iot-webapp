@@ -71,11 +71,9 @@ export default function ForgetPassword() {
     fetch("//115.29.191.198:8080/forgetPassword", {
       method: "POST",
       body: JSON.stringify({ email: email }),
-      // mode: "no-cors",
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("fgpwd data", data);
         if (data.success === true) setModalOpen(true);
         else {
           switch (data.result.message) {

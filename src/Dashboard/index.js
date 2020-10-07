@@ -46,9 +46,7 @@ export default (props) => {
   ];
   const [currentDevice, setCurrentDevice] = useState(deviceList[0]);
   const handleChange = (e) => {
-    console.log(e.target.value);
     setCurrentDevice(e.target.value);
-    console.log(currentDevice);
   };
   return (
     <div>

@@ -77,13 +77,11 @@ export default function Login() {
     fetch("//115.29.191.198:8080/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: pwd }),
-      // mode: "no-cors",
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("success", data);
         if (data.success === true) {
           history.push("/dashboard");
         } else {

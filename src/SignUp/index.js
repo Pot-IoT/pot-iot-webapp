@@ -101,11 +101,9 @@ export default function SignUp(props) {
         email: email,
         password: pwd,
       }),
-      // mode: "no-cors",
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("signupdata", data);
         if (data.success === true) {
           setModalOpen(true);
         } else {

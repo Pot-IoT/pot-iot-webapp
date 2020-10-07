@@ -98,7 +98,6 @@ export default function ChangePassword(props) {
       method: "POST",
       body: JSON.stringify(requestObj),
     });
-    console.log(response);
     setModalOpen(true);
     setTimeout(() => history.push("/login"), 3000);
   }
