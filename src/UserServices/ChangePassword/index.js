@@ -91,15 +91,35 @@ export default function ChangePassword(props) {
   };
   const { needOldPwd } = props;
 
-  async function handleChangePassword() {
+  function handleChangePassword() {
     let requestObj = { newPassword: newPwd };
     if (needOldPwd) requestObj.oldPassword = oldPwd;
-    let response = await fetch("//115.29.191.198:8080/resetPassword", {
+    // need to put token here
+    let token = "";
+    fetch(`//115.29.191.198:8080/resetPassword${token}`, {
       method: "POST",
       body: JSON.stringify(requestObj),
-    });
-    setModalOpen(true);
-    setTimeout(() => history.push("/login"), 3000);
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success === true) {
+          setModalOpen(true);
+        } else {
+          switch (data.result.message) {
+            case "TOKEN_AURHENTICATION_ERROR":
+              alert(
+                'Link expired, click "forget password" again on login page'
+              );
+              break;
+            case "EMAIL_INVALID_ERROR":
+              // might need change soon
+              alert("Email invalid");
+              break;
+            default:
+              console.log(("data", data));
+          }
+        }
+      });
   }
 
   return (
