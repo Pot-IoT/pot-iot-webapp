@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import SingleEmailField from "../../common/SingleEmailField.js";
 
 export default function ForgetPassword() {
   const [modalOpen, setModalOpen] = useState(false);
-  const history = useHistory();
 
   function handleContinue(email) {
-    fetch("//115.29.191.198:8080/forgetPassword", {
+    fetch("//115.29.191.198:8080/reactiveAccount", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     })
@@ -19,19 +17,8 @@ export default function ForgetPassword() {
             case "EMAIL_INVALID_ERROR":
               alert("Email is not registered yet");
               break;
-            case "ACCOUNT_INACTIVE_ERROR":
-              if (
-                window.confirm(
-                  "Email is not activated yet, click OK to resend activate email"
-                )
-              ) {
-                history.push("./reactivate-account");
-              }
-              break;
-            case "FORGET_PASSWORD_EMAIL_ERROR":
-              alert(
-                "Failed to send reset password email. Please enter a valid email address"
-              );
+            case "ACCOUNT_ACTIVED_ERROR":
+              alert("This account is already activated");
               break;
             default:
               console.log(("data", data));
@@ -44,9 +31,9 @@ export default function ForgetPassword() {
     <SingleEmailField
       handleContinue={handleContinue}
       modalOpen={modalOpen}
-      title={"Reset Password"}
+      title={"Re-send Activation Email"}
       dialogText={
-        "An email with a link to set new password has been sent to the email address you entered."
+        "An email with an acitivation link has been sent to your email address above, please activate and login."
       }
     />
   );

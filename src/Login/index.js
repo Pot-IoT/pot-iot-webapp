@@ -89,8 +89,14 @@ export default function Login() {
             case "EMAIL_INVALID_ERROR":
               alert("Email is not registered.");
               break;
-            case "ACCOUNT_INACTIVATE_ERROR":
-              alert("Account is not activated.");
+            case "ACCOUNT_INACTIVE_ERROR":
+              if (
+                window.confirm(
+                  "Email is not activated yet, click OK to resend activate email"
+                )
+              ) {
+                history.push("./user-services/reactivate-account");
+              }
               break;
             case "WRONG_PASSWORD_ERROR":
               setPwdErr(true);

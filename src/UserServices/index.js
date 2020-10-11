@@ -10,6 +10,7 @@ import ForgetPassword from "./ForgetPassword";
 import ChangePassword from "./ChangePassword";
 import ResetPassword from "./ResetPassword.js";
 import ActivationResult from "./ActivationResult";
+import ReactivateAccount from "./ReactivateAccount";
 
 function App() {
   let match = useRouteMatch();
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path={`${match.url}/activation-result`}>
             <ActivationResult />
+          </Route>
+          <Route path={`${match.url}/reactivate-account`}>
+            <ReactivateAccount />
           </Route>
         </Switch>
       </Router>
