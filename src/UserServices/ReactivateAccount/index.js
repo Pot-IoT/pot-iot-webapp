@@ -17,7 +17,7 @@ export default function ForgetPassword() {
             case "EMAIL_INVALID_ERROR":
               alert("Email is not registered yet");
               break;
-            case "ACCOUNT_ACTIVED_ERROR":
+            case "ACCOUNT_ACTIVATED_ERROR":
               alert("This account is already activated");
               break;
             default:

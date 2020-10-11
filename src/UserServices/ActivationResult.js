@@ -1,22 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
-  Button,
   CssBaseline,
-  TextField,
-  Link,
   Box,
   Container,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
   makeStyles,
 } from "@material-ui/core";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import Copyright from "../common/copyright";
+import Loading from "../common/Loading";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,40 +35,65 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ForgetPassword() {
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activationSuccess, setActivationSuccess] = useState(false);
+  const history = useHistory();
 
-  async function handleResendEmail() {}
+  useEffect(() => {
+    fetch(
+      "//115.29.191.198:8080/activateAccount?token=" +
+        window.location.search.split("=")[1],
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setIsLoading(false);
+        if (data.success === true) {
+          setActivationSuccess(true);
+        } else {
+          switch (data.result.message) {
+            case "TOKEN_AURHENTICATION_ERROR":
+              if (window.confirm("Link expired, click OK to resend email")) {
+                history.push("./reactivate-account");
+              }
+              break;
+            case "EMAIL_INVALID_ERROR":
+              alert("Please retry with a valid email address");
+              break;
+            default:
+              console.log("data", data);
+          }
+        }
+      });
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <CheckCircleOutlineIcon />
-        </Avatar>
-        <Typography variant="h5">Account successfully activated!</Typography>
-        {/* <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleResendEmail}
-        >
-          Resend Email
-        </Button> */}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            {activationSuccess ? (
+              <CheckCircleOutlineIcon />
+            ) : (
+              <HighlightOffIcon />
+            )}
+          </Avatar>
+          <Typography variant="h5">
+            {activationSuccess
+              ? "Account successfully activated!"
+              : "Activation failed"}
+          </Typography>
+        </div>
+      )}
       <Box mt={8}>
         <Copyright />
       </Box>
-      {/* <Dialog open={modalOpen} onClose={() => setModalOpen(false)} height={250}>
-        <DialogTitle>Check your email inbox!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            An email with a link to set new password has been sent to the email
-            address you entered.
-          </DialogContentText>
-        </DialogContent>
-      </Dialog> */}
     </Container>
   );
 }
