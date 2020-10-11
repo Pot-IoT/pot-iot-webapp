@@ -44,11 +44,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SingleEmailField(props) {
-  const { handleContinue, title, dialogText } = props;
+  const { handleContinue, title, dialogText, modalOpen, setModalOpen } = props;
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

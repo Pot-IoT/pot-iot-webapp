@@ -43,6 +43,7 @@ export default function ForgetPassword() {
   return (
     <SingleEmailField
       handleContinue={handleContinue}
+      setModalOpen={setModalOpen}
       modalOpen={modalOpen}
       title={"Reset Password"}
       dialogText={
