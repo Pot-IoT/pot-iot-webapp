@@ -4,7 +4,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  Link,
   Box,
   Container,
   Typography,
@@ -15,7 +14,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Copyright from "./copyright";
+import Copyright from "./Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import Copyright from "../common/copyright";
+import Copyright from "../common/Copyright";
 import Loading from "../common/Loading";
 import { useHistory } from "react-router-dom";
 

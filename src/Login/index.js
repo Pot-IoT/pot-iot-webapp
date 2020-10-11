@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
-import Copyright from "../common/copyright";
+import Copyright from "../common/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
