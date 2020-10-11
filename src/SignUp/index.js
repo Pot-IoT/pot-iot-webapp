@@ -82,7 +82,7 @@ export default function SignUp(props) {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailErr(
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
     );
   };
   const handlePwdChange = (e) => {
