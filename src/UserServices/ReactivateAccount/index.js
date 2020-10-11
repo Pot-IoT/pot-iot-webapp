@@ -5,7 +5,7 @@ export default function ForgetPassword() {
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleContinue(email) {
-    fetch("//115.29.191.198:8080/reactiveAccount", {
+    fetch("//115.29.191.198:8080/resendActivationEmail", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     })
