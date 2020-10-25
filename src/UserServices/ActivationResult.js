@@ -40,24 +40,21 @@ export default function ForgetPassword() {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(
-      "//115.29.191.198:8080/activateAccount?token=" +
-        window.location.search.split("=")[1],
-      {
-        method: "GET",
-      }
-    )
+    fetch("//115.29.191.198:8080/activateAccount" + window.location.search, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setIsLoading(false);
         if (data.success === true) {
           setActivationSuccess(true);
+          setTimeout(() => history.push("/login"), 3000);
         } else {
           switch (data.result.message) {
             case "TOKEN_AURHENTICATION_ERROR":
               if (window.confirm("Link expired, click OK to resend email")) {
-                history.push("./reactivate-account");
+                history.push("/user-services/reactivate-account");
               }
               break;
             case "EMAIL_INVALID_ERROR":
@@ -86,7 +83,7 @@ export default function ForgetPassword() {
           </Avatar>
           <Typography variant="h5">
             {activationSuccess
-              ? "Account successfully activated!"
+              ? "Account successfully activated! Redirecting to login page..."
               : "Activation failed"}
           </Typography>
         </div>

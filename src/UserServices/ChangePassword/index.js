@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
-import Copyright from "../../common/copyright";
+import Copyright from "../../common/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  modalButton: {
+    width: "20%",
+    margin: "0 auto 20px",
   },
   modal: {
     width: "500px",
@@ -80,10 +84,9 @@ export default function ChangePassword(props) {
   const { needOldPwd } = props;
 
   function handleChangePassword() {
-    let requestObj = { newPassword: newPwd };
+    let requestObj = { password: newPwd };
     if (needOldPwd) requestObj.oldPassword = oldPwd;
-    // need to put token here
-    let token = "";
+    let token = window.location.search;
     fetch(`//115.29.191.198:8080/resetPassword${token}`, {
       method: "POST",
       body: JSON.stringify(requestObj),
