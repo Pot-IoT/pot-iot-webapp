@@ -45,7 +45,6 @@ export default function ForgetPassword() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setIsLoading(false);
         if (data.success === true) {
           setActivationSuccess(true);

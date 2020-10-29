@@ -4,15 +4,18 @@ import SingleEmailField from "../../common/SingleEmailField.js";
 
 export default function ForgetPassword() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   function handleContinue(email) {
+    setIsLoading(true);
     fetch("//115.29.191.198:8080/forgetPassword", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     })
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         if (data.success === true) setModalOpen(true);
         else {
           switch (data.result.message) {
@@ -42,6 +45,7 @@ export default function ForgetPassword() {
 
   return (
     <SingleEmailField
+      isLoading={isLoading}
       handleContinue={handleContinue}
       setModalOpen={setModalOpen}
       modalOpen={modalOpen}

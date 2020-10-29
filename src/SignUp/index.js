@@ -18,6 +18,7 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import Copyright from "../common/Copyright";
+import Loading from "../common/Loading";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,7 +63,9 @@ export default function SignUp(props) {
   const [confrimPwdErr, setConfirmPwdErr] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,30}$/.test(e.target.value));
@@ -82,6 +85,7 @@ export default function SignUp(props) {
     setConfirmPwdErr(e.target.value !== pwd);
   };
   function handleSignUp() {
+    setIsLoading(true);
     fetch("//115.29.191.198:8080/register", {
       method: "POST",
       body: JSON.stringify({
@@ -92,6 +96,7 @@ export default function SignUp(props) {
     })
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         if (data.success === true) {
           setModalOpen(true);
         } else {
@@ -229,6 +234,7 @@ export default function SignUp(props) {
           OK
         </Button>
       </Dialog>
+      {isLoading && <Loading />}
     </Container>
   );
 }

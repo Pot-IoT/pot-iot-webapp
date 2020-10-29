@@ -17,6 +17,7 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import Copyright from "../../common/Copyright";
+import Loading from "../../common/Loading";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -67,6 +68,7 @@ export default function ChangePassword(props) {
   const [newPwdErr, setNewPwdErr] = useState(false);
   const [confirmNewPwdErr, setConfirmNewPwdErr] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const handleOldPwdChange = (e) => {
@@ -84,6 +86,7 @@ export default function ChangePassword(props) {
   const { needOldPwd } = props;
 
   function handleChangePassword() {
+    setIsLoading(true);
     let requestObj = { password: newPwd };
     if (needOldPwd) requestObj.oldPassword = oldPwd;
     let token = window.location.search;
@@ -93,6 +96,7 @@ export default function ChangePassword(props) {
     })
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         if (data.success === true) {
           setModalOpen(true);
         } else {
@@ -209,6 +213,7 @@ export default function ChangePassword(props) {
           Login
         </Button>
       </Dialog>
+      {isLoading && <Loading />}
     </Container>
   );
 }

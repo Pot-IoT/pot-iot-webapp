@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Copyright from "./Copyright";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,7 +44,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SingleEmailField(props) {
-  const { handleContinue, title, dialogText, modalOpen, setModalOpen } = props;
+  const {
+    isLoading,
+    handleContinue,
+    title,
+    dialogText,
+    modalOpen,
+    setModalOpen,
+  } = props;
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState(false);
@@ -103,6 +111,7 @@ export default function SingleEmailField(props) {
           <DialogContentText>{dialogText}</DialogContentText>
         </DialogContent>
       </Dialog>
+      {isLoading && <Loading />}
     </Container>
   );
 }

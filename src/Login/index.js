@@ -16,6 +16,7 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import Copyright from "../common/Copyright";
+import Loading from "../common/Loading";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,6 +51,7 @@ export default function Login() {
 
   const [emailErr, setEmailErr] = useState(false);
   const [pwdErr, setPwdErr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const handleEmailChange = (e) => {
@@ -62,6 +64,7 @@ export default function Login() {
     setPwd(e.target.value);
   };
   function handleLogin() {
+    setIsLoading(true);
     fetch("//115.29.191.198:8080/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: pwd }),
@@ -70,6 +73,7 @@ export default function Login() {
         return response.json();
       })
       .then((data) => {
+        setIsLoading(false);
         if (data.success === true) {
           history.push("/dashboard");
         } else {
@@ -170,6 +174,7 @@ export default function Login() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      {isLoading && <Loading />}
     </Container>
   );
 }
