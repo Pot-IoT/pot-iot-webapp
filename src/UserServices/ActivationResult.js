@@ -48,7 +48,8 @@ export default function ForgetPassword() {
         setIsLoading(false);
         if (data.success === true) {
           setActivationSuccess(true);
-          setTimeout(() => history.push("/login"), 3000);
+          // setTimeout(() => history.push("/login"), 3000);
+          setTimeout(() => (window.location.href = "/login"), 3000);
         } else {
           switch (data.result.message) {
             case "TOKEN_AURHENTICATION_ERROR":

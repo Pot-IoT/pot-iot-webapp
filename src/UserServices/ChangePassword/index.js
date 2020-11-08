@@ -15,7 +15,7 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import Copyright from "../../common/Copyright";
 import Loading from "../../common/Loading";
 
@@ -69,7 +69,7 @@ export default function ChangePassword(props) {
   const [confirmNewPwdErr, setConfirmNewPwdErr] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleOldPwdChange = (e) => {
     setOldPwd(e.target.value);
@@ -208,7 +208,8 @@ export default function ChangePassword(props) {
           variant="contained"
           color="primary"
           className={classes.modalButton}
-          onClick={() => history.push("/login")}
+          // onClick={() => history.push("/login")}
+          onClick={() => (window.location.href = "/login")}
         >
           Login
         </Button>
