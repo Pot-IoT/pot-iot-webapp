@@ -11,6 +11,7 @@ import {
   MenuItem,
   Paper,
 } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -48,7 +49,7 @@ export default (props) => {
   const handleChange = (e) => {
     setCurrentDevice(e.target.value);
   };
-  return (
+  return localStorage.getItem("user_token") ? (
     <div>
       <Navbar />
       <div className={classes.dashboardContainer}>
@@ -82,5 +83,7 @@ export default (props) => {
         </div>
       </div>
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 };

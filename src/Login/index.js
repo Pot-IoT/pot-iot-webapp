@@ -75,6 +75,7 @@ export default function Login() {
       .then((data) => {
         setIsLoading(false);
         if (data.success === true) {
+          localStorage.setItem("user_token", data.data);
           history.push("/dashboard");
         } else {
           switch (data.result.message) {
