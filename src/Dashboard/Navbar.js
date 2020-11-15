@@ -79,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const { setChangeUsernameModalOpen } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -88,11 +89,12 @@ export default function Navbar() {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  const handleChangeUsername = () => {
+    setChangeUsernameModalOpen(true);
+  };
   const handleSignOut = () => {
     localStorage.removeItem("user_token");
     window.location.href = "/login";
@@ -109,7 +111,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>Profile</MenuItem>
+      <MenuItem onClick={handleChangeUsername}>Change Username</MenuItem>
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
   );

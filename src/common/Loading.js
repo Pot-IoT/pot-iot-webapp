@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     height: "100%",
     width: "100%",
-    padding: "300px",
+    padding: "300px 0",
     backgroundColor: "#fff",
     opacity: 0.8,
-    zIndex: 1,
+    zIndex: 10000,
   },
   circle: {
     width: "80px",
