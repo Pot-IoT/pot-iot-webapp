@@ -76,7 +76,7 @@ export default (props) => {
   };
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,30}$/.test(e.target.value));
+    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
   };
   const handleSubmitUsername = () => {
     setIsLoading(true);
@@ -162,7 +162,7 @@ export default (props) => {
           FormHelperTextProps={{
             className: usernameErr ? classes.errMsg : classes.hideErrMsg,
           }}
-          helperText="Username has to be a combination of letters and numbers with length between 3 and 30"
+          helperText="Username has to be a combination of letters and numbers with length between 3 and 30, and it has to be different from your current username."
         />
         <Button
           variant="contained"

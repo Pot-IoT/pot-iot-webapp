@@ -102,7 +102,13 @@ export default function SignUp(props) {
         } else {
           switch (data.result.message) {
             case "EMAIL_DUPLICATE_ERROR":
-              alert("This email address is already registered!");
+              if (
+                window.confirm(
+                  "This email address is already registered, click OK to redirect to login page."
+                )
+              ) {
+                history.push("/login");
+              }
               break;
             case "REGISTRATION_EMAIL_ERROR":
               alert(
