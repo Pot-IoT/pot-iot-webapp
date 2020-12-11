@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Overview from "./Overview";
 import GoogleAPI from "./GoogleAPI";
@@ -65,11 +65,25 @@ export default (props) => {
     { name: "banana", location: { lat: 40.444, lng: -120.176 } },
     { name: "carrot", location: { lat: 50, lng: -122 } },
   ];
+  const userToken = window.localStorage.getItem("user_token");
   const [currentDevice, setCurrentDevice] = useState(deviceList[0]);
   const [modalOpen, setModalOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameErr, setUsernameErr] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false);
+        if (data.success === true) {
+          localStorage.setItem("data", data.data);
+        }
+      });
+  }, []);
 
   const handleChange = (e) => {
     setCurrentDevice(e.target.value);
@@ -80,16 +94,12 @@ export default (props) => {
   };
   const handleSubmitUsername = () => {
     setIsLoading(true);
-    fetch(
-      "//115.29.191.198:8080/changeUsername?token=" +
-        window.localStorage.getItem("user_token"),
-      {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-        }),
-      }
-    )
+    fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
