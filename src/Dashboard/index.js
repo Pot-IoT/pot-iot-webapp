@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import Loading from "../common/Loading";
+import { getDeviceList } from "./store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -73,16 +74,7 @@ export default (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoading(false);
-        if (data.success === true) {
-          localStorage.setItem("data", data.data);
-        }
-      });
+    getDeviceList(userToken);
   }, []);
 
   const handleChange = (e) => {

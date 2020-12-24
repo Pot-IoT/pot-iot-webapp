@@ -1,14 +1,5 @@
-const actionTypes = {
-  GET_DEVICELIST: "GET_DEVICELIST",
-};
+import reducer from "./reducer";
+import * as actionCreators from "./actionCreators";
+import * as constants from "./constants";
 
-const defaultState = {
-  deviceList: [],
-};
-
-export default (state = defaultState, action) => {
-  switch (action.type) {
-    case actionTypes.GET_DEVICELIST:
-      return state.set("deviceList", action.data);
-  }
-};
+export { reducer, actionCreators, constants };
