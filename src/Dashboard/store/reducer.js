@@ -1,18 +1,23 @@
 import * as actionTypes from "./constants";
 
 const defaultState = {
-  isLoading: false,
+  isLoading: true,
   deviceList: [],
 };
 
 export default (state = defaultState, action) => {
+  console.log("www", action);
   switch (action.type) {
     case actionTypes.TOGGLE_IS_LOADING:
-      return state.set("isLoading", action.data);
+      return {
+        isLoading: action.data,
+        deviceList: state.deviceList,
+      };
     case actionTypes.CHANGE_DEVICELIST:
-      return state.set("deviceList", action.data);
-    case actionTypes.GET_DEVICELIST:
-      return state.set("deviceList", action.data);
+      return {
+        isLoading: state.isLoading,
+        deviceList: action.data,
+      };
     default:
       return {};
   }

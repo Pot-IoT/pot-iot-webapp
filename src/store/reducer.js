@@ -2,5 +2,5 @@ import { combineReducers } from "redux";
 import { reducer as dashboardReducer } from "../Dashboard/store/index";
 
 export default combineReducers({
-  dashboardReducer,
+  dashboard: dashboardReducer,
 });

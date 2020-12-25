@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import Overview from "./Overview";
 import GoogleAPI from "./GoogleAPI";
@@ -59,7 +60,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
 }));
-export default (props) => {
+const Dashboard = (props) => {
+  const { getDeviceListDispatch, isLoading } = props;
   const classes = useStyles();
   const deviceList = [
     { name: "apple", location: { lat: 47.444, lng: -122.176 } },
@@ -71,10 +73,10 @@ export default (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameErr, setUsernameErr] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getDeviceList(userToken);
+    getDeviceListDispatch(userToken);
   }, []);
 
   const handleChange = (e) => {
@@ -85,7 +87,7 @@ export default (props) => {
     setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
   };
   const handleSubmitUsername = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
       method: "POST",
       body: JSON.stringify({
@@ -94,7 +96,7 @@ export default (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setIsLoading(false);
+        // setIsLoading(false);
         setModalOpen(false);
         if (data.success === true) {
           alert("Username successfully changed!");
@@ -182,3 +184,17 @@ export default (props) => {
     <Redirect to="/login" />
   );
 };
+const mapStateToProps = (state) => {
+  console.log("sss", state);
+  return {
+    isLoading: state.dashboard.isLoading,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDeviceListDispatch(userToken) {
+      dispatch(getDeviceList(userToken));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
