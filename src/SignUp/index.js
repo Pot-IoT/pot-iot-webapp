@@ -68,7 +68,7 @@ export default function SignUp(props) {
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,30}$/.test(e.target.value));
+    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
   };
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

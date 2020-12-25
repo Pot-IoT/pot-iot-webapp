@@ -42,7 +42,7 @@ export default (props) => {
   };
   const handleDevicenameChange = (e) => {
     setDeviceName(e.target.value);
-    setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,30}$/.test(e.target.value));
+    setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
   };
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
