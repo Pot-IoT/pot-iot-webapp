@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default (props) => {
+  const { totalNumber, totalOffline, totalOnline } = props;
   const classes = useStyles();
   return (
     <div className={classes.overviewContainer}>
@@ -35,9 +36,9 @@ export default (props) => {
             className={classes.numberofDevice}
             variant="h5"
           >
-            3
+            {totalOnline}
           </Typography>
-          <div>Connected Devices</div>
+          <div>Online Devices</div>
         </div>
         <Divider className={classes.divider} orientation="vertical" />
         <div className={classes.numberContainer}>
@@ -46,9 +47,9 @@ export default (props) => {
             className={classes.numberofDevice}
             variant="h5"
           >
-            5
+            {totalOffline}
           </Typography>
-          <div>Active Devices</div>
+          <div>Offline Devices</div>
         </div>
         <Divider className={classes.divider} orientation="vertical" />
         <div className={classes.numberContainer}>
@@ -57,7 +58,7 @@ export default (props) => {
             className={classes.numberofDevice}
             variant="h5"
           >
-            8
+            {totalNumber}
           </Typography>
           <div>Total # of Devices</div>
         </div>

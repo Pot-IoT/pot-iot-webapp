@@ -19,6 +19,6 @@ export default (state = defaultState, action) => {
         deviceList: action.data,
       };
     default:
-      return {};
+      return state;
   }
 };
