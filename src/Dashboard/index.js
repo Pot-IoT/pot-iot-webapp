@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Overview from "./Overview";
 import GoogleAPI from "./GoogleAPI";
 import SensorDetail from "./SensorDetail";
+import NewDeviceModal from "./NewDeviceModal";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Divider,
@@ -19,7 +20,11 @@ import {
 } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import Loading from "../common/Loading";
-import { getDeviceList } from "./store/actionCreators";
+import {
+  getDeviceList,
+  newDevice,
+  toggleIsLoading,
+} from "./store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -30,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: "0 5%",
   },
-  dropdown: {
+  deviceSectionHeader: {
     margin: "20px 0 20px 5%",
     display: "flex",
   },
@@ -62,12 +67,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Dashboard = (props) => {
   const {
-    getDeviceListDispatch,
     isLoading,
     deviceList,
     totalNumber,
     totalOffline,
     totalOnline,
+    toggleIsLoadingDispatch,
+    getDeviceListDispatch,
+    newDeviceDispatch,
   } = props;
   const classes = useStyles();
   // const deviceList = [
@@ -77,7 +84,8 @@ const Dashboard = (props) => {
   // ];
   const userToken = window.localStorage.getItem("user_token");
   const [currentDevice, setCurrentDevice] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
+  const [usernameModalOpen, setUsernameModalOpen] = useState(false);
+  const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameErr, setUsernameErr] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);
@@ -104,7 +112,7 @@ const Dashboard = (props) => {
       .then((response) => response.json())
       .then((data) => {
         // setIsLoading(false);
-        setModalOpen(false);
+        setUsernameModalOpen(false);
         if (data.success === true) {
           alert("Username successfully changed!");
         } else {
@@ -120,10 +128,17 @@ const Dashboard = (props) => {
         }
       });
   };
+  const handleAddNewDevice = () => {
+    setNewDeviceModalOpen(true);
+  };
+  const addNewDevice = (deviceDetails) => {
+    toggleIsLoadingDispatch(true);
+    newDeviceDispatch(deviceDetails, userToken);
+  };
 
   return localStorage.getItem("user_token") ? (
     <div>
-      <Navbar setChangeUsernameModalOpen={setModalOpen} />
+      <Navbar setChangeUsernameModalOpen={setUsernameModalOpen} />
       <div className={classes.dashboardContainer}>
         <Overview
           totalNumber={totalNumber}
@@ -131,7 +146,7 @@ const Dashboard = (props) => {
           totalOnline={totalOnline}
         />
         <Divider className={classes.divider} />
-        <div className={classes.dropdown}>
+        <div className={classes.deviceSectionHeader}>
           <Typography align="left" className={classes.title} variant="h4">
             Device:&nbsp;
           </Typography>
@@ -147,6 +162,13 @@ const Dashboard = (props) => {
               </MenuItem>
             ))}
           </TextField>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddNewDevice}
+          >
+            New Device
+          </Button>
         </div>
         <div className={classes.thingInfo}>
           <Paper className={classes.thingInfoCard}>
@@ -221,8 +243,8 @@ const Dashboard = (props) => {
         </div>
       </div>
       <Dialog
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        open={usernameModalOpen}
+        onClose={() => setUsernameModalOpen(false)}
         height={250}
         width={700}
       >
@@ -251,6 +273,11 @@ const Dashboard = (props) => {
           OK
         </Button>
       </Dialog>
+      <NewDeviceModal
+        newDeviceModalOpen={newDeviceModalOpen}
+        setNewDeviceModalOpen={setNewDeviceModalOpen}
+        addNewDevice={addNewDevice}
+      />
       {isLoading && <Loading />}
     </div>
   ) : (
@@ -273,8 +300,14 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    toggleIsLoadingDispatch(isLoading) {
+      dispatch(toggleIsLoading(isLoading));
+    },
     getDeviceListDispatch(userToken) {
       dispatch(getDeviceList(userToken));
+    },
+    newDeviceDispatch(deviceDetails, userToken) {
+      dispatch(newDevice(deviceDetails, userToken));
     },
   };
 };
