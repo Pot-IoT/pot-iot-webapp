@@ -25,6 +25,7 @@ import {
   newDevice,
   toggleIsLoading,
 } from "./store/actionCreators";
+import { setUsername } from "../Login/store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Dashboard = (props) => {
   const {
+    username,
     isLoading,
     deviceList,
     totalNumber,
@@ -75,6 +77,7 @@ const Dashboard = (props) => {
     toggleIsLoadingDispatch,
     getDeviceListDispatch,
     newDeviceDispatch,
+    setUsernameDispatch,
   } = props;
   const classes = useStyles();
   // const deviceList = [
@@ -86,8 +89,8 @@ const Dashboard = (props) => {
   const [currentDevice, setCurrentDevice] = useState({});
   const [usernameModalOpen, setUsernameModalOpen] = useState(false);
   const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
-  const [username, setUsername] = useState("");
-  const [usernameErr, setUsernameErr] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
+  const [newUsernameErr, setNewUsernameErr] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -98,15 +101,19 @@ const Dashboard = (props) => {
     setCurrentDevice(e.target.value);
   };
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
+    setNewUsername(e.target.value);
+    setNewUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
   };
   const handleSubmitUsername = () => {
+    if (newUsername === username) {
+      alert("Please enter a different username.");
+      return;
+    }
     // setIsLoading(true);
     fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
       method: "POST",
       body: JSON.stringify({
-        username: username,
+        username: newUsername,
       }),
     })
       .then((response) => response.json())
@@ -114,6 +121,7 @@ const Dashboard = (props) => {
         // setIsLoading(false);
         setUsernameModalOpen(false);
         if (data.success === true) {
+          setUsernameDispatch(newUsername);
           alert("Username successfully changed!");
         } else {
           switch (data.result.message) {
@@ -257,9 +265,9 @@ const Dashboard = (props) => {
           className={classes.modalInput}
           autoFocus
           onChange={handleUsernameChange}
-          error={usernameErr}
+          error={newUsernameErr}
           FormHelperTextProps={{
-            className: usernameErr ? classes.errMsg : classes.hideErrMsg,
+            className: newUsernameErr ? classes.errMsg : classes.hideErrMsg,
           }}
           helperText="Username has to be a combination of letters and numbers with length between 3 and 30, and it has to be different from your current username."
         />
@@ -268,7 +276,7 @@ const Dashboard = (props) => {
           color="primary"
           className={classes.modalButton}
           onClick={handleSubmitUsername}
-          disabled={usernameErr}
+          disabled={newUsernameErr}
         >
           OK
         </Button>
@@ -291,6 +299,7 @@ const mapStateToProps = (state) => {
     if (element.device_status >= 1) totalOnline += 1;
   });
   return {
+    username: state.login.username,
     isLoading: state.dashboard.isLoading,
     deviceList,
     totalOnline,
@@ -298,17 +307,23 @@ const mapStateToProps = (state) => {
     totalNumber: deviceList.length,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleIsLoadingDispatch(isLoading) {
-      dispatch(toggleIsLoading(isLoading));
-    },
-    getDeviceListDispatch(userToken) {
-      dispatch(getDeviceList(userToken));
-    },
-    newDeviceDispatch(deviceDetails, userToken) {
-      dispatch(newDevice(deviceDetails, userToken));
-    },
-  };
+const mapDispatchToProps = {
+  toggleIsLoadingDispatch: toggleIsLoading,
+  getDeviceListDispatch: getDeviceList,
+  newDeviceDispatch: newDevice,
+  setUsernameDispatch: setUsername,
 };
+// (dispatch) => {
+//   return {
+//     toggleIsLoadingDispatch(isLoading) {
+//       dispatch(toggleIsLoading(isLoading));
+//     },
+//     getDeviceListDispatch(userToken) {
+//       dispatch(getDeviceList(userToken));
+//     },
+//     newDeviceDispatch(deviceDetails, userToken) {
+//       dispatch(newDevice(deviceDetails, userToken));
+//     },
+//   };
+// };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

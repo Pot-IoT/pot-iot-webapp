@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import {
   Avatar,
   Button,
@@ -17,6 +18,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import Copyright from "../common/Copyright";
 import Loading from "../common/Loading";
+import { setUsername } from "./store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+function Login(props) {
+  const { setUsernameDispatch } = props;
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -76,6 +79,7 @@ export default function Login() {
         setIsLoading(false);
         if (data.success === true) {
           localStorage.setItem("user_token", data.data.token);
+          setUsernameDispatch(data.data.username);
           history.push("/dashboard");
         } else {
           switch (data.result.message) {
@@ -179,3 +183,8 @@ export default function Login() {
     </Container>
   );
 }
+const mapDispatchToProps = {
+  setUsernameDispatch: setUsername,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

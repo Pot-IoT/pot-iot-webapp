@@ -1,14 +1,5 @@
-const actionTypes = {
-  GET_USERINFO: "GET_USERINFO",
-};
+import reducer from "./reducer";
+import * as actionCreators from "./actionCreators";
+import * as constants from "./constants";
 
-const defaultState = {
-  userInfo: {},
-};
-
-export default (state = defaultState, action) => {
-  switch (action.type) {
-    case actionTypes.GET_USERINFO:
-      return state.set("userInfo", action.data);
-  }
-};
+export { reducer, actionCreators, constants };
