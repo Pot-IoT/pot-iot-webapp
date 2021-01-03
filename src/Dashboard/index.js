@@ -65,6 +65,18 @@ const useStyles = makeStyles((theme) => ({
   errMsg: {
     display: "block",
   },
+  buttonGroup: {
+    display: "flex",
+    margin: "50px auto",
+    width: "fit-content",
+  },
+  emptylistPic: {
+    display: "block",
+    margin: "100px auto",
+  },
+  newDeviceCTA: {
+    marginRight: "100px",
+  },
 }));
 const Dashboard = (props) => {
   const {
@@ -147,109 +159,141 @@ const Dashboard = (props) => {
   return localStorage.getItem("user_token") ? (
     <div>
       <Navbar setChangeUsernameModalOpen={setUsernameModalOpen} />
-      <div className={classes.dashboardContainer}>
-        <Overview
-          totalNumber={totalNumber}
-          totalOffline={totalOffline}
-          totalOnline={totalOnline}
-        />
-        <Divider className={classes.divider} />
-        <div className={classes.deviceSectionHeader}>
-          <Typography align="left" className={classes.title} variant="h4">
-            Device:&nbsp;
+      {totalNumber == 1 ? (
+        <div>
+          <picture>
+            <source
+              media="(min-width:768px)"
+              srcset="//via.placeholder.com/600x400"
+            />
+            <img
+              className={classes.emptylistPic}
+              src="//via.placeholder.com/300x400"
+              alt=""
+            />
+          </picture>
+          <Typography align="center" variant="h2">
+            You don't have any device yet.
           </Typography>
-          <TextField
-            select
-            label=""
-            value={currentDevice}
-            onChange={handleChange}
-          >
-            {deviceList.map((option) => (
-              <MenuItem key={option.name} value={option}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddNewDevice}
-          >
-            New Device
-          </Button>
+          <div className={classes.buttonGroup}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddNewDevice}
+              className={classes.newDeviceCTA}
+            >
+              New Device
+            </Button>
+            <Button variant="outlined" color="primary">
+              How Dashboard works?
+            </Button>
+          </div>
         </div>
-        <div className={classes.thingInfo}>
-          <Paper className={classes.thingInfoCard}>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Device ID
+      ) : (
+        <div className={classes.dashboardContainer}>
+          <Overview
+            totalNumber={totalNumber}
+            totalOffline={totalOffline}
+            totalOnline={totalOnline}
+          />
+          <Divider className={classes.divider} />
+          <div className={classes.deviceSectionHeader}>
+            <Typography align="left" className={classes.title} variant="h4">
+              Device:&nbsp;
             </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.ID || "--"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Device Name
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.name || "--"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Device Description
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.description || "--"}
-            </Typography>
-          </Paper>
-          <Paper className={classes.thingInfoCard}>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Start Time
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.on_time || "--:--:----"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Offline Time
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.off_time || "--:--:----"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Connection Duration
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.off_time - currentDevice.on_time || "--"}
-            </Typography>
-          </Paper>
-          <Paper className={classes.thingInfoCard}>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Connection Mode and Interval
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.communication_mode &&
-              currentDevice.communication_interval
-                ? currentDevice.communication_mode +
-                  "/" +
-                  currentDevice.communication_interval
-                : "--"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Last Communication time
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.last_communication || "--:--:----"}
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailTitle}>
-              Next Communication time
-            </Typography>
-            <Typography align="left" className={classes.deviceDetailValue}>
-              {currentDevice.next_communication || "--:--:----"}
-            </Typography>
-          </Paper>
+            <TextField
+              select
+              label=""
+              value={currentDevice}
+              onChange={handleChange}
+            >
+              {deviceList.map((option) => (
+                <MenuItem key={option.name} value={option}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddNewDevice}
+            >
+              New Device
+            </Button>
+          </div>
+          <div className={classes.thingInfo}>
+            <Paper className={classes.thingInfoCard}>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Device ID
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.ID || "--"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Device Name
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.name || "--"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Device Description
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.description || "--"}
+              </Typography>
+            </Paper>
+            <Paper className={classes.thingInfoCard}>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Start Time
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.on_time || "--:--:----"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Offline Time
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.off_time || "--:--:----"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Connection Duration
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.off_time - currentDevice.on_time || "--"}
+              </Typography>
+            </Paper>
+            <Paper className={classes.thingInfoCard}>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Connection Mode and Interval
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.communication_mode &&
+                currentDevice.communication_interval
+                  ? currentDevice.communication_mode +
+                    "/" +
+                    currentDevice.communication_interval
+                  : "--"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Last Communication time
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.last_communication || "--:--:----"}
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailTitle}>
+                Next Communication time
+              </Typography>
+              <Typography align="left" className={classes.deviceDetailValue}>
+                {currentDevice.next_communication || "--:--:----"}
+              </Typography>
+            </Paper>
+          </div>
+          <div className={classes.sensorLocationContainer}>
+            <SensorDetail />
+            <GoogleAPI location={currentDevice.gps} />
+          </div>
         </div>
-        <div className={classes.sensorLocationContainer}>
-          <SensorDetail />
-          <GoogleAPI location={currentDevice.gps} />
-        </div>
-      </div>
+      )}
       <Dialog
         open={usernameModalOpen}
         onClose={() => setUsernameModalOpen(false)}
