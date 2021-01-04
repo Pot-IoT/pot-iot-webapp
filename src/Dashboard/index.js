@@ -159,7 +159,7 @@ const Dashboard = (props) => {
   return localStorage.getItem("user_token") ? (
     <div>
       <Navbar setChangeUsernameModalOpen={setUsernameModalOpen} />
-      {totalNumber == 1 ? (
+      {totalNumber == 0 ? (
         <div>
           <picture>
             <source
