@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Dialog, DialogTitle, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  //   modal: {
-  //     width: "50%",
-  //     height: "50%",
-  //   },
   modalButton: {
-    width: "20%",
+    width: "25%",
     margin: "0 auto 20px",
+    display: "inline-block",
   },
   hideErrMsg: {
     display: "none",
@@ -17,12 +14,21 @@ const useStyles = makeStyles((theme) => ({
   errMsg: {
     display: "block",
   },
+  textField: {
+    width: "400px",
+    margin: "15px auto",
+  },
+  modalTitle: {
+    textAlign: "center",
+  },
+  buttonGroup: {
+    display: "flex",
+  },
 }));
 
 export default (props) => {
   const classes = useStyles();
   const { newDeviceModalOpen, addNewDevice, setNewDeviceModalOpen } = props;
-  //   const [product, setProduct] = useState("");
   const [IMEI, setIMEI] = useState("");
   const [pincode, setPincode] = useState("");
   const [deviceName, setDeviceName] = useState("");
@@ -60,31 +66,29 @@ export default (props) => {
 
   return (
     <Dialog
-      //   className={classes.modal}
       open={newDeviceModalOpen}
+      fullWidth
       onClose={() => setNewDeviceModalOpen(false)}
-      height={500}
-      width={1000}
+      maxWidth="sm"
     >
-      <DialogTitle>Add a new device</DialogTitle>
+      <DialogTitle className={classes.modalTitle}>Add a new device</DialogTitle>
       <TextField
+        className={classes.textField}
         variant="outlined"
         margin="normal"
         required
-        fullWidth
         label="Product"
         autoFocus
         value="Pot-IoT Tracker"
         disabled
-        // onChange={handleProductChange}
       />
       <TextField
+        className={classes.textField}
         variant="outlined"
         margin="normal"
         required
-        fullWidth
         label="IMEI"
-        // name="email"
+        placeholder="Please enter the 15 digits number on your device"
         onChange={handleIMEIChange}
         error={IMEIErr}
         FormHelperTextProps={{
@@ -93,24 +97,26 @@ export default (props) => {
         helperText="Please enter a valid IMEI, which is the 15 digit number on your device"
       />
       <TextField
+        className={classes.textField}
         variant="outlined"
         margin="normal"
         required
-        fullWidth
-        label="Pin Code"
+        label="Pin"
+        placeholder="Please enter the 8 digits number on your device"
         onChange={handlePincodeChange}
         error={pincodeErr}
         FormHelperTextProps={{
           className: pincodeErr ? classes.errMsg : classes.hideErrMsg,
         }}
-        helperText="Pin Code is a 8 digit combination of numbers and letters"
+        helperText="Pin Code is a 8 digits combination of numbers and letters"
       />
       <TextField
+        className={classes.textField}
         variant="outlined"
         margin="normal"
         required
-        fullWidth
         label="Device Name"
+        placeholder="Give your device a name（2 to 30 characters)"
         onChange={handleDevicenameChange}
         error={deviceNameErr}
         FormHelperTextProps={{
@@ -119,30 +125,32 @@ export default (props) => {
         helperText="Device name has to be a combination of letters and numbers with length between 3 and 30"
       />
       <TextField
+        className={classes.textField}
         variant="outlined"
         margin="normal"
-        required
-        fullWidth
         label="Description"
+        placeholder="Provide more information about your device..."
         onChange={handleDescriptionChange}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.modalButton}
-        onClick={handleSubmitNewDevice}
-        disabled={IMEI === "" || pincode === "" || deviceName === ""}
-      >
-        Add
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.modalButton}
-        onClick={() => setNewDeviceModalOpen(false)}
-      >
-        Cancel
-      </Button>
+      <div className={classes.buttonGroup}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.modalButton}
+          onClick={handleSubmitNewDevice}
+          disabled={IMEI === "" || pincode === "" || deviceName === ""}
+        >
+          Add
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.modalButton}
+          onClick={() => setNewDeviceModalOpen(false)}
+        >
+          Cancel
+        </Button>
+      </div>
     </Dialog>
   );
 };
