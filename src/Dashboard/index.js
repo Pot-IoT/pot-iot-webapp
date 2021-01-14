@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import Overview from "./Overview";
-import GoogleAPI from "./GoogleAPI";
-import SensorDetail from "./SensorDetail";
 import NewDeviceModal from "./NewDeviceModal";
+import DataLogTabs from "./DataLogTabs";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Divider,
@@ -38,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   deviceSectionHeader: {
     margin: "20px 0 20px 5%",
-    display: "flex",
-  },
-  sensorLocationContainer: {
     display: "flex",
   },
   thingInfo: {
@@ -288,10 +284,7 @@ const Dashboard = (props) => {
               </Typography>
             </Paper>
           </div>
-          <div className={classes.sensorLocationContainer}>
-            <SensorDetail />
-            <GoogleAPI location={currentDevice.gps} />
-          </div>
+          <DataLogTabs currentDevice={currentDevice} />
         </div>
       )}
       <Dialog
