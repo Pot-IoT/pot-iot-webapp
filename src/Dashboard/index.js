@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     width: "25%",
     height: "400px",
     margin: "20px 5%",
+    padding: "2%",
   },
   modalInput: {
     width: "80%",
@@ -83,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
   },
   newDeviceCTA: {
     marginRight: "100px",
+  },
+  deviceDetailValue: {
+    marginBottom: "15%",
   },
 }));
 const Dashboard = (props) => {
@@ -115,6 +119,11 @@ const Dashboard = (props) => {
   useEffect(() => {
     getDeviceListDispatch(userToken);
   }, []);
+  useEffect(() => {
+    if (deviceList.length !== 0) {
+      setCurrentDevice(deviceList[0]);
+    }
+  }, [deviceList]);
 
   const handleChange = (e) => {
     setCurrentDevice(e.target.value);
@@ -257,19 +266,31 @@ const Dashboard = (props) => {
           </div>
           <div className={classes.thingInfo}>
             <Paper className={classes.thingInfoCard}>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 IMEI
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
                 {currentDevice.imei || "--"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Device Name
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
                 {currentDevice.name || "--"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Device Description
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
@@ -277,19 +298,31 @@ const Dashboard = (props) => {
               </Typography>
             </Paper>
             <Paper className={classes.thingInfoCard}>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Start Time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
                 {currentDevice.on_time || "--:--:----"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Offline Time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
                 {currentDevice.off_time || "--:--:----"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Connection Duration
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
@@ -297,7 +330,11 @@ const Dashboard = (props) => {
               </Typography>
             </Paper>
             <Paper className={classes.thingInfoCard}>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Connection Mode and Interval
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
@@ -308,13 +345,21 @@ const Dashboard = (props) => {
                     currentDevice.communication_interval
                   : "--"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Last Communication time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
                 {currentDevice.last_communication || "--:--:----"}
               </Typography>
-              <Typography align="left" className={classes.deviceDetailTitle}>
+              <Typography
+                align="left"
+                className={classes.deviceDetailTitle}
+                variant="h6"
+              >
                 Next Communication time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>

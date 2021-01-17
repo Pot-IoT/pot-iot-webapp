@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     padding: "0 2% 2% 5%",
   },
+  details: {
+    padding: "0 10%",
+  },
 }));
 
 function TabPanel(props) {
@@ -69,14 +72,14 @@ export default (props) => {
           <Typography align="left" className={classes.title} variant="h4">
             Sensor Details:
           </Typography>
-          <Typography align="left" className={classes.title} variant="h5">
-            LED Status
+          <Typography align="left" className={classes.title} variant="h6">
+            LED Status:
           </Typography>
-          <Typography variant="h6">
+          <Typography className={classes.details}>
             {currentDevice.led_status > 0 ? "ON" : "OFF"}
           </Typography>
-          <Typography align="left" className={classes.title} variant="h5">
-            Acceleration
+          <Typography align="left" className={classes.title} variant="h6">
+            Acceleration:
           </Typography>
           <Typography variant="h6">{currentDevice.acceleration}</Typography>
         </div>
