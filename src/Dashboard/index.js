@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   deviceSectionHeader: {
     margin: "20px 0 20px 5%",
+    paddingRight: "2%",
     display: "flex",
   },
   thingInfo: {
@@ -82,8 +83,11 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: "100px auto",
   },
-  newDeviceCTA: {
+  newDeviceBtn: {
     marginRight: "100px",
+  },
+  newDeviceBtnAtEnd: {
+    marginLeft: "auto",
   },
   deviceDetailValue: {
     marginBottom: "15%",
@@ -220,7 +224,7 @@ const Dashboard = (props) => {
               variant="contained"
               color="primary"
               onClick={handleAddNewDevice}
-              className={classes.newDeviceCTA}
+              className={classes.newDeviceBtn}
             >
               New Device
             </Button>
@@ -260,6 +264,7 @@ const Dashboard = (props) => {
               variant="contained"
               color="primary"
               onClick={handleAddNewDevice}
+              className={classes.newDeviceBtnAtEnd}
             >
               New Device
             </Button>
