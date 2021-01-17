@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, AppBar, Tabs, Tab } from "@material-ui/core";
+import { Typography, AppBar, Tabs, Tab, Divider } from "@material-ui/core";
 import GoogleAPI from "./GoogleAPI";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,12 +11,21 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   sensorDetailContainer: {
-    width: "720px",
-    height: "720px",
+    width: "50%",
+    paddingRight: "5%",
+    marginBottom: "2%",
+    borderRight: "1px rgba(0, 0, 0, 0.12) solid",
   },
   logContainer: {
     width: "100%",
-    height: "720px",
+    height: "100%",
+  },
+  divider: {
+    margin: "0 5%",
+  },
+  locationInfo: {
+    width: "50%",
+    padding: "0 2% 2% 5%",
   },
 }));
 
@@ -39,12 +48,17 @@ export default (props) => {
   };
   return (
     <div>
-      <AppBar position="static">
-        <Tabs value={currentTab} onChange={handleChangeTab}>
+      <div position="static">
+        <Tabs
+          value={currentTab}
+          onChange={handleChangeTab}
+          indicatorColor="primary"
+          textColor="primary"
+        >
           <Tab label="Data" id="data" />
           <Tab label="Log" id="log" />
         </Tabs>
-      </AppBar>
+      </div>
       <TabPanel
         currentTab={currentTab}
         tabIndex={0}
@@ -53,7 +67,7 @@ export default (props) => {
       >
         <div className={classes.sensorDetailContainer}>
           <Typography align="left" className={classes.title} variant="h4">
-            Sensor Details
+            Sensor Details:
           </Typography>
           <Typography align="left" className={classes.title} variant="h5">
             LED Status
@@ -66,7 +80,13 @@ export default (props) => {
           </Typography>
           <Typography variant="h6">{currentDevice.acceleration}</Typography>
         </div>
-        <GoogleAPI location={currentDevice.gps} />
+        {/* <Divider className={classes.divider} orientation="vertical" /> */}
+        <div className={classes.locationInfo}>
+          <Typography align="left" className={classes.title} variant="h4">
+            Location:
+          </Typography>
+          <GoogleAPI location={currentDevice.gps} />
+        </div>
       </TabPanel>
       <TabPanel
         currentTab={currentTab}

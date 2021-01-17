@@ -17,6 +17,17 @@ import {
   DialogContentText,
   Button,
 } from "@material-ui/core";
+import {
+  SignalCellularOff,
+  SignalCellular1Bar,
+  SignalCellular2Bar,
+  SignalCellular3Bar,
+  SignalCellular4Bar,
+  BatteryUnknown,
+  BatteryFull,
+  Battery50,
+  Error,
+} from "@material-ui/icons";
 import { Redirect } from "react-router-dom";
 import Loading from "../common/Loading";
 import {
@@ -151,6 +162,30 @@ const Dashboard = (props) => {
     toggleIsLoadingDispatch(true);
     newDeviceDispatch(deviceDetails, userToken);
   };
+  const showSignalStrength = () => {
+    switch (currentDevice.signal_strength) {
+      case 4:
+        return <SignalCellular4Bar />;
+      case 3:
+        return <SignalCellular3Bar />;
+      case 2:
+        return <SignalCellular2Bar />;
+      case 1:
+        return <SignalCellular1Bar />;
+      default:
+        return <SignalCellularOff />;
+    }
+  };
+  const showBatteryRemaining = () => {
+    switch (currentDevice.battery) {
+      case "full":
+        return <BatteryFull />;
+      case "half":
+        return <Battery50 />;
+      default:
+        return <BatteryUnknown />;
+    }
+  };
 
   return localStorage.getItem("user_token") ? (
     <div>
@@ -209,6 +244,9 @@ const Dashboard = (props) => {
                 </MenuItem>
               ))}
             </TextField>
+            {showSignalStrength()}
+            {showBatteryRemaining()}
+            <Error />
             <Button
               variant="contained"
               color="primary"
@@ -220,10 +258,10 @@ const Dashboard = (props) => {
           <div className={classes.thingInfo}>
             <Paper className={classes.thingInfoCard}>
               <Typography align="left" className={classes.deviceDetailTitle}>
-                Device ID
+                IMEI
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.ID || "--"}
+                {currentDevice.imei || "--"}
               </Typography>
               <Typography align="left" className={classes.deviceDetailTitle}>
                 Device Name

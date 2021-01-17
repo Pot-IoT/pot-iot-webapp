@@ -9,6 +9,7 @@ export class MapContainer extends Component {
         google={google}
         zoom={10}
         containerStyle={{
+          position: "relative",
           maxWidth: "720px",
           height: "720px",
         }}
