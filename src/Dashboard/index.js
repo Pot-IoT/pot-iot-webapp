@@ -202,13 +202,16 @@ const Dashboard = (props) => {
 
   return localStorage.getItem("user_token") ? (
     <div>
-      <Navbar setChangeUsernameModalOpen={setUsernameModalOpen} />
+      <Navbar
+        setChangeUsernameModalOpen={setUsernameModalOpen}
+        username={username}
+      />
       {totalNumber == 0 ? (
         <div>
           <picture>
             <source
               media="(min-width:768px)"
-              srcset="//via.placeholder.com/600x400"
+              srcSet="//via.placeholder.com/600x400"
             />
             <img
               className={classes.emptylistPic}
@@ -401,7 +404,7 @@ const Dashboard = (props) => {
           color="primary"
           className={classes.modalButton}
           onClick={handleSubmitUsername}
-          disabled={newUsernameErr}
+          disabled={newUsername === "" || newUsernameErr}
         >
           OK
         </Button>
@@ -438,17 +441,4 @@ const mapDispatchToProps = {
   newDeviceDispatch: newDevice,
   setUsernameDispatch: setUsername,
 };
-// (dispatch) => {
-//   return {
-//     toggleIsLoadingDispatch(isLoading) {
-//       dispatch(toggleIsLoading(isLoading));
-//     },
-//     getDeviceListDispatch(userToken) {
-//       dispatch(getDeviceList(userToken));
-//     },
-//     newDeviceDispatch(deviceDetails, userToken) {
-//       dispatch(newDevice(deviceDetails, userToken));
-//     },
-//   };
-// };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

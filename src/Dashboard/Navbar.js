@@ -13,6 +13,7 @@ import {
   Menu as MenuIcon,
   AccountCircle,
   Notifications as NotificationsIcon,
+  Edit as EditIcon,
 } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
@@ -77,10 +78,13 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  editIcon: {
+    marginLeft: "auto",
+  },
 }));
 
 export default function Navbar(props) {
-  const { setChangeUsernameModalOpen } = props;
+  const { setChangeUsernameModalOpen, username } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -111,7 +115,10 @@ export default function Navbar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleChangeUsername}>Change Username</MenuItem>
+      <MenuItem onClick={handleChangeUsername}>
+        <strong>{username}</strong>
+        <EditIcon className={classes.editIcon} />
+      </MenuItem>
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
   );

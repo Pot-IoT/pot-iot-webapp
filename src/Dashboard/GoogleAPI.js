@@ -13,10 +13,10 @@ export class MapContainer extends Component {
           maxWidth: "720px",
           height: "720px",
         }}
-        initialCenter={{ lat: 47.444, lng: -122.176 }}
-        center={location}
+        initialCenter={JSON.parse(location)}
+        center={JSON.parse(location)}
       >
-        <Marker position={location} />
+        <Marker position={JSON.parse(location)} />
       </Map>
     );
   }

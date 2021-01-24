@@ -37,6 +37,7 @@ export default (props) => {
   const [IMEIErr, setIMEIErr] = useState(false);
   const [pincodeErr, setPincodeErr] = useState(false);
   const [deviceNameErr, setDeviceNameErr] = useState(false);
+  const [descCharRemain, setDescCharRemain] = useState(100);
 
   const handleIMEIChange = (e) => {
     setIMEI(e.target.value);
@@ -52,6 +53,7 @@ export default (props) => {
   };
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
+    setDescCharRemain(100 - e.target.value.length);
   };
 
   const handleSubmitNewDevice = () => {
@@ -128,8 +130,15 @@ export default (props) => {
         className={classes.textField}
         variant="outlined"
         margin="normal"
-        label="Description"
-        placeholder="Provide more information about your device..."
+        label={
+          description.length === 0
+            ? "Description"
+            : `Desciption (${descCharRemain} characters left)`
+        }
+        multiline
+        rows={4}
+        inputProps={{ maxLength: 100 }}
+        placeholder="Provide more information about your device...(no more than 100 characters)"
         onChange={handleDescriptionChange}
       />
       <div className={classes.buttonGroup}>
