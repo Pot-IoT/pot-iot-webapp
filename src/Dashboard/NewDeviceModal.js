@@ -147,7 +147,14 @@ export default (props) => {
           color="primary"
           className={classes.modalButton}
           onClick={handleSubmitNewDevice}
-          disabled={IMEI === "" || pincode === "" || deviceName === ""}
+          disabled={
+            IMEI === "" ||
+            pincode === "" ||
+            deviceName === "" ||
+            IMEIErr ||
+            pincodeErr ||
+            deviceNameErr
+          }
         >
           Add
         </Button>
