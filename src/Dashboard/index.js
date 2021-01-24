@@ -35,7 +35,7 @@ import {
   newDevice,
   toggleIsLoading,
 } from "./store/actionCreators";
-import { setUsername } from "../Login/store/actionCreators";
+// import { setUsername } from "../Login/store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Dashboard = (props) => {
   const {
-    username,
+    // username,
     isLoading,
     deviceList,
     totalNumber,
@@ -104,8 +104,9 @@ const Dashboard = (props) => {
     toggleIsLoadingDispatch,
     getDeviceListDispatch,
     newDeviceDispatch,
-    setUsernameDispatch,
+    // setUsernameDispatch,
   } = props;
+  const username = localStorage.getItem("username");
   const classes = useStyles();
   // const deviceList = [
   //   { name: "apple", location: { lat: 47.444, lng: -122.176 } },
@@ -153,7 +154,8 @@ const Dashboard = (props) => {
         // setIsLoading(false);
         setUsernameModalOpen(false);
         if (data.success === true) {
-          setUsernameDispatch(newUsername);
+          // setUsernameDispatch(newUsername);
+          localStorage.setItem("username", newUsername);
           alert("Username successfully changed!");
         } else {
           switch (data.result.message) {
@@ -427,7 +429,7 @@ const mapStateToProps = (state) => {
     if (element.device_status >= 1) totalOnline += 1;
   });
   return {
-    username: state.login.username,
+    // username: state.login.username,
     isLoading: state.dashboard.isLoading,
     deviceList,
     totalOnline,
@@ -439,6 +441,6 @@ const mapDispatchToProps = {
   toggleIsLoadingDispatch: toggleIsLoading,
   getDeviceListDispatch: getDeviceList,
   newDeviceDispatch: newDevice,
-  setUsernameDispatch: setUsername,
+  // setUsernameDispatch: setUsername,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

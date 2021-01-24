@@ -18,7 +18,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import Copyright from "../common/Copyright";
 import Loading from "../common/Loading";
-import { setUsername } from "./store/actionCreators";
+// import { setUsername } from "./store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login(props) {
-  const { setUsernameDispatch } = props;
+  // const { setUsernameDispatch } = props;
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -79,7 +79,8 @@ function Login(props) {
         setIsLoading(false);
         if (data.success === true) {
           localStorage.setItem("user_token", data.data.token);
-          setUsernameDispatch(data.data.username);
+          // setUsernameDispatch(data.data.username);
+          localStorage.setItem("username", data.data.username);
           history.push("/dashboard");
         } else {
           switch (data.result.message) {
@@ -184,7 +185,7 @@ function Login(props) {
   );
 }
 const mapDispatchToProps = {
-  setUsernameDispatch: setUsername,
+  // setUsernameDispatch: setUsername,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
