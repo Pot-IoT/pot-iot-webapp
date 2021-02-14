@@ -102,6 +102,7 @@ const Dashboard = (props) => {
     totalNumber,
     totalOffline,
     totalOnline,
+    commandLog,
     toggleIsLoadingDispatch,
     getDeviceListDispatch,
     newDeviceDispatch,
@@ -379,7 +380,11 @@ const Dashboard = (props) => {
               </Typography>
             </Paper>
           </div>
-          <DataLogTabs currentDevice={currentDevice} getLogs={getLogs} />
+          <DataLogTabs
+            currentDevice={currentDevice}
+            getLogs={getLogs}
+            commandLog={commandLog}
+          />
         </div>
       )}
       <Dialog
@@ -437,6 +442,7 @@ const mapStateToProps = (state) => {
     totalOnline,
     totalOffline: deviceList.length - totalOnline,
     totalNumber: deviceList.length,
+    commandLog: state.dashboard.commandLog,
   };
 };
 const mapDispatchToProps = {

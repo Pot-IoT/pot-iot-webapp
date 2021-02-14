@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Tabs, Tab, TextField, MenuItem } from "@material-ui/core";
 import { NotListedLocation } from "@material-ui/icons";
 import GoogleAPI from "./GoogleAPI";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -64,9 +65,15 @@ function LocationInfoMissing() {
   );
 }
 export default (props) => {
-  const { currentDevice, getLogs } = props;
+  const { currentDevice, getLogs, commandLog } = props;
   const classes = useStyles();
+  const closest5Days = [0, 1, 2, 3, 4].map((element) => {
+    return moment().subtract(element, "days").format("YYYY-MM-DD");
+  });
+  const logTypeList = ["Device Log", "Communication Log"];
   const [currentTab, setCurrentTab] = useState(0);
+  const [currentDate, setCurrentDate] = useState(closest5Days[0]);
+  const [currentLogType, setCurrentLogType] = useState(logTypeList[0]);
 
   const handleChangeTab = (e, newValue) => {
     console.log(newValue);
@@ -75,6 +82,8 @@ export default (props) => {
     }
     setCurrentTab(newValue);
   };
+  const handleCurrentDateChange = (e) => setCurrentDate(e.target.value);
+  const handleCurrentLogTypeChange = (e) => setCurrentLogType(e.target.value);
   return (
     <div>
       <div position="static">
@@ -131,14 +140,13 @@ export default (props) => {
           <Typography align="left" className={classes.title} variant="h7">
             Select Date:&nbsp;
           </Typography>
-          <TextField select label="" value={"2021-01-16"}>
-            {[
-              "2021-01-16",
-              "2021-01-15",
-              "2021-01-14",
-              "2021-01-13",
-              "2021-01-12",
-            ].map((option) => (
+          <TextField
+            select
+            label=""
+            value={currentDate}
+            onChange={handleCurrentDateChange}
+          >
+            {closest5Days.map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
@@ -147,13 +155,33 @@ export default (props) => {
           <Typography align="left" className={classes.title} variant="h7">
             Log Type:&nbsp;
           </Typography>
-          <TextField select label="" value="Device Log">
-            {["Device Log", "Communication Log"].map((option) => (
+          <TextField
+            select
+            label=""
+            value={currentLogType}
+            onChange={handleCurrentLogTypeChange}
+          >
+            {logTypeList.map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
             ))}
           </TextField>
+        </div>
+        <div>
+          {!commandLog || Object.keys(commandLog).length == 0 ? (
+            <Typography align="left" variant="h7">
+              Log is empty
+            </Typography>
+          ) : (
+            Object.keys(commandLog).maps((element) => {
+              return (
+                <Typography align="left" className={classes.title} variant="h7">
+                  {element}: {commandLog[element]}
+                </Typography>
+              );
+            })
+          )}
         </div>
       </TabPanel>
     </div>
