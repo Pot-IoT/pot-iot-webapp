@@ -34,6 +34,7 @@ import {
   getDeviceList,
   newDevice,
   toggleIsLoading,
+  getCommandLog,
 } from "./store/actionCreators";
 // import { setUsername } from "../Login/store/actionCreators";
 
@@ -104,6 +105,7 @@ const Dashboard = (props) => {
     toggleIsLoadingDispatch,
     getDeviceListDispatch,
     newDeviceDispatch,
+    getCommandLogDispatch,
     // setUsernameDispatch,
   } = props;
   const username = localStorage.getItem("username");
@@ -119,7 +121,6 @@ const Dashboard = (props) => {
   const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [newUsernameErr, setNewUsernameErr] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getDeviceListDispatch(userToken);
@@ -142,7 +143,6 @@ const Dashboard = (props) => {
       alert("Please enter a different username.");
       return;
     }
-    // setIsLoading(true);
     fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
       method: "POST",
       body: JSON.stringify({
@@ -151,7 +151,6 @@ const Dashboard = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // setIsLoading(false);
         setUsernameModalOpen(false);
         if (data.success === true) {
           // setUsernameDispatch(newUsername);
@@ -176,6 +175,9 @@ const Dashboard = (props) => {
   const addNewDevice = (deviceDetails) => {
     toggleIsLoadingDispatch(true);
     newDeviceDispatch(deviceDetails, userToken);
+  };
+  const getLogs = () => {
+    getCommandLogDispatch(userToken, currentDevice.imei, "2021-01-16");
   };
   const showSignalStrength = () => {
     switch (currentDevice.signal_strength) {
@@ -377,7 +379,7 @@ const Dashboard = (props) => {
               </Typography>
             </Paper>
           </div>
-          <DataLogTabs currentDevice={currentDevice} />
+          <DataLogTabs currentDevice={currentDevice} getLogs={getLogs} />
         </div>
       )}
       <Dialog
@@ -441,6 +443,7 @@ const mapDispatchToProps = {
   toggleIsLoadingDispatch: toggleIsLoading,
   getDeviceListDispatch: getDeviceList,
   newDeviceDispatch: newDevice,
+  getCommandLogDispatch: getCommandLog,
   // setUsernameDispatch: setUsername,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

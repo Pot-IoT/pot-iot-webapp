@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, AppBar, Tabs, Tab, Divider } from "@material-ui/core";
+import { Typography, Tabs, Tab, TextField, MenuItem } from "@material-ui/core";
 import GoogleAPI from "./GoogleAPI";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   details: {
     padding: "0 10%",
   },
+  logTitles: {
+    display: "flex",
+  },
 }));
 
 function TabPanel(props) {
@@ -41,12 +44,15 @@ function TabPanel(props) {
   );
 }
 export default (props) => {
-  const { currentDevice } = props;
+  const { currentDevice, getLogs } = props;
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
 
   const handleChangeTab = (e, newValue) => {
     console.log(newValue);
+    if (newValue === 1) {
+      getLogs();
+    }
     setCurrentTab(newValue);
   };
   return (
@@ -96,7 +102,36 @@ export default (props) => {
         tabIndex={1}
         aria-labelledby="log"
         className={classes.logContainer}
-      ></TabPanel>
+      >
+        <div className={classes.logTitles}>
+          <Typography align="left" className={classes.title} variant="h7">
+            Select Date:&nbsp;
+          </Typography>
+          <TextField select label="" value={"2021-01-16"}>
+            {[
+              "2021-01-16",
+              "2021-01-15",
+              "2021-01-14",
+              "2021-01-13",
+              "2021-01-12",
+            ].map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Typography align="left" className={classes.title} variant="h7">
+            Log Type:&nbsp;
+          </Typography>
+          <TextField select label="" value="Device Log">
+            {["Device Log", "Communication Log"].map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
+      </TabPanel>
     </div>
   );
 };

@@ -9,3 +9,12 @@ export const addNewDeviceRequest = (deviceDetails, userToken) => {
     body: JSON.stringify(deviceDetails),
   });
 };
+
+export const getCommandLogRequest = (userToken, imei, logTime) => {
+  return fetch(
+    `//115.29.191.198:8080/commandLog?token=${userToken}&imei=${imei}&log_time=${logTime}`,
+    {
+      method: "GET",
+    }
+  );
+};

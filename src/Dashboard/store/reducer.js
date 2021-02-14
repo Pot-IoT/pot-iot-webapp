@@ -3,6 +3,7 @@ import * as actionTypes from "./constants";
 const defaultState = {
   isLoading: true,
   deviceList: [],
+  commandLog: {},
 };
 
 export default (state = defaultState, action) => {
@@ -14,8 +15,11 @@ export default (state = defaultState, action) => {
       };
     case actionTypes.CHANGE_DEVICELIST:
       return {
-        isLoading: state.isLoading,
         deviceList: action.data,
+      };
+    case actionTypes.CHANGE_COMMAND_LOG:
+      return {
+        commandLog: action.data,
       };
     default:
       return state;
