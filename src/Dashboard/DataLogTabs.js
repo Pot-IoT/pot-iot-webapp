@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Tabs, Tab, TextField, MenuItem } from "@material-ui/core";
+import { NotListedLocation } from "@material-ui/icons";
 import GoogleAPI from "./GoogleAPI";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,25 @@ function TabPanel(props) {
   return (
     <div hidden={currentTab !== tabIndex} {...others}>
       {currentTab === tabIndex && children}
+    </div>
+  );
+}
+function LocationInfoMissing() {
+  return (
+    <div>
+      {/* <NotListedLocation /> */}
+      <picture>
+        <source
+          media="(min-width:768px)"
+          srcSet="//via.placeholder.com/600x400"
+        />
+        <img src="//via.placeholder.com/300x400" alt="" />
+      </picture>
+      <Typography align="center" variant="h5">
+        Oops...We can't find this device
+        <br />
+        Please check your device's GPS or status
+      </Typography>
     </div>
   );
 }
@@ -94,7 +114,11 @@ export default (props) => {
           <Typography align="left" className={classes.title} variant="h4">
             Location:
           </Typography>
-          <GoogleAPI location={currentDevice.gps} />
+          {!currentDevice.gps || currentDevice.gps == "" ? (
+            <LocationInfoMissing />
+          ) : (
+            <GoogleAPI location={currentDevice.gps} />
+          )}
         </div>
       </TabPanel>
       <TabPanel
