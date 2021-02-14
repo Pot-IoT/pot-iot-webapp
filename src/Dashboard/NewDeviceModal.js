@@ -49,7 +49,7 @@ export default (props) => {
   };
   const handleDevicenameChange = (e) => {
     setDeviceName(e.target.value);
-    setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
+    setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{1,29}$/.test(e.target.value));
   };
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -118,13 +118,13 @@ export default (props) => {
         margin="normal"
         required
         label="Device Name"
-        placeholder="Give your device a name（2 to 30 characters)"
+        placeholder="Give your device a name (Please enter 2 to 30 characters)"
         onChange={handleDevicenameChange}
         error={deviceNameErr}
         FormHelperTextProps={{
           className: deviceNameErr ? classes.errMsg : classes.hideErrMsg,
         }}
-        helperText="Device name has to be a combination of letters and numbers with length between 3 and 30"
+        helperText="Please enter 2 to 30 characters"
       />
       <TextField
         className={classes.textField}

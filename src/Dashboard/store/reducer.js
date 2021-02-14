@@ -6,7 +6,6 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
-  console.log("www", action);
   switch (action.type) {
     case actionTypes.TOGGLE_IS_LOADING:
       return {
