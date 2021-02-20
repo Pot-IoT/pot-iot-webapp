@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import moment from "moment";
 import Navbar from "./Navbar";
 import Overview from "./Overview";
 import NewDeviceModal from "./NewDeviceModal";
@@ -25,7 +26,13 @@ import {
   SignalCellular4Bar,
   BatteryUnknown,
   BatteryFull,
+  Battery90,
+  Battery80,
+  Battery60,
   Battery50,
+  Battery30,
+  Battery20,
+  BatteryAlert,
   Error,
 } from "@material-ui/icons";
 import { Redirect } from "react-router-dom";
@@ -111,11 +118,6 @@ const Dashboard = (props) => {
   } = props;
   const username = localStorage.getItem("username");
   const classes = useStyles();
-  // const deviceList = [
-  //   { name: "apple", location: { lat: 47.444, lng: -122.176 } },
-  //   { name: "banana", location: { lat: 40.444, lng: -120.176 } },
-  //   { name: "carrot", location: { lat: 50, lng: -122 } },
-  // ];
   const userToken = window.localStorage.getItem("user_token");
   const [currentDevice, setCurrentDevice] = useState({});
   const [usernameModalOpen, setUsernameModalOpen] = useState(false);
@@ -195,11 +197,26 @@ const Dashboard = (props) => {
     }
   };
   const showBatteryRemaining = () => {
-    switch (currentDevice.battery) {
-      case "full":
+    switch (Math.floor(currentDevice.battery / 10)) {
+      case 10:
+      case 9:
         return <BatteryFull />;
-      case "half":
+      case 8:
+        return <Battery90 />;
+      case 7:
+        return <Battery80 />;
+      case 6:
+      case 5:
+        return <Battery60 />;
+      case 4:
         return <Battery50 />;
+      case 3:
+      case 2:
+        return <Battery30 />;
+      case 1:
+        return <Battery20 />;
+      case 0:
+        return <BatteryAlert />;
       default:
         return <BatteryUnknown />;
     }
@@ -267,7 +284,7 @@ const Dashboard = (props) => {
             </TextField>
             {showSignalStrength()}
             {showBatteryRemaining()}
-            <Error />
+            {"Command in queue: " + currentDevice.device_command}
             <Button
               variant="contained"
               color="primary"
@@ -319,7 +336,7 @@ const Dashboard = (props) => {
                 Start Time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.on_time || "--:--:----"}
+                {moment(currentDevice.on_time).format() || "--:--:----"}
               </Typography>
               <Typography
                 align="left"
@@ -329,7 +346,7 @@ const Dashboard = (props) => {
                 Offline Time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.off_time || "--:--:----"}
+                {moment(currentDevice.off_time).format() || "--:--:----"}
               </Typography>
               <Typography
                 align="left"
@@ -351,11 +368,9 @@ const Dashboard = (props) => {
                 Connection Mode and Interval
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.communication_mode &&
-                currentDevice.communication_interval
-                  ? currentDevice.communication_mode +
-                    "/" +
-                    currentDevice.communication_interval
+                {currentDevice.communication_mode > 0 &&
+                currentDevice.communication_interval > 0
+                  ? `Mode ${currentDevice.communication_mode} - Every ${currentDevice.communication_interval}mins`
                   : "--"}
               </Typography>
               <Typography
@@ -366,7 +381,8 @@ const Dashboard = (props) => {
                 Last Communication time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.last_communication || "--:--:----"}
+                {moment(currentDevice.last_communication).format() ||
+                  "--:--:----"}
               </Typography>
               <Typography
                 align="left"
@@ -376,7 +392,11 @@ const Dashboard = (props) => {
                 Next Communication time
               </Typography>
               <Typography align="left" className={classes.deviceDetailValue}>
-                {currentDevice.next_communication || "--:--:----"}
+                {currentDevice.communication_interval > 0
+                  ? moment(currentDevice.last_communication)
+                      .add(currentDevice.communication_interval, "minutes")
+                      .format()
+                  : "--:--:----"}
               </Typography>
             </Paper>
           </div>
