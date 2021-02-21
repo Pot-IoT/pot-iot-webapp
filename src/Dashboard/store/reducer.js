@@ -23,10 +23,12 @@ export default (state = defaultState, action) => {
     case actionTypes.CHANGE_COMMAND_LOG:
       let { commandLog, ...restState3 } = state;
       let newCommandLog = action.data.reduce((acc, cur) => {
-        // first 10 char represents the time
-        acc[cur.log.slice(0, 10)] = cur;
+        if (cur.success == true) {
+          // first 10 char represents the time
+          acc[cur.data.log.slice(0, 10)] = cur.data;
+        }
         return acc;
-      });
+      }, {});
       return {
         commandLog: newCommandLog,
         ...restState3,

@@ -66,7 +66,6 @@ function LocationInfoMissing() {
 }
 export default (props) => {
   const { currentDevice, getLogs, commandLog } = props;
-  console.log("????", currentDevice.gps);
   const deviceLocation =
     currentDevice.gps && currentDevice.gps.length
       ? JSON.parse(currentDevice.gps)

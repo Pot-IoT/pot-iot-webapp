@@ -74,28 +74,31 @@ export const getCommandLog = (userToken, imei, logTimeArr) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
     Promise.all(getCommandLogRequest(userToken, imei, logTimeArr))
-      .then((response) => response.json())
+      .then((responses) =>
+        Promise.all(responses.map((response) => response.json()))
+      )
       .then((data) => {
         dispatch(toggleIsLoading(false));
-        if (data.success === true) {
-          dispatch(changeCommandLog(data.data));
-        } else {
-          switch (data.result.message) {
-            case "TOKEN_AURHENTICATION_ERROR":
-              alert(
-                "Login session expired, please refresh page to login again."
-              );
-              break;
-            case "DEVICE_INVALID_ERROR":
-              alert("Device doesn't exist");
-              break;
-            case "COMMAND_LOG_NOT_FOUND_ERROR":
-              alert("Command Log doesn't exist");
-              break;
-            default:
-              console.log(data.result.message);
-          }
-        }
+        // if (data.success === true) {
+        dispatch(changeCommandLog(data));
+        // }
+        // else {
+        //   switch (data.result.message) {
+        //     case "TOKEN_AURHENTICATION_ERROR":
+        //       alert(
+        //         "Login session expired, please refresh page to login again."
+        //       );
+        //       break;
+        //     case "DEVICE_INVALID_ERROR":
+        //       alert("Device doesn't exist");
+        //       break;
+        //     case "COMMAND_LOG_NOT_FOUND_ERROR":
+        //       alert("Command Log doesn't exist");
+        //       break;
+        //     default:
+        //       console.log(data.result.message);
+        //   }
+        // }
       });
   };
 };
