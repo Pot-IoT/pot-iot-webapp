@@ -71,7 +71,7 @@ export const newDevice = (deviceDetails, userToken) => {
 export const getCommandLog = (userToken, imei, logTimeArr) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    Promises.all(getCommandLogRequest(userToken, imei, logTimeArr))
+    Promise.all(getCommandLogRequest(userToken, imei, logTimeArr))
       .then((response) => response.json())
       .then((data) => {
         dispatch(toggleIsLoading(false));
