@@ -32,6 +32,8 @@ export const getDeviceList = (userToken) => {
                 "Login session expired, please refresh page to login again."
               );
               break;
+            default:
+              console.log(data);
           }
         }
       });

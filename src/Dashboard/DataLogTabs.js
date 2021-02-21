@@ -66,6 +66,11 @@ function LocationInfoMissing() {
 }
 export default (props) => {
   const { currentDevice, getLogs, commandLog } = props;
+  console.log("????", currentDevice.gps);
+  const deviceLocation =
+    currentDevice.gps && currentDevice.gps.length
+      ? JSON.parse(currentDevice.gps)
+      : {};
   const classes = useStyles();
   const closest5Days = [0, 1, 2, 3, 4].map((element) => {
     return moment().subtract(element, "days").format("YYYY-MM-DD");
@@ -123,7 +128,12 @@ export default (props) => {
           <Typography align="left" className={classes.title} variant="h4">
             Location:
           </Typography>
-          {!currentDevice.gps || currentDevice.gps == "" ? (
+          <Typography align="left" className={classes.title} variant="h7">
+            {currentDevice.gps &&
+              currentDevice.gps !== "" &&
+              `Latitude: ${deviceLocation.lat}, Longitude: ${deviceLocation.lng}`}
+          </Typography>
+          {!currentDevice.gps || currentDevice.gps === "" ? (
             <LocationInfoMissing />
           ) : (
             <GoogleAPI location={currentDevice.gps} />
@@ -169,7 +179,7 @@ export default (props) => {
           </TextField>
         </div>
         <div>
-          {!commandLog || Object.keys(commandLog).length == 0 ? (
+          {!commandLog || Object.keys(commandLog).length === 0 ? (
             <Typography align="left" variant="h7">
               Log is empty
             </Typography>

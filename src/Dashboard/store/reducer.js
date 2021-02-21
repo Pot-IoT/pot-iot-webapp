@@ -25,6 +25,7 @@ export default (state = defaultState, action) => {
       let newCommandLog = action.data.reduce((acc, cur) => {
         // first 10 char represents the time
         acc[cur.log.slice(0, 10)] = cur;
+        return acc;
       });
       return {
         commandLog: newCommandLog,
