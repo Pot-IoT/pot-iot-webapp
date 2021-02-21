@@ -72,17 +72,17 @@ export default (props) => {
   });
   const logTypeList = ["Device Log", "Communication Log"];
   const [currentTab, setCurrentTab] = useState(0);
-  const [currentDate, setCurrentDate] = useState(closest5Days[0]);
+  const [selectedDate, setSelectedDate] = useState(closest5Days[0]);
   const [currentLogType, setCurrentLogType] = useState(logTypeList[0]);
 
   const handleChangeTab = (e, newValue) => {
     console.log(newValue);
-    if (newValue === 1) {
-      getLogs();
+    if (newValue === 1 && Object.keys(commandLog).length === 0) {
+      getLogs(closest5Days);
     }
     setCurrentTab(newValue);
   };
-  const handleCurrentDateChange = (e) => setCurrentDate(e.target.value);
+  const handleSelectedDateChange = (e) => setSelectedDate(e.target.value);
   const handleCurrentLogTypeChange = (e) => setCurrentLogType(e.target.value);
   return (
     <div>
@@ -143,8 +143,8 @@ export default (props) => {
           <TextField
             select
             label=""
-            value={currentDate}
-            onChange={handleCurrentDateChange}
+            value={selectedDate}
+            onChange={handleSelectedDateChange}
           >
             {closest5Days.map((option) => (
               <MenuItem key={option} value={option}>
@@ -174,13 +174,10 @@ export default (props) => {
               Log is empty
             </Typography>
           ) : (
-            Object.keys(commandLog).maps((element) => {
-              return (
-                <Typography align="left" className={classes.title} variant="h7">
-                  {element}: {commandLog[element]}
-                </Typography>
-              );
-            })
+            <Typography align="left" className={classes.title} variant="h7">
+              {"Log Name: " + commandLog[selectedDate]["log_name"]}
+              {"Log: " + commandLog[selectedDate]["log"]}
+            </Typography>
           )}
         </div>
       </TabPanel>

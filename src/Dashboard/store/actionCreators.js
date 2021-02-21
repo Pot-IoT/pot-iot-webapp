@@ -68,10 +68,10 @@ export const newDevice = (deviceDetails, userToken) => {
       });
   };
 };
-export const getCommandLog = (userToken, imei, logTime) => {
+export const getCommandLog = (userToken, imei, logTimeArr) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    getCommandLogRequest(userToken, imei, logTime)
+    Promises.all(getCommandLogRequest(userToken, imei, logTimeArr))
       .then((response) => response.json())
       .then((data) => {
         dispatch(toggleIsLoading(false));

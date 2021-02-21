@@ -179,8 +179,8 @@ const Dashboard = (props) => {
     toggleIsLoadingDispatch(true);
     newDeviceDispatch(deviceDetails, userToken);
   };
-  const getLogs = () => {
-    getCommandLogDispatch(userToken, currentDevice.imei, "2021-01-16");
+  const getLogs = (logTimeArr) => {
+    getCommandLogDispatch(userToken, currentDevice.imei, logTimeArr);
   };
   const showSignalStrength = () => {
     switch (currentDevice.signal_strength) {

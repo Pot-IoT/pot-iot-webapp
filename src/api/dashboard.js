@@ -10,11 +10,13 @@ export const addNewDeviceRequest = (deviceDetails, userToken) => {
   });
 };
 
-export const getCommandLogRequest = (userToken, imei, logTime) => {
-  return fetch(
-    `//115.29.191.198:8080/commandLog?token=${userToken}&imei=${imei}&log_time=${logTime}`,
-    {
-      method: "GET",
-    }
+export const getCommandLogRequest = (userToken, imei, logTimeArr) => {
+  return logTimeArr.map((element) =>
+    fetch(
+      `//115.29.191.198:8080/commandLog?token=${userToken}&imei=${imei}&log_time=${element}`,
+      {
+        method: "GET",
+      }
+    )
   );
 };
