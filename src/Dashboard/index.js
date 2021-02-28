@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "1440px",
     backgroundColor: "#f5f5f5",
     margin: "0 auto",
+    padding: "0 0 5%",
   },
   divider: {
     margin: "0 5%",
@@ -99,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
   },
   deviceDetailValue: {
     marginBottom: "15%",
+  },
+  icon: {
+    padding: "0 1%",
   },
 }));
 const Dashboard = (props) => {
@@ -282,9 +286,10 @@ const Dashboard = (props) => {
                 </MenuItem>
               ))}
             </TextField>
-            {showSignalStrength()}
-            {showBatteryRemaining()}
-            {"Command in queue: " + currentDevice.device_command}
+            <div className={classes.icon}>{showSignalStrength()}</div>
+            <div className={classes.icon}>{showBatteryRemaining()}</div>
+            <strong>Command in queue: </strong>
+            {currentDevice.device_command}
             <Button
               variant="contained"
               color="primary"

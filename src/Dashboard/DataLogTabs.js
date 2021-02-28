@@ -7,7 +7,7 @@ import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    padding: "2% 5%",
+    padding: "2% 2% 5% 4%",
   },
   sensorLocationContainer: {
     display: "flex",
@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   logTitles: {
     display: "flex",
+  },
+  dropDown: {
+    padding: "1em 0",
   },
 }));
 
@@ -147,12 +150,13 @@ export default (props) => {
       >
         <div className={classes.logTitles}>
           <Typography align="left" className={classes.title} variant="h7">
-            Select Date:&nbsp;
+            <strong>Select Date:&nbsp;</strong>
           </Typography>
           <TextField
             select
             label=""
             value={selectedDate}
+            className={classes.dropDown}
             onChange={handleSelectedDateChange}
           >
             {closest5Days.map((option) => (
@@ -162,12 +166,13 @@ export default (props) => {
             ))}
           </TextField>
           <Typography align="left" className={classes.title} variant="h7">
-            Log Type:&nbsp;
+            <strong>Log Type:&nbsp;</strong>
           </Typography>
           <TextField
             select
             label=""
             value={currentLogType}
+            className={classes.dropDown}
             onChange={handleCurrentLogTypeChange}
           >
             {logTypeList.map((option) => (
@@ -183,10 +188,16 @@ export default (props) => {
               Log is empty
             </Typography>
           ) : (
-            <Typography align="left" className={classes.title} variant="h7">
-              {"Log Name: " + commandLog[selectedDate]["log_name"]}
-              {"Log: " + commandLog[selectedDate]["log"]}
-            </Typography>
+            <div>
+              <Typography align="left" className={classes.title} variant="h7">
+                <strong>Log Name: </strong>
+                {commandLog[selectedDate]["log_name"]}
+              </Typography>
+              <Typography align="left" className={classes.title} variant="h7">
+                <strong>Log Name: </strong>
+                {commandLog[selectedDate]["log"]}
+              </Typography>
+            </div>
           )}
         </div>
       </TabPanel>
