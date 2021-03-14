@@ -296,7 +296,7 @@ const Dashboard = (props) => {
               onClick={handleAddNewDevice}
               className={classes.newDeviceBtnAtEnd}
             >
-              New Device
+              Add Device
             </Button>
           </div>
           <div className={classes.thingInfo}>
