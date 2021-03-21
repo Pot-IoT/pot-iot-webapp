@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import Navbar from "./Navbar";
 import Overview from "./Overview";
 import NewDeviceModal from "./NewDeviceModal";
 import DataLogTabs from "./DataLogTabs";
@@ -12,10 +11,6 @@ import {
   TextField,
   MenuItem,
   Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
   Button,
 } from "@material-ui/core";
 import {
@@ -37,13 +32,13 @@ import {
 } from "@material-ui/icons";
 import { Redirect } from "react-router-dom";
 import Loading from "../common/Loading";
+import EmptyDeviceList from "../common/EmptyDeviceList";
 import {
   getDeviceList,
   newDevice,
   toggleIsLoading,
   getCommandLog,
 } from "./store/actionCreators";
-// import { setUsername } from "../Login/store/actionCreators";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -107,7 +102,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Dashboard = (props) => {
   const {
-    // username,
     isLoading,
     deviceList,
     totalNumber,
@@ -118,16 +112,11 @@ const Dashboard = (props) => {
     getDeviceListDispatch,
     newDeviceDispatch,
     getCommandLogDispatch,
-    // setUsernameDispatch,
   } = props;
-  const username = localStorage.getItem("username");
   const classes = useStyles();
   const userToken = window.localStorage.getItem("user_token");
   const [currentDevice, setCurrentDevice] = useState({});
-  const [usernameModalOpen, setUsernameModalOpen] = useState(false);
   const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
-  const [newUsernameErr, setNewUsernameErr] = useState(false);
 
   useEffect(() => {
     getDeviceListDispatch(userToken);
@@ -140,41 +129,6 @@ const Dashboard = (props) => {
 
   const handleChange = (e) => {
     setCurrentDevice(e.target.value);
-  };
-  const handleUsernameChange = (e) => {
-    setNewUsername(e.target.value);
-    setNewUsernameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,29}$/.test(e.target.value));
-  };
-  const handleSubmitUsername = () => {
-    if (newUsername === username) {
-      alert("Please enter a different username.");
-      return;
-    }
-    fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
-      method: "POST",
-      body: JSON.stringify({
-        username: newUsername,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUsernameModalOpen(false);
-        if (data.success === true) {
-          // setUsernameDispatch(newUsername);
-          localStorage.setItem("username", newUsername);
-          alert("Username successfully changed!");
-        } else {
-          switch (data.result.message) {
-            case "TOKEN_AURHENTICATION_ERROR":
-              alert(
-                "Login session expired, please refresh page to login again."
-              );
-              break;
-            default:
-              console.log("data", data);
-          }
-        }
-      });
   };
   const handleAddNewDevice = () => {
     setNewDeviceModalOpen(true);
@@ -228,40 +182,8 @@ const Dashboard = (props) => {
 
   return localStorage.getItem("user_token") ? (
     <div>
-      <Navbar
-        setChangeUsernameModalOpen={setUsernameModalOpen}
-        username={username}
-      />
-      {totalNumber == 0 ? (
-        <div>
-          <picture>
-            <source
-              media="(min-width:768px)"
-              srcSet="//via.placeholder.com/600x400"
-            />
-            <img
-              className={classes.emptylistPic}
-              src="//via.placeholder.com/300x400"
-              alt=""
-            />
-          </picture>
-          <Typography align="center" variant="h2">
-            You don't have any device yet.
-          </Typography>
-          <div className={classes.buttonGroup}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleAddNewDevice}
-              className={classes.newDeviceBtn}
-            >
-              New Device
-            </Button>
-            <Button variant="outlined" color="primary">
-              How Dashboard works?
-            </Button>
-          </div>
-        </div>
+      {totalNumber === 0 ? (
+        <EmptyDeviceList handleAddNewDevice={handleAddNewDevice} />
       ) : (
         <div className={classes.dashboardContainer}>
           <Overview
@@ -412,37 +334,6 @@ const Dashboard = (props) => {
           />
         </div>
       )}
-      <Dialog
-        open={usernameModalOpen}
-        onClose={() => setUsernameModalOpen(false)}
-        height={250}
-        width={700}
-      >
-        <DialogTitle>Please type your new username here:</DialogTitle>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          label="Username"
-          name="username"
-          className={classes.modalInput}
-          autoFocus
-          onChange={handleUsernameChange}
-          error={newUsernameErr}
-          FormHelperTextProps={{
-            className: newUsernameErr ? classes.errMsg : classes.hideErrMsg,
-          }}
-          helperText="Username has to be a combination of letters and numbers with length between 3 and 30, and it has to be different from your current username."
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.modalButton}
-          onClick={handleSubmitUsername}
-          disabled={newUsername === "" || newUsernameErr}
-        >
-          OK
-        </Button>
-      </Dialog>
       <NewDeviceModal
         newDeviceModalOpen={newDeviceModalOpen}
         setNewDeviceModalOpen={setNewDeviceModalOpen}
@@ -461,7 +352,6 @@ const mapStateToProps = (state) => {
     if (element.device_status >= 1) totalOnline += 1;
   });
   return {
-    // username: state.login.username,
     isLoading: state.dashboard.isLoading,
     deviceList,
     totalOnline,
@@ -475,6 +365,5 @@ const mapDispatchToProps = {
   getDeviceListDispatch: getDeviceList,
   newDeviceDispatch: newDevice,
   getCommandLogDispatch: getCommandLog,
-  // setUsernameDispatch: setUsername,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

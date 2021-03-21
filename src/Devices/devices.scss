@@ -1,23 +1,37 @@
 .device-board {
   max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1%;
-  background-color: #d5d5d5;
+  margin: 20px auto;
+  padding: 1%;
+  background-color: #f5f3f3;
   border-radius: 10px;
   &__header {
     display: flex;
     margin-bottom: 10px;
+    border-bottom: 1px solid #9c9c9c;
     &__title {
       font-weight: 700;
       font-size: 20px;
       font-family: "Times New Roman", Times, serif;
       margin-right: auto;
     }
+    &__add-btn {
+      position: relative;
+      bottom: 10px;
+    }
   }
   &__table {
     width: 100%;
+    border-collapse: collapse;
     &__header {
-      color: grey;
+      color: #b9b7b7;
+    }
+    &__row {
+      border: 1px solid #9c9c9c;
+      border-radius: 8px;
+      background-color: #fff;
+      td {
+        padding: 15px;
+      }
     }
   }
 }

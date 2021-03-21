@@ -15,12 +15,15 @@ function App() {
     <Provider store={store} className="App">
       <Router>
         <Switch>
-          <Route path="/dashboard">
+          <Route path={["/dashboard", "/devices"]}>
+            <HomePage />
+          </Route>
+          {/* <Route path="/dashboard">
             <Dashboard />
           </Route>
           <Route path="/devices">
             <Devices />
-          </Route>
+          </Route> */}
           <Route path="/login">
             <Login />
           </Route>
@@ -29,9 +32,6 @@ function App() {
           </Route>
           <Route path="/user-services">
             <UserServices />
-          </Route>
-          <Route path="/">
-            <HomePage />
           </Route>
         </Switch>
       </Router>

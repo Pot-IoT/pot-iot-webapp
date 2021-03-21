@@ -8,6 +8,7 @@ import {
   toggleIsLoading,
 } from "../Dashboard/store/actionCreators";
 import "./devices.scss";
+import EmptyDeviceList from "../common/EmptyDeviceList";
 
 const Devices = (props) => {
   const {
@@ -31,38 +32,44 @@ const Devices = (props) => {
     newDeviceDispatch(deviceDetails, userToken);
   };
   return (
-    <div className="device-board">
-      <div className="device-board__header">
-        <div className="device-board__header__title">Devices</div>
-        <Button
-          variant="contained"
-          color="primary"
-          className="device-board__header__add-btn"
-          onClick={handleAddNewDevice}
-        >
-          Add Device
-        </Button>
-      </div>
-      <table className="device-board__table">
-        <tbody>
-          <tr className="device-board__table__header">
-            <td>Status</td>
-            <td>Signal</td>
-            <td>Battery</td>
-            <td>Device Name</td>
-            <td>Transmission Interval</td>
-          </tr>
-          {deviceList.map((device) => (
-            <tr className="device-board__table__body">
-              <td>{device.device_status}</td>
-              <td>{device.signal_strength}</td>
-              <td>{device.battery}</td>
-              <td>{device.name}</td>
-              <td>{device.communication_interval}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      {deviceList.length === 0 ? (
+        <EmptyDeviceList handleAddNewDevice={handleAddNewDevice} />
+      ) : (
+        <div className="device-board">
+          <div className="device-board__header">
+            <div className="device-board__header__title">Devices</div>
+            <Button
+              variant="contained"
+              color="primary"
+              className="device-board__header__add-btn"
+              onClick={handleAddNewDevice}
+            >
+              Add Device
+            </Button>
+          </div>
+          <table className="device-board__table">
+            <tbody>
+              <tr className="device-board__table__header">
+                <td>Status</td>
+                <td>Signal</td>
+                <td>Battery</td>
+                <td>Device Name</td>
+                <td>Transmission Interval</td>
+              </tr>
+              {deviceList.map((device) => (
+                <tr className="device-board__table__row">
+                  <td>{device.device_status}</td>
+                  <td>{device.signal_strength}</td>
+                  <td>{device.battery}</td>
+                  <td>{device.name}</td>
+                  <td>{device.communication_interval}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       <NewDeviceModal
         newDeviceModalOpen={newDeviceModalOpen}
         setNewDeviceModalOpen={setNewDeviceModalOpen}

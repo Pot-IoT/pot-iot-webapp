@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -81,11 +82,27 @@ const useStyles = makeStyles((theme) => ({
   editIcon: {
     marginLeft: "auto",
   },
+  tabLink: {
+    width: "100px",
+    fontSize: "20px",
+    color: "#fff",
+    textDecoration: "none",
+    padding: "20px 40px",
+    display: "inline-block",
+    "&:hover": {
+      fontWeight: "bold",
+    },
+    "&$selected": {
+      fontWeight: "bold",
+    },
+  },
+  selected: {},
 }));
 
 export default function Navbar(props) {
   const { setChangeUsernameModalOpen, username } = props;
   const classes = useStyles();
+  const urlPath = useHistory().location.pathname;
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -138,7 +155,28 @@ export default function Navbar(props) {
           <Typography className={classes.title} variant="h5">
             Pot-IoT
           </Typography>
-          <div className={classes.grow} />
+          <div className={classes.grow}>
+            <a
+              href="/dashboard"
+              className={
+                classes.tabLink +
+                " " +
+                (urlPath === "/dashboard" && classes.selected)
+              }
+            >
+              Dashboard
+            </a>
+            <a
+              href="/devices"
+              className={
+                classes.tabLink +
+                " " +
+                (urlPath === "/devices" && classes.selected)
+              }
+            >
+              Devices
+            </a>
+          </div>
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 0 new notifications" color="inherit">
               <Badge badgeContent={0} color="secondary">
