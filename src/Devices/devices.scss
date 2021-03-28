@@ -1,6 +1,6 @@
 .device-board {
   max-width: 900px;
-  margin: 20px auto;
+  margin: 100px auto;
   padding: 1%;
   background-color: #f5f3f3;
   border-radius: 10px;
@@ -11,7 +11,6 @@
     &__title {
       font-weight: 700;
       font-size: 20px;
-      font-family: "Times New Roman", Times, serif;
       margin-right: auto;
     }
     &__add-btn {
@@ -29,9 +28,45 @@
       border: 1px solid #9c9c9c;
       border-radius: 8px;
       background-color: #fff;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      &:hover {
+        background-color: #f5f3f3;
+        transition: background-color 0.3s;
+      }
       td {
         padding: 15px;
       }
+    }
+  }
+}
+
+.device-manager {
+  &__title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px;
+  }
+  &__textfield {
+    display: flex;
+    width: 400px;
+    margin: 15px auto !important;
+    &__label {
+      font-weight: bold;
+    }
+    &__value {
+      margin-left: auto;
+    }
+    &__box {
+      width: 100%;
+    }
+  }
+  &__buttons {
+    display: flex;
+    button {
+      margin: 5%;
+      width: 50%;
     }
   }
 }

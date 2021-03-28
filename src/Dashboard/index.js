@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import Overview from "./Overview";
-import NewDeviceModal from "./NewDeviceModal";
+import NewDeviceModal from "../common/NewDeviceModal";
 import DataLogTabs from "./DataLogTabs";
 import { makeStyles } from "@material-ui/core/styles";
 import {

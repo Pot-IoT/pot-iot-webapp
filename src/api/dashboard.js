@@ -3,6 +3,7 @@ export const getDeviceListRequest = (userToken) => {
     method: "GET",
   });
 };
+
 export const addNewDeviceRequest = (deviceDetails, userToken) => {
   return fetch("//115.29.191.198:8080/addDevice?token=" + userToken, {
     method: "POST",
