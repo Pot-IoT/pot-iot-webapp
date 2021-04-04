@@ -13,23 +13,6 @@ import {
   Paper,
   Button,
 } from "@material-ui/core";
-import {
-  SignalCellularOff,
-  SignalCellular1Bar,
-  SignalCellular2Bar,
-  SignalCellular3Bar,
-  SignalCellular4Bar,
-  BatteryUnknown,
-  BatteryFull,
-  Battery90,
-  Battery80,
-  Battery60,
-  Battery50,
-  Battery30,
-  Battery20,
-  BatteryAlert,
-  Error,
-} from "@material-ui/icons";
 import { Redirect } from "react-router-dom";
 import Loading from "../common/Loading";
 import EmptyDeviceList from "../common/EmptyDeviceList";
@@ -39,6 +22,7 @@ import {
   toggleIsLoading,
   getCommandLog,
 } from "./store/actionCreators";
+import { showSignalStrength, showBatteryRemaining } from "../common/helpers";
 
 const useStyles = makeStyles((theme) => ({
   dashboardContainer: {
@@ -140,45 +124,6 @@ const Dashboard = (props) => {
   const getLogs = (logTimeArr) => {
     getCommandLogDispatch(userToken, currentDevice.imei, logTimeArr);
   };
-  const showSignalStrength = () => {
-    switch (currentDevice.signal_strength) {
-      case 4:
-        return <SignalCellular4Bar />;
-      case 3:
-        return <SignalCellular3Bar />;
-      case 2:
-        return <SignalCellular2Bar />;
-      case 1:
-        return <SignalCellular1Bar />;
-      default:
-        return <SignalCellularOff />;
-    }
-  };
-  const showBatteryRemaining = () => {
-    switch (Math.floor(currentDevice.battery / 10)) {
-      case 10:
-      case 9:
-        return <BatteryFull />;
-      case 8:
-        return <Battery90 />;
-      case 7:
-        return <Battery80 />;
-      case 6:
-      case 5:
-        return <Battery60 />;
-      case 4:
-        return <Battery50 />;
-      case 3:
-      case 2:
-        return <Battery30 />;
-      case 1:
-        return <Battery20 />;
-      case 0:
-        return <BatteryAlert />;
-      default:
-        return <BatteryUnknown />;
-    }
-  };
 
   return localStorage.getItem("user_token") ? (
     <div>
@@ -208,8 +153,12 @@ const Dashboard = (props) => {
                 </MenuItem>
               ))}
             </TextField>
-            <div className={classes.icon}>{showSignalStrength()}</div>
-            <div className={classes.icon}>{showBatteryRemaining()}</div>
+            <div className={classes.icon}>
+              {showSignalStrength(currentDevice.signal_strength)}
+            </div>
+            <div className={classes.icon}>
+              {showBatteryRemaining(currentDevice.battery)}
+            </div>
             <strong>Command in queue: </strong>
             {currentDevice.device_command}
             <Button

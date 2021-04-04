@@ -1,17 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Divider,
-  Typography,
-  TextField,
-  MenuItem,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Button,
-} from "@material-ui/core";
+import { TextField, Dialog, DialogTitle, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "../common/Navbar";
 import Dashboard from "../Dashboard";

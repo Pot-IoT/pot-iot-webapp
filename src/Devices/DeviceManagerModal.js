@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Dialog, DialogTitle, Button } from "@material-ui/core";
+import { TextField, Dialog,, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./devices.scss";
 
@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default (props) => {
   const classes = useStyles();
-  const { open, onClose, device, removeDeviceDispatch } = props;
-  const userToken = window.localStorage.getItem("user_token");
+  const { open, onClose, device, handleOpenDeleteDeviceModal } = props;
   const [deviceName, setDeviceName] = useState(device.name || "");
   const [description, setDescription] = useState(device.description || "");
   const [deviceNameErr, setDeviceNameErr] = useState(false);
   const [descCharRemain, setDescCharRemain] = useState(
     100 - device.description.length
   );
+  const [newCommand, setNewCommand] = useState("");
   const handleDevicenameChange = (e) => {
     setDeviceName(e.target.value);
     setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{1,29}$/.test(e.target.value));
@@ -41,14 +41,8 @@ export default (props) => {
     setDescription(e.target.value);
     setDescCharRemain(100 - e.target.value.length);
   };
-  const handleDeleteDevice = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this device from your list?"
-      )
-    ) {
-      removeDeviceDispatch(device.imei, device.pin_code, userToken);
-    }
+  const handleNewCommandChange = (e) => {
+    setNewCommand(e.target.value);
   };
 
   return (
@@ -107,7 +101,7 @@ export default (props) => {
       <div className="device-manager__textfield">
         <div className="device-manager__textfield__label">Status</div>
         <div className="device-manager__textfield__value">
-          {device.device_status}
+          {device.device_status > 0 ? "ON" : "OFF"}
         </div>
       </div>
       <div className="device-manager__textfield">
@@ -115,15 +109,21 @@ export default (props) => {
           Transmission Interval
         </div>
         <div className="device-manager__textfield__value">
-          {device.communication_interval}
+          {device.communication_mode > 0 && device.communication_interval > 0
+            ? `Mode ${device.communication_mode} - Every ${device.communication_interval}mins`
+            : "--"}
         </div>
       </div>
-      {/* <div className="device-manager__textfield">
-        <div className="device-manager__textfield__label">
-          Custom Instruction
-        </div>
-        <div className="device-manager__textfield__value"></div>
-      </div> */}
+      <div className="device-manager__textfield">
+        <TextField
+          className="device-manager__textfield__box"
+          variant="outlined"
+          margin="normal"
+          label="Custom Instruction"
+          value={newCommand}
+          onChange={handleNewCommandChange}
+        />
+      </div>
       <div className="device-manager__buttons">
         <Button
           variant="contained"
@@ -132,7 +132,11 @@ export default (props) => {
         >
           Cancel
         </Button>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={deviceName === "" || deviceNameErr}
+        >
           OK
         </Button>
       </div>
@@ -140,7 +144,7 @@ export default (props) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleDeleteDevice}
+          onClick={handleOpenDeleteDeviceModal}
         >
           Delete Device
         </Button>

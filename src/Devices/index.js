@@ -12,7 +12,9 @@ import EmptyDeviceList from "../common/EmptyDeviceList";
 import NewDeviceModal from "../common/NewDeviceModal";
 import Loading from "../common/Loading";
 import DeviceManangerModal from "./DeviceManagerModal";
+import DeleteDeviceModal from "./DeleteDeviceModal";
 import "./devices.scss";
+import { showSignalStrength, showBatteryRemaining } from "../common/helpers";
 
 const Devices = (props) => {
   const {
@@ -27,6 +29,7 @@ const Devices = (props) => {
 
   const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
   const [deviceManagerModalOpen, setDeviceManagerModalOpen] = useState(false);
+  const [deleteDeviceModalOpen, setDeleteDeviceModalOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState({});
 
   useEffect(() => {
@@ -44,6 +47,17 @@ const Devices = (props) => {
     setSelectedDevice(deviceDetails);
     setDeviceManagerModalOpen(true);
   };
+  const handleDeleteDevice = () => {
+    removeDeviceDispatch(
+      selectedDevice.imei,
+      selectedDevice.pin_code,
+      userToken
+    );
+  };
+  const handleOpenDeleteDeviceModal = () => {
+    setDeleteDeviceModalOpen(true);
+  };
+
   return localStorage.getItem("user_token") ? (
     <div>
       {deviceList.length === 0 ? (
@@ -75,11 +89,16 @@ const Devices = (props) => {
                   className="device-board__table__row"
                   onClick={() => handleClickDevice(device)}
                 >
-                  <td>{device.device_status}</td>
-                  <td>{device.signal_strength}</td>
-                  <td>{device.battery}</td>
+                  <td>{device.device_status > 0 ? "ON" : "OFF"}</td>
+                  <td>{showSignalStrength(device.signal_strength)}</td>
+                  <td>{showBatteryRemaining(device.battery)}</td>
                   <td>{device.name}</td>
-                  <td>{device.communication_interval}</td>
+                  <td>
+                    {device.communication_mode > 0 &&
+                    device.communication_interval > 0
+                      ? `Mode ${device.communication_mode} - Every ${device.communication_interval}mins`
+                      : "--"}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -96,7 +115,15 @@ const Devices = (props) => {
           open={deviceManagerModalOpen}
           onClose={setDeviceManagerModalOpen}
           device={selectedDevice}
-          removeDeviceDispatch={removeDeviceDispatch}
+          handleOpenDeleteDeviceModal={handleOpenDeleteDeviceModal}
+        />
+      )}
+      {deleteDeviceModalOpen && (
+        <DeleteDeviceModal
+          open={deleteDeviceModalOpen}
+          onClose={setDeleteDeviceModalOpen}
+          device={selectedDevice}
+          handleDeleteDevice={handleDeleteDevice}
         />
       )}
       {isLoading && <Loading />}
