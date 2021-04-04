@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Dialog,, Button } from "@material-ui/core";
+import { TextField, Dialog, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./devices.scss";
 
