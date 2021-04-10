@@ -25,7 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default (props) => {
   const classes = useStyles();
-  const { open, onClose, device, handleOpenDeleteDeviceModal } = props;
+  const {
+    open,
+    onClose,
+    device,
+    handleOpenDeleteDeviceModal,
+    changeDeviceNameDispatch,
+    changeDeviceDescriptionDispatch,
+    addNewDeviceDispatch,
+  } = props;
+  const userToken = window.localStorage.getItem("user_token");
+
   const [deviceName, setDeviceName] = useState(device.name || "");
   const [description, setDescription] = useState(device.description || "");
   const [deviceNameErr, setDeviceNameErr] = useState(false);
@@ -43,6 +53,29 @@ export default (props) => {
   };
   const handleNewCommandChange = (e) => {
     setNewCommand(e.target.value);
+  };
+  const handleChangeDeviceDetail = () => {
+    if (device.name && deviceName !== device.name) {
+      changeDeviceNameDispatch({
+        imei: device.imei,
+        name: deviceName,
+        userToken,
+      });
+    }
+    if (device.description && description !== device.description) {
+      changeDeviceDescriptionDispatch({
+        imei: device.imei,
+        description: description,
+        userToken,
+      });
+    }
+    if (newCommand !== "") {
+      addNewDeviceDispatch({
+        imei: device.imei,
+        command: newCommand,
+        userToken,
+      });
+    }
   };
 
   return (
@@ -135,7 +168,16 @@ export default (props) => {
         <Button
           variant="contained"
           color="primary"
-          disabled={deviceName === "" || deviceNameErr}
+          disabled={
+            deviceName === "" ||
+            deviceNameErr ||
+            !(
+              (device.name && deviceName !== device.name) ||
+              (device.description && description !== device.description) ||
+              newCommand !== ""
+            )
+          }
+          onClick={handleChangeDeviceDetail}
         >
           OK
         </Button>

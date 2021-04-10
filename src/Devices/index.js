@@ -7,7 +7,12 @@ import {
   newDevice,
   toggleIsLoading,
 } from "../Dashboard/store/actionCreators";
-import { removeDevice } from "./store/actionCreators";
+import {
+  removeDevice,
+  changeDeviceName,
+  changeDeviceDescription,
+  addNewDevice,
+} from "./store/actionCreators";
 import EmptyDeviceList from "../common/EmptyDeviceList";
 import NewDeviceModal from "../common/NewDeviceModal";
 import Loading from "../common/Loading";
@@ -24,6 +29,9 @@ const Devices = (props) => {
     toggleIsLoadingDispatch,
     newDeviceDispatch,
     removeDeviceDispatch,
+    changeDeviceNameDispatch,
+    changeDeviceDescriptionDispatch,
+    addNewDeviceDispatch,
   } = props;
   const userToken = window.localStorage.getItem("user_token");
 
@@ -116,6 +124,9 @@ const Devices = (props) => {
           onClose={setDeviceManagerModalOpen}
           device={selectedDevice}
           handleOpenDeleteDeviceModal={handleOpenDeleteDeviceModal}
+          changeDeviceNameDispatch={changeDeviceNameDispatch}
+          changeDeviceDescriptionDispatch={changeDeviceDescriptionDispatch}
+          addNewDeviceDispatch={addNewDeviceDispatch}
         />
       )}
       {deleteDeviceModalOpen && (
@@ -144,5 +155,8 @@ const mapDispatchToProps = {
   getDeviceListDispatch: getDeviceList,
   newDeviceDispatch: newDevice,
   removeDeviceDispatch: removeDevice,
+  changeDeviceNameDispatch: changeDeviceName,
+  changeDeviceDescriptionDispatch: changeDeviceDescription,
+  addNewDeviceDispatch: addNewDevice,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Devices);
