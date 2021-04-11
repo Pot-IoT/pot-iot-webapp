@@ -156,7 +156,7 @@ export default function Navbar(props) {
             Pot-IoT
           </Typography>
           <div className={classes.grow}>
-            <a
+            {/* <a
               href="/dashboard"
               className={
                 classes.tabLink +
@@ -175,7 +175,7 @@ export default function Navbar(props) {
               }
             >
               Devices
-            </a>
+            </a> */}
           </div>
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 0 new notifications" color="inherit">

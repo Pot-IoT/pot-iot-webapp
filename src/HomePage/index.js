@@ -74,7 +74,7 @@ export default (props) => {
         setChangeUsernameModalOpen={setUsernameModalOpen}
         username={username}
       />
-      {urlPath === "/dashboard" && <Dashboard />}
+      {/* {urlPath === "/dashboard" && <Dashboard />} */}
       {urlPath === "/devices" && <Devices />}
       <Dialog
         open={usernameModalOpen}

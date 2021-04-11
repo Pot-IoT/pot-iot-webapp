@@ -15,6 +15,8 @@ import {
   Battery20,
   BatteryAlert,
   Power,
+  CheckCircleRounded,
+  HighlightOffRounded,
 } from "@material-ui/icons";
 
 export const showSignalStrength = (signalStrength) => {
@@ -58,5 +60,13 @@ export const showBatteryRemaining = (battery) => {
       return <BatteryAlert />;
     default:
       return <BatteryUnknown />;
+  }
+};
+
+export const showDeviceStatus = (status) => {
+  if (status > 0) {
+    return <CheckCircleRounded style={{ color: "green" }} />;
+  } else {
+    return <HighlightOffRounded style={{ color: "red" }} />;
   }
 };

@@ -19,7 +19,11 @@ import Loading from "../common/Loading";
 import DeviceManangerModal from "./DeviceManagerModal";
 import DeleteDeviceModal from "./DeleteDeviceModal";
 import "./devices.scss";
-import { showSignalStrength, showBatteryRemaining } from "../common/helpers";
+import {
+  showDeviceStatus,
+  // showSignalStrength,
+  showBatteryRemaining,
+} from "../common/helpers";
 
 const Devices = (props) => {
   const {
@@ -73,7 +77,7 @@ const Devices = (props) => {
       ) : (
         <div className="device-board">
           <div className="device-board__header">
-            <div className="device-board__header__title">Devices</div>
+            <div className="device-board__header__title">Device List</div>
             <Button
               variant="contained"
               color="primary"
@@ -87,7 +91,7 @@ const Devices = (props) => {
             <tbody>
               <tr className="device-board__table__header">
                 <td>Status</td>
-                <td>Signal</td>
+                {/* <td>Signal</td> */}
                 <td>Battery</td>
                 <td>Device Name</td>
                 <td>Transmission Interval</td>
@@ -97,8 +101,8 @@ const Devices = (props) => {
                   className="device-board__table__row"
                   onClick={() => handleClickDevice(device)}
                 >
-                  <td>{device.device_status > 0 ? "ON" : "OFF"}</td>
-                  <td>{showSignalStrength(device.signal_strength)}</td>
+                  <td>{showDeviceStatus(device.device_status)}</td>
+                  {/* <td>{showSignalStrength(device.signal_strength)}</td> */}
                   <td>{showBatteryRemaining(device.battery)}</td>
                   <td>{device.name}</td>
                   <td>

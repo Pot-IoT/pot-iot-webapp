@@ -81,10 +81,10 @@ export default (props) => {
         required
         label="Product"
         autoFocus
-        value="Pot-IoT Tracker"
+        value="General"
         disabled
       />
-      <TextField
+      {/* <TextField
         className={classes.textField}
         variant="outlined"
         margin="normal"
@@ -111,7 +111,7 @@ export default (props) => {
           className: pincodeErr ? classes.errMsg : classes.hideErrMsg,
         }}
         helperText="Pin Code is a 8 digits combination of numbers and letters"
-      />
+      /> */}
       <TextField
         className={classes.textField}
         variant="outlined"

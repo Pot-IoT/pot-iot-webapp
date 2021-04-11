@@ -79,7 +79,7 @@ function Login(props) {
           localStorage.setItem("user_token", data.data.token);
           // setUsernameDispatch(data.data.username);
           localStorage.setItem("username", data.data.username);
-          history.push("/dashboard");
+          history.push("/devices");
         } else {
           switch (data.result.message) {
             case "EMAIL_INVALID_ERROR":

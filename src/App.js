@@ -13,7 +13,7 @@ function App() {
     <Provider store={store} className="App">
       <Router>
         <Switch>
-          <Route path={["/dashboard", "/devices"]}>
+          <Route path="/devices">
             <HomePage />
           </Route>
           <Route path="/login">
