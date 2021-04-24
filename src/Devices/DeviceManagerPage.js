@@ -22,7 +22,9 @@ import {
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 import "./devices.scss";
-import { useDemoData } from "@material-ui/x-grid-data-generator";
+// import { useDemoData } from "@material-ui/x-grid-data-generator";
+
+import { data } from "./tempDataSource";
 
 const useStyles = makeStyles((theme) => ({
   modalButton: {
@@ -109,12 +111,12 @@ const DeviceManagerPage = (props) => {
     setEditingProperty(property);
     setEditorOpen(true);
   };
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-    rowLength: 100,
-    maxColumns: 6,
-  });
-  console.log("edp", editingProperty, "nn", newDeviceName);
+  // const { data } = useDemoData({
+  //   dataSet: "Commodity",
+  //   rowLength: 100,
+  //   maxColumns: 6,
+  // });
+  // console.log("edp", JSON.stringify(data));
   const [page, setPage] = React.useState(0);
   const DeviceInfoEditor = () => (
     <Dialog
