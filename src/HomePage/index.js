@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { TextField, Dialog, DialogTitle, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import {
+  getDeviceList,
+  toggleIsLoading,
+} from "../Dashboard/store/actionCreators";
 import Navbar from "../common/Navbar";
-import Dashboard from "../Dashboard";
+import DeviceManagerPage from "../Devices/DeviceManagerPage";
 import Devices from "../Devices";
+import Loading from "../common/Loading";
 
 const useStyles = makeStyles((theme) => ({
   modalInput: {
@@ -22,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
 }));
-export default (props) => {
-  const urlPath = useHistory().location.pathname;
+const HomePage = (props) => {
+  const { getDeviceListDispatch } = props;
   const classes = useStyles();
+  const { isLoading } = useSelector((state) => state.dashboard);
 
   const [usernameModalOpen, setUsernameModalOpen] = useState(false);
   const [newUsername, setNewUsername] = useState("");
@@ -32,6 +39,10 @@ export default (props) => {
 
   const username = localStorage.getItem("username");
   const userToken = window.localStorage.getItem("user_token");
+
+  useEffect(() => {
+    getDeviceListDispatch(userToken);
+  }, []);
 
   const handleUsernameChange = (e) => {
     setNewUsername(e.target.value);
@@ -52,7 +63,6 @@ export default (props) => {
       .then((data) => {
         setUsernameModalOpen(false);
         if (data.success === true) {
-          // setUsernameDispatch(newUsername);
           localStorage.setItem("username", newUsername);
           alert("Username successfully changed!");
         } else {
@@ -69,13 +79,21 @@ export default (props) => {
       });
   };
   return (
-    <div>
+    <>
       <Navbar
         setChangeUsernameModalOpen={setUsernameModalOpen}
         username={username}
       />
-      {/* {urlPath === "/dashboard" && <Dashboard />} */}
-      {urlPath === "/devices" && <Devices />}
+      <Router>
+        <Switch>
+          <Route path="/devices" exact>
+            <Devices />
+          </Route>
+          <Route path="/devices/device-manager">
+            <DeviceManagerPage />
+          </Route>
+        </Switch>
+      </Router>
       <Dialog
         open={usernameModalOpen}
         onClose={() => setUsernameModalOpen(false)}
@@ -107,6 +125,12 @@ export default (props) => {
           OK
         </Button>
       </Dialog>
-    </div>
+      {isLoading && <Loading />}
+    </>
   );
 };
+const mapDispatchToProps = {
+  toggleIsLoadingDispatch: toggleIsLoading,
+  getDeviceListDispatch: getDeviceList,
+};
+export default connect(null, mapDispatchToProps)(HomePage);

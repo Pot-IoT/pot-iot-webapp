@@ -1,52 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { connect, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import {
-  getDeviceList,
-  newDevice,
-  toggleIsLoading,
-} from "../Dashboard/store/actionCreators";
-import {
-  removeDevice,
-  changeDeviceName,
-  changeDeviceDescription,
-  addNewDevice,
-} from "./store/actionCreators";
+import { newDevice, toggleIsLoading } from "../Dashboard/store/actionCreators";
+import { removeDevice, addNewDevice } from "./store/actionCreators";
 import EmptyDeviceList from "../common/EmptyDeviceList";
 import NewDeviceModal from "../common/NewDeviceModal";
-import Loading from "../common/Loading";
-import DeviceManangerModal from "./DeviceManagerModal";
 import DeleteDeviceModal from "./DeleteDeviceModal";
 import "./devices.scss";
-import {
-  showDeviceStatus,
-  // showSignalStrength,
-  showBatteryRemaining,
-} from "../common/helpers";
+import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 
 const Devices = (props) => {
   const {
-    isLoading,
-    deviceList,
-    getDeviceListDispatch,
     toggleIsLoadingDispatch,
     newDeviceDispatch,
     removeDeviceDispatch,
-    changeDeviceNameDispatch,
-    changeDeviceDescriptionDispatch,
-    addNewDeviceDispatch,
   } = props;
   const userToken = window.localStorage.getItem("user_token");
 
   const [newDeviceModalOpen, setNewDeviceModalOpen] = useState(false);
-  const [deviceManagerModalOpen, setDeviceManagerModalOpen] = useState(false);
   const [deleteDeviceModalOpen, setDeleteDeviceModalOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState({});
-
-  useEffect(() => {
-    getDeviceListDispatch(userToken);
-  }, []);
+  const history = useHistory();
+  const { deviceList } = useSelector((state) => state.dashboard);
 
   const handleAddNewDevice = () => {
     setNewDeviceModalOpen(true);
@@ -57,7 +33,7 @@ const Devices = (props) => {
   };
   const handleClickDevice = (deviceDetails) => {
     setSelectedDevice(deviceDetails);
-    setDeviceManagerModalOpen(true);
+    history.push("/devices/device-manager?id=" + deviceDetails.imei);
   };
   const handleDeleteDevice = () => {
     removeDeviceDispatch(
@@ -91,8 +67,7 @@ const Devices = (props) => {
             <tbody>
               <tr className="device-board__table__header">
                 <td>Status</td>
-                {/* <td>Signal</td> */}
-                <td>Battery</td>
+                <td>Power</td>
                 <td>Device Name</td>
                 <td>Transmission Interval</td>
               </tr>
@@ -102,7 +77,6 @@ const Devices = (props) => {
                   onClick={() => handleClickDevice(device)}
                 >
                   <td>{showDeviceStatus(device.device_status)}</td>
-                  {/* <td>{showSignalStrength(device.signal_strength)}</td> */}
                   <td>{showBatteryRemaining(device.battery)}</td>
                   <td>{device.name}</td>
                   <td>
@@ -122,17 +96,6 @@ const Devices = (props) => {
         setNewDeviceModalOpen={setNewDeviceModalOpen}
         addNewDevice={addNewDevice}
       />
-      {deviceManagerModalOpen && (
-        <DeviceManangerModal
-          open={deviceManagerModalOpen}
-          onClose={setDeviceManagerModalOpen}
-          device={selectedDevice}
-          handleOpenDeleteDeviceModal={handleOpenDeleteDeviceModal}
-          changeDeviceNameDispatch={changeDeviceNameDispatch}
-          changeDeviceDescriptionDispatch={changeDeviceDescriptionDispatch}
-          addNewDeviceDispatch={addNewDeviceDispatch}
-        />
-      )}
       {deleteDeviceModalOpen && (
         <DeleteDeviceModal
           open={deleteDeviceModalOpen}
@@ -141,26 +104,15 @@ const Devices = (props) => {
           handleDeleteDevice={handleDeleteDevice}
         />
       )}
-      {isLoading && <Loading />}
     </div>
   ) : (
     <Redirect to="/login" />
   );
 };
-const mapStateToProps = (state) => {
-  let deviceList = state.dashboard.deviceList;
-  return {
-    isLoading: state.dashboard.isLoading,
-    deviceList,
-  };
-};
 const mapDispatchToProps = {
   toggleIsLoadingDispatch: toggleIsLoading,
-  getDeviceListDispatch: getDeviceList,
   newDeviceDispatch: newDevice,
   removeDeviceDispatch: removeDevice,
-  changeDeviceNameDispatch: changeDeviceName,
-  changeDeviceDescriptionDispatch: changeDeviceDescription,
   addNewDeviceDispatch: addNewDevice,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Devices);
+export default connect(null, mapDispatchToProps)(Devices);
