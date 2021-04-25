@@ -9,6 +9,7 @@ import NewDeviceModal from "../common/NewDeviceModal";
 import DeleteDeviceModal from "./DeleteDeviceModal";
 import "./devices.scss";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
+import AddDeviceSuccessModal from "./AddDeviceSuccessModal";
 
 const Devices = (props) => {
   const {
@@ -104,6 +105,7 @@ const Devices = (props) => {
           handleDeleteDevice={handleDeleteDevice}
         />
       )}
+      <AddDeviceSuccessModal />
     </div>
   ) : (
     <Redirect to="/login" />

@@ -17,6 +17,14 @@ export const changeCommandLog = (data) => ({
   type: actionTypes.CHANGE_COMMAND_LOG,
   data,
 });
+export const toggleAddDeviceSuccessModal = (data) => ({
+  type: actionTypes.TOGGLE_ADD_DEVICE_SUCCESS_MODAL,
+  data,
+});
+export const addNewDeviceDetail = (data) => ({
+  type: actionTypes.ADD_NEW_DEVICE_DETAIL,
+  data,
+});
 export const getDeviceList = (userToken) => {
   return (dispatch) => {
     getDeviceListRequest(userToken)
@@ -46,7 +54,9 @@ export const newDevice = (deviceDetails, userToken) => {
       .then((data) => {
         dispatch(toggleIsLoading(false));
         if (data.success === true) {
-          alert("Device is successfully added!");
+          dispatch(addNewDeviceDetail(data.data));
+          // dispatch(toggleAddDeviceSuccessModal(true));
+          // dispatch(getDeviceList(userToken));
         } else {
           switch (data.result.message) {
             case "TOKEN_AURHENTICATION_ERROR":

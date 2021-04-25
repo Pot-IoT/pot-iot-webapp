@@ -4,16 +4,14 @@ const defaultState = {
   isLoading: true,
   deviceList: [],
   commandLog: {},
+  addDeviceSuccess: false,
+  newDeviceDetail: {},
 };
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case actionTypes.TOGGLE_IS_LOADING:
-      let { isLoading, ...restState1 } = state;
-      return {
-        isLoading: action.data,
-        ...restState1,
-      };
+      return Object.assign(state, { isLoading: action.data });
     case actionTypes.CHANGE_DEVICELIST:
       let { deviceList, ...restState2 } = state;
       return {
@@ -33,6 +31,10 @@ export default (state = defaultState, action) => {
         commandLog: newCommandLog,
         ...restState3,
       };
+    case actionTypes.TOGGLE_ADD_DEVICE_SUCCESS_MODAL:
+      return Object.assign(state, { addDeviceSuccess: action.data });
+    case actionTypes.ADD_NEW_DEVICE_DETAIL:
+      return Object.assign(state, { newDeviceDetail: action.data });
     default:
       return state;
   }

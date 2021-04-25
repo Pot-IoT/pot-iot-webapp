@@ -109,3 +109,23 @@
   //   }
   // }
 }
+
+.addDeviceSuccessModal {
+  &__title {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 40px auto 40px;
+    color: #4bb543;
+  }
+  &__desc {
+    font-size: 20px;
+    margin: 0 20px 40px;
+  }
+  &__textfield {
+    width: 80%;
+    margin: 0 auto 20px !important;
+  }
+  &__buttons {
+    margin: 0 auto 30px;
+  }
+}

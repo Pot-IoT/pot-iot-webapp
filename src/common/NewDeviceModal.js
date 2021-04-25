@@ -29,24 +29,24 @@ const useStyles = makeStyles((theme) => ({
 export default (props) => {
   const classes = useStyles();
   const { newDeviceModalOpen, addNewDevice, setNewDeviceModalOpen } = props;
-  const [IMEI, setIMEI] = useState("");
-  const [pincode, setPincode] = useState("");
+  // const [IMEI, setIMEI] = useState("");
+  // const [pincode, setPincode] = useState("");
   const [deviceName, setDeviceName] = useState("");
   const [description, setDescription] = useState("");
 
-  const [IMEIErr, setIMEIErr] = useState(false);
-  const [pincodeErr, setPincodeErr] = useState(false);
+  // const [IMEIErr, setIMEIErr] = useState(false);
+  // const [pincodeErr, setPincodeErr] = useState(false);
   const [deviceNameErr, setDeviceNameErr] = useState(false);
   const [descCharRemain, setDescCharRemain] = useState(100);
 
-  const handleIMEIChange = (e) => {
-    setIMEI(e.target.value);
-    setIMEIErr(!/^[0-9][0-9]{14}$/.test(e.target.value));
-  };
-  const handlePincodeChange = (e) => {
-    setPincode(e.target.value);
-    setPincodeErr(!/^[A-Z0-9][A-Z0-9]{7}$/.test(e.target.value));
-  };
+  // const handleIMEIChange = (e) => {
+  //   setIMEI(e.target.value);
+  //   setIMEIErr(!/^[0-9][0-9]{14}$/.test(e.target.value));
+  // };
+  // const handlePincodeChange = (e) => {
+  //   setPincode(e.target.value);
+  //   setPincodeErr(!/^[A-Z0-9][A-Z0-9]{7}$/.test(e.target.value));
+  // };
   const handleDevicenameChange = (e) => {
     setDeviceName(e.target.value);
     setDeviceNameErr(!/^[a-zA-Z0-9][a-zA-Z0-9]{1,29}$/.test(e.target.value));
@@ -59,8 +59,8 @@ export default (props) => {
   const handleSubmitNewDevice = () => {
     addNewDevice({
       product_id: "PoT-IoT Tracker",
-      imei: IMEI,
-      pin_code: pincode,
+      // imei: IMEI,
+      // pin_code: pincode,
       name: deviceName,
       description: description,
     });
@@ -148,11 +148,11 @@ export default (props) => {
           className={classes.modalButton}
           onClick={handleSubmitNewDevice}
           disabled={
-            IMEI === "" ||
-            pincode === "" ||
+            // IMEI === "" ||
+            // pincode === "" ||
             deviceName === "" ||
-            IMEIErr ||
-            pincodeErr ||
+            // IMEIErr ||
+            // pincodeErr ||
             deviceNameErr
           }
         >
