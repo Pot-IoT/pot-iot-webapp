@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { TextField, Dialog, Button } from "@material-ui/core";
 import { CheckCircle } from "@material-ui/icons";
+import XLSX from "xlsx";
+import { fileUploadURL } from "../common/staticData";
 
 export default () => {
-  const newDeviceDetail = useSelector(
+  const { name, imei, private_key } = useSelector(
     (state) => state.dashboard.newDeviceDetail
   );
+  const handleDownload = () => {
+    const newSheet = XLSX.utils.aoa_to_sheet([
+      ["Device Name", "Device ID", "Private Key", "Post Address"],
+      [name, imei, private_key, fileUploadURL],
+    ]);
+    const newBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(newBook, newSheet, "credentials");
+    XLSX.writeFile(newBook, name + "-credientials.xlsx");
+  };
   return (
-    <Dialog
-      className="addDeviceSuccessModal"
-      open={Object.keys(newDeviceDetail).length > 0}
-    >
+    <Dialog className="addDeviceSuccessModal" open={name}>
       <CheckCircle className="addDeviceSuccessModal__title" />
       <div className="addDeviceSuccessModal__desc">
         Device is successfully added. Please save your{" "}
@@ -28,7 +36,7 @@ export default () => {
         InputProps={{
           readOnly: true,
         }}
-        value={newDeviceDetail.imei}
+        value={imei}
       />
       <TextField
         className="addDeviceSuccessModal__textfield"
@@ -40,7 +48,7 @@ export default () => {
         InputProps={{
           readOnly: true,
         }}
-        value={newDeviceDetail.private_key}
+        value={private_key}
       />
       <TextField
         className="addDeviceSuccessModal__textfield"
@@ -50,12 +58,14 @@ export default () => {
         InputProps={{
           readOnly: true,
         }}
+        value={fileUploadURL}
       />
       <div className="addDeviceSuccessModal__buttons">
         <Button
           variant="contained"
           color="primary"
           className="addDeviceSuccessModal__buttons__cta"
+          onClick={handleDownload}
         >
           Save to local
         </Button>
