@@ -72,8 +72,9 @@ const Devices = (props) => {
                 <td>Device Name</td>
                 <td>Transmission Interval</td>
               </tr>
-              {deviceList.map((device) => (
+              {deviceList.map((device, idx) => (
                 <tr
+                  key={idx}
                   className="device-board__table__row"
                   onClick={() => handleClickDevice(device)}
                 >

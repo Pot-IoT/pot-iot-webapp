@@ -21,7 +21,7 @@ export default () => {
     );
   };
   return (
-    <Dialog className="addDeviceSuccessModal" open={name}>
+    <Dialog className="addDeviceSuccessModal" open={name !== undefined}>
       <CheckCircle className="addDeviceSuccessModal__title" />
       <div className="addDeviceSuccessModal__desc">
         Device is successfully added. Please save your{" "}
