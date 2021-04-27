@@ -28,3 +28,13 @@ export const newDeviceCommand = ({ imei, command, userToken }) => {
     body: JSON.stringify({ imei, command }),
   });
 };
+
+export const getFileList = () =>
+  fetch("//w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/fileList", {
+    method: "GET",
+  });
+export const getFileDownloadLinkRequest = (imei) =>
+  fetch(
+    "//w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/download/7dee2cef-214a-4e7a-859f-9500b1fc068f",
+    { method: "GET" }
+  );

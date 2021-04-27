@@ -1,11 +1,17 @@
-// import * as actionTypes from "./constants";
+import * as actionTypes from "./constants";
 import {
   removeDeviceRequest,
   modifyDeviceName,
   modifyDeviceDescription,
   newDeviceCommand,
+  getFileDownloadLinkRequest,
 } from "../../api/devices";
 import { toggleIsLoading } from "../../Dashboard/store/actionCreators";
+
+export const updateFileDownloadLinks = (data) => ({
+  type: actionTypes.UPDATE_FILE_DOWNLOAD_LINKS,
+  data,
+});
 
 export const removeDevice = (imei, pin_code, userToken) => {
   return (dispatch) => {
@@ -114,6 +120,16 @@ export const addNewDevice = (args) => {
               console.log(data.result.message);
           }
         }
+      });
+  };
+};
+
+export const getFileDownloadLink = (imei) => {
+  return (dispatch) => {
+    getFileDownloadLinkRequest(imei)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(updateFileDownloadLinks(data.url));
       });
   };
 };

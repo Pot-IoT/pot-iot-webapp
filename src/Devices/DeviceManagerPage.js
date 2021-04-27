@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import {
   TextField,
@@ -19,6 +19,7 @@ import {
   changeDeviceName,
   changeDeviceDescription,
   addNewDevice,
+  getFileDownloadLink,
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 import "./devices.scss";
@@ -38,12 +39,6 @@ const useStyles = makeStyles((theme) => ({
   errMsg: {
     display: "block",
   },
-  modalTitle: {
-    textAlign: "center",
-  },
-  buttonGroup: {
-    display: "flex",
-  },
 }));
 
 const DeviceManagerPage = (props) => {
@@ -53,9 +48,11 @@ const DeviceManagerPage = (props) => {
     changeDeviceNameDispatch,
     changeDeviceDescriptionDispatch,
     addNewDeviceDispatch,
+    getFileDownloadLinkDispatch,
   } = props;
   const deviceList = useSelector((state) => state.dashboard.deviceList);
   const curID = window.location.search.split("=")[1];
+  useEffect(() => getFileDownloadLinkDispatch(curID), []);
   const device = deviceList.filter((item) => item.imei === curID)[0] || {
     imei: "",
     name: "",
@@ -303,5 +300,6 @@ const mapDispatchToProps = {
   changeDeviceNameDispatch: changeDeviceName,
   changeDeviceDescriptionDispatch: changeDeviceDescription,
   addNewDeviceDispatch: addNewDevice,
+  getFileDownloadLinkDispatch: getFileDownloadLink,
 };
 export default connect(null, mapDispatchToProps)(DeviceManagerPage);
