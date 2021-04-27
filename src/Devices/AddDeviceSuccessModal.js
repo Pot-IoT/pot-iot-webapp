@@ -16,7 +16,9 @@ export default () => {
     ]);
     const newBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(newBook, newSheet, "credentials");
-    XLSX.writeFile(newBook, name + "-credientials.xlsx");
+    XLSX.writeFile(newBook, name + "-credientials.xlsx").then(
+      window.location.reload()
+    );
   };
   return (
     <Dialog className="addDeviceSuccessModal" open={name}>
@@ -26,6 +28,11 @@ export default () => {
         <strong>Device ID</strong> and <strong>Private Key</strong> properly.
         You will need them to connect through the <strong>Post Address</strong>{" "}
         listed below.
+        <br />
+        <strong>
+          You are not able to get access to this private key later, please save
+          it now!
+        </strong>
       </div>
       <TextField
         className="addDeviceSuccessModal__textfield"
