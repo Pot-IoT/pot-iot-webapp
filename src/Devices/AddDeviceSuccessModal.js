@@ -57,7 +57,7 @@ export default () => {
         }}
         value={private_key}
       />
-      <TextField
+      {/* <TextField
         className="addDeviceSuccessModal__textfield"
         variant="outlined"
         margin="normal"
@@ -66,7 +66,7 @@ export default () => {
           readOnly: true,
         }}
         value={fileUploadURL}
-      />
+      /> */}
       <div className="addDeviceSuccessModal__buttons">
         <Button
           variant="contained"
