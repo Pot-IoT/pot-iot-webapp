@@ -29,8 +29,8 @@ export const newDeviceCommand = ({ imei, command, userToken }) => {
   });
 };
 
-export const getFileDownloadLinkRequest = (imei) =>
+export const getFileDownloadLinkRequest = ({ curID, userToken }) =>
   fetch(
-    "https://w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/fileList/64e2d105-4913-4b82-q214-0e5fe8qcd5fe",
-    { method: "GET" }
+    `https://w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/fileList/${curID}`,
+    { method: "GET", headers: { Authorization: userToken } }
   );

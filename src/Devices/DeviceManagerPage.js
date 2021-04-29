@@ -48,6 +48,7 @@ const DeviceManagerPage = (props) => {
     addNewDeviceDispatch,
     getFileDownloadLinkDispatch,
   } = props;
+  const userToken = window.localStorage.getItem("user_token");
   const deviceList = useSelector((state) => state.dashboard.deviceList);
   const fileDownloadLink = useSelector(
     (state) => state.device.fileDownloadLink
@@ -81,13 +82,12 @@ const DeviceManagerPage = (props) => {
     rows: fileDownloadLink,
   };
   const curID = window.location.search.split("=")[1];
-  useEffect(() => getFileDownloadLinkDispatch(curID), []);
+  useEffect(() => getFileDownloadLinkDispatch({ curID, userToken }), []);
   const device = deviceList.filter((item) => item.imei === curID)[0] || {
     imei: "",
     name: "",
     description: "",
   };
-  const userToken = window.localStorage.getItem("user_token");
 
   const [newDeviceName, setNewDeviceName] = useState("");
   const [newDescription, setNewDescription] = useState("");

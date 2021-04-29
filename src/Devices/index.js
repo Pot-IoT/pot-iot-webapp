@@ -34,7 +34,7 @@ const Devices = (props) => {
   };
   const handleClickDevice = (deviceDetails) => {
     setSelectedDevice(deviceDetails);
-    history.push("/devices/device-manager?id=" + deviceDetails.imei);
+    history.push("/devices/device-manager?deviceID=" + deviceDetails.imei);
   };
   const handleDeleteDevice = () => {
     removeDeviceDispatch(

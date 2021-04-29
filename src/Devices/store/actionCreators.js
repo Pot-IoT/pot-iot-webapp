@@ -124,9 +124,9 @@ export const addNewDevice = (args) => {
   };
 };
 
-export const getFileDownloadLink = (imei) => {
+export const getFileDownloadLink = (args) => {
   return (dispatch) => {
-    getFileDownloadLinkRequest(imei)
+    getFileDownloadLinkRequest(args)
       .then((response) => response.json())
       .then((data) => {
         dispatch(updateFileDownloadLinks(data));
