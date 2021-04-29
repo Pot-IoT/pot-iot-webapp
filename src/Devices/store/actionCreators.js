@@ -129,7 +129,7 @@ export const getFileDownloadLink = (imei) => {
     getFileDownloadLinkRequest(imei)
       .then((response) => response.json())
       .then((data) => {
-        dispatch(updateFileDownloadLinks(data.url));
+        dispatch(updateFileDownloadLinks(data));
       });
   };
 };

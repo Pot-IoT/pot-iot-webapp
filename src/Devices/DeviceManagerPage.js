@@ -23,9 +23,7 @@ import {
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 import "./devices.scss";
-// import { useDemoData } from "@material-ui/x-grid-data-generator";
-
-import { data } from "./tempDataSource";
+// import { data } from "./tempDataSource";
 
 const useStyles = makeStyles((theme) => ({
   modalButton: {
@@ -51,6 +49,37 @@ const DeviceManagerPage = (props) => {
     getFileDownloadLinkDispatch,
   } = props;
   const deviceList = useSelector((state) => state.dashboard.deviceList);
+  const fileDownloadLink = useSelector(
+    (state) => state.device.fileDownloadLink
+  ).map((element, id) => ({ id, ...element }));
+  const data = {
+    columns: [
+      { field: "fileName", headerName: "File Name", width: 300 },
+      {
+        field: "lastModifiedTime",
+        headerName: "Last Modification",
+        width: 300,
+        valueGetter: (params) => {
+          let timeStamp = new Date(params.getValue("lastModified"));
+          return timeStamp.toUTCString();
+        },
+      },
+      {
+        field: "fileSize",
+        headerName: "File Size",
+        width: 200,
+        valueGetter: (params) =>
+          Math.floor(params.getValue("size") / 1000) + "kb",
+      },
+      {
+        field: "downloadUrl",
+        headerName: "Download",
+        width: "300",
+        renderCell: (params) => <a href={params.getValue("url")}>Download</a>,
+      },
+    ],
+    rows: fileDownloadLink,
+  };
   const curID = window.location.search.split("=")[1];
   useEffect(() => getFileDownloadLinkDispatch(curID), []);
   const device = deviceList.filter((item) => item.imei === curID)[0] || {
@@ -222,7 +251,7 @@ const DeviceManagerPage = (props) => {
             variant="outlined"
             margin="normal"
             required
-            label="IMEI"
+            label="Device ID"
             value={device.imei}
             disabled
           />
