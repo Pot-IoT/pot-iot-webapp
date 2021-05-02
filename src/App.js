@@ -5,6 +5,9 @@ import HomePage from "./HomePage";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import UserServices from "./UserServices";
+import Home from "./pages/HomePage/Home";
+import Documentation from "./pages/Documentation/Documentation";
+import Pricing from "./pages/Pricing/Pricing";
 import "./App.scss";
 import store from "./store/index";
 
@@ -13,6 +16,9 @@ function App() {
     <Provider store={store} className="App">
       <Router>
         <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/documentation" exact component={Documentation} />
+          <Route path="/pricing" exact component={Pricing} />
           <Route path="/devices">
             <HomePage />
           </Route>
