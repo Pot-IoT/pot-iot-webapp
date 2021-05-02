@@ -23,7 +23,6 @@ import {
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 import "./devices.scss";
-// import { data } from "./tempDataSource";
 
 const useStyles = makeStyles((theme) => ({
   modalButton: {

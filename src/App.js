@@ -1,13 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import UserServices from "./UserServices";
-import Home from "./pages/HomePage/Home";
-import Documentation from "./pages/Documentation/Documentation";
-import Pricing from "./pages/Pricing/Pricing";
+import HomePage from "./components/MainPage";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import UserServices from "./components/UserServices";
+import Home from "./components/HomePageRepo/HomePage/Home";
+import Documentation from "./components/HomePageRepo/Documentation/Documentation";
+import Pricing from "./components/HomePageRepo/Pricing/Pricing";
 import "./App.scss";
 import store from "./store/index";
 

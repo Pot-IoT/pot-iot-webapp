@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
 }));
-const HomePage = (props) => {
+const MainPage = (props) => {
   const { getDeviceListDispatch } = props;
   const classes = useStyles();
   const { isLoading } = useSelector((state) => state.dashboard);
@@ -133,4 +133,4 @@ const mapDispatchToProps = {
   toggleIsLoadingDispatch: toggleIsLoading,
   getDeviceListDispatch: getDeviceList,
 };
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(null, mapDispatchToProps)(MainPage);

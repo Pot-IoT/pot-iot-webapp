@@ -3,7 +3,7 @@ import {
   getDeviceListRequest,
   addNewDeviceRequest,
   getCommandLogRequest,
-} from "../../api/dashboard";
+} from "../../../api/dashboard";
 
 export const toggleIsLoading = (data) => ({
   type: actionTypes.TOGGLE_IS_LOADING,

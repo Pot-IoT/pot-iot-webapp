@@ -5,7 +5,7 @@ import {
   modifyDeviceDescription,
   newDeviceCommand,
   getFileDownloadLinkRequest,
-} from "../../api/devices";
+} from "../../../api/devices";
 import { toggleIsLoading } from "../../Dashboard/store/actionCreators";
 
 export const updateFileDownloadLinks = (data) => ({
