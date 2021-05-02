@@ -41,8 +41,8 @@ function Navbar() {
                 })}
             </ul>
             <div className='button-section'>
-                <Link to='/'>{button && <Button buttonStyle='btn--outline' buttonSize='btn--medium' buttonColor='gray'>Log In</Button>}</Link>
-                <Link to='/'>{button && <Button buttonStyle='btn--primary' buttonSize='btn--medium--free' buttonColor='primary'>Try for free</Button>}</Link>
+                <Link to='/login'>{button && <Button buttonStyle='btn--outline' buttonSize='btn--medium' buttonColor='gray'>Log In</Button>}</Link>
+                <Link to='/signup'>{button && <Button buttonStyle='btn--primary' buttonSize='btn--medium--free' buttonColor='primary'>Try for free</Button>}</Link>
             </div>
             <div className='menu-icon' onClick={handleClick}>
                 <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}></i>

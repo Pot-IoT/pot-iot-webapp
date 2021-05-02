@@ -5,6 +5,7 @@ import HomePage from "./components/MainPage";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import UserServices from "./components/UserServices";
+import ScrollToTop from './components/HomePageRepo/ScrollToTop';
 import Home from "./components/HomePageRepo/HomePage/Home";
 import Documentation from "./components/HomePageRepo/Documentation/Documentation";
 import Pricing from "./components/HomePageRepo/Pricing/Pricing";
@@ -15,6 +16,7 @@ function App() {
   return (
     <Provider store={store} className="App">
       <Router>
+        <ScrollToTop />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/documentation" exact component={Documentation} />

@@ -11,12 +11,12 @@ export const MenuItems = [
     },
     {
         title: "Log In",
-        url: "/",
+        url: "/login",
         cName: 'nav-links-mobile'
     },
     {
         title: "Try for free",
-        url: "/",
+        url: "/signup",
         cName: 'nav-links-mobile'
     }
 ];

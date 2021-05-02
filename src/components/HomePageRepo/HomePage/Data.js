@@ -13,7 +13,7 @@ export const homeObjOne = {
         '- Download data packages \n' +
         '- Support sending simple commands remotely \n',
     buttonLabel: 'Try for free',
-    butLink: 'signup',
+    butLink: '/signup',
     imgStart: '',
     img: 'images/svg-1.svg',
 };
@@ -60,7 +60,7 @@ export const homeObjFour = {
     description:
         'Step by step, with the help of instructions, both device and you are able to have a smooth settlement. Click to check!',
     buttonLabel: 'Documentation',
-    butLink: 'documentation',
+    butLink: '/documentation',
     imgStart: 'start',
     img: 'images/svg-4.svg',
 };
