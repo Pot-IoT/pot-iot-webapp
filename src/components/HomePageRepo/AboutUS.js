@@ -19,6 +19,7 @@ function AboutUS() {
                     '\n' +
                     'What we have in the roadmap (updating...): \n' +
                     '  - Fully PSK support \n' +
+                    '  - Enable HTTPS \n' +
                     '  - Remote device management & Firmware upgrade \n' +
                     '  - Parsing & cleaning data \n' +
                     '\n' +

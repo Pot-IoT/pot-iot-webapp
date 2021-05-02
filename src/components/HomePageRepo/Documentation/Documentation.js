@@ -24,7 +24,7 @@ function Documentation() {
             With this instruction, you will be guided by sections, steps, and
             findally connect to the Platform and enjoy how easy it is. If there is
             something hard to understand, do not hesitate to contact us via Email:
-            contact_us@pot-iot.com.
+            support@pot-iot.com.
             </div>
         </div>
         <Divider

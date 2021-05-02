@@ -31,10 +31,10 @@ function Pricing() {
         <div className="pricing-top-section" id="pricing-top-section">
             <h3 class="heading color-black">Pricing</h3>
             <div class="text-top color-black">
-            Pot-Iot Platform is free to use for <h2> 3 MONTHS </h2> The pricing of
-            Basic plan is shown as below, and if you want more capacity or even a
-            customized feature, please contact us to know more details:
-            contact_us@pot-iot.com.
+            Pot-Iot Platform is using for <h2> FREE </h2> but with limited conditions. 
+            We won't consider to charge now since we are in the very early stage and keep polishing the product in order to improve the user expericen. 
+            The Basic plan is shown as below, and if you want more capacity or even a customized feature, please contact us to know more details:
+            support@pot-iot.com.
             </div>
             <br />
             <Link to="/signup">
@@ -66,7 +66,7 @@ function Pricing() {
                     padding: "1rem",
                     }}
                 >
-                    $100/month
+                    $0/month
                 </h1>
                 <div
                     class="color-black"
@@ -77,17 +77,17 @@ function Pricing() {
                     }}
                 >
                     <h3> - 10 connected devices</h3>
-                    <h3> - Accessable for all features </h3>
-                    <h3> - 50 GB data storaging </h3>
+                    <h3> - 1 GB data storaging per device</h3>
+                    <h3> - Accessable for all features</h3>
                     <h3> - Ten thousand times API call </h3>
                 </div>
                 <br />
-                <h4>
+                {/* <h4>
                     {" "}
                     Your pay will be treated as donation for supporting us to
                     maintain current service, as well as keep producing better
                     solutions!{" "}
-                </h4>
+                </h4> */}
                 </Paper>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -102,7 +102,7 @@ function Pricing() {
                 <h2> More Capacity?</h2>
                 <h2>Customized Features?</h2>
                 <br />
-                <h3>Contact us via email: contact_us@pot-iot.com</h3>
+                <h3>Contact us via email: support@pot-iot.com</h3>
                 </Paper>
             </Grid>
             </Grid>
