@@ -13,7 +13,7 @@ function Footer() {
                             <GiCookingPot class="navbar-icon" /> PoT-IoT
                         </Link>
                     </div>
-                    <small className='website-rights'>Email: contact_us@pot-iot.com</small>
+                    <small className='website-rights'>Email: support@pot-iot.com</small>
                 </div>
             </section>
         </div>

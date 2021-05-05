@@ -3,7 +3,7 @@ export const homeObjOne = {
     lightText: false,
     lightTextDesc: false,
     topLine: 'Connect once, consume forever',
-    headline: 'A better solution to work on the IoT project.',
+    headline: 'A better solution to work on the IoT project. Now is FREE！',
     description:
         'With the simplest connection steps, monitoning and accessing your device from everywhere. \n' +
         '\n' +
@@ -39,11 +39,13 @@ export const homeObjThree = {
     topLine: 'Safty data hanlding',
     headline: 'In PoT-IoT, we do care about your data.',
     description:
-        "- SSL with https transmission allows your data to be well protected in the internet. \n" +
-        " \n" +
         "- Keep data with Amazon S3, the giant is guarding your fortune. \n" +
         " \n" +
-        "- PSK is on the way, we are currently using pravite key to make sure the one-of-a-kind connection.",
+        "- PSK is under developping, we are currently using pravite key to make sure the one-of-a-kind connection. \n" +
+        " \n" +
+        "- Working on injecting SSL into server, trying to enabled HTTPS in the near future. \n" +
+        " \n" +
+        "- At the current stage, we encourage users to do the testing/POC first, and place improtant data later.",
     buttonLabel: 'none',
     butLink: '',
     imgStart: 'start',
