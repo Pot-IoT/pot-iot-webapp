@@ -5,7 +5,7 @@ import HomePage from "./components/MainPage";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import UserServices from "./components/UserServices";
-import ScrollToTop from './components/HomePageRepo/ScrollToTop';
+import ScrollToTop from "./components/HomePageRepo/ScrollToTop";
 import Home from "./components/HomePageRepo/HomePage/Home";
 import Documentation from "./components/HomePageRepo/Documentation/Documentation";
 import Pricing from "./components/HomePageRepo/Pricing/Pricing";
@@ -20,7 +20,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/documentation" exact component={Documentation} />
-          <Route path="/pricing" exact component={Pricing} />
+          {/* <Route path="/pricing" exact component={Pricing} /> */}
           <Route path="/devices">
             <HomePage />
           </Route>
