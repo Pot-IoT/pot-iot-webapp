@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
   const { setChangeUsernameModalOpen, username } = props;
   const classes = useStyles();
-  const urlPath = useHistory().location.pathname;
+  // const urlPath = useHistory().location.pathname;
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -144,14 +144,14 @@ export default function Navbar(props) {
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography className={classes.title} variant="h5">
             Pot-IoT
           </Typography>
@@ -178,11 +178,11 @@ export default function Navbar(props) {
             </a> */}
           </div>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 0 new notifications" color="inherit">
+            {/* <IconButton aria-label="show 0 new notifications" color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               edge="end"
               aria-label="account of current user"
