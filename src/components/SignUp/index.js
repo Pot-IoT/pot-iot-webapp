@@ -86,7 +86,7 @@ export default function SignUp(props) {
   };
   function handleSignUp() {
     setIsLoading(true);
-    fetch("//115.29.191.198:8080/register", {
+    fetch("http://api.pot-iot.com:8080/register", {
       method: "POST",
       body: JSON.stringify({
         username: username,

@@ -65,7 +65,7 @@ function Login(props) {
   };
   function handleLogin() {
     setIsLoading(true);
-    fetch("//115.29.191.198:8080/login", {
+    fetch("http://api.pot-iot.com:8080/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: pwd }),
     })

@@ -7,7 +7,7 @@ export default function ForgetPassword() {
 
   function handleContinue(email) {
     setIsLoading(true);
-    fetch("//115.29.191.198:8080/resendActivationEmail", {
+    fetch("http://api.pot-iot.com:8080/resendActivationEmail", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     })
