@@ -29,9 +29,9 @@ export default () => {
         You will need them to connect through the <strong>Post Address</strong>{" "}
         listed below.
         <br />
-        <strong>
-          You are not able to get access to this private key later, please save
-          it now!
+        <strong className="addDeviceSuccessModal__desc__alert">
+          ***You won't be able to access this private key anytime later, please
+          save it now!***
         </strong>
       </div>
       <TextField

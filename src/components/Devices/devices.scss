@@ -120,6 +120,9 @@
   &__desc {
     font-size: 20px;
     margin: 0 20px 40px;
+    &__alert {
+      color: #ff0f0f;
+    }
   }
   &__textfield {
     width: 80%;

@@ -67,6 +67,6 @@ export const showDeviceStatus = (status) => {
   if (status > 0) {
     return <CheckCircleRounded style={{ color: "green" }} />;
   } else {
-    return <PowerOff title="OFF" style={{ color: "red" }} />;
+    return <PowerOff title="OFF" style={{ color: "#ff0f0f" }} />;
   }
 };
