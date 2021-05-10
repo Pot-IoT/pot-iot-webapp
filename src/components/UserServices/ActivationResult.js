@@ -40,12 +40,9 @@ export default function ForgetPassword() {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(
-      "http://api.pot-iot.com:8080/activateAccount" + window.location.search,
-      {
-        method: "GET",
-      }
-    )
+    fetch("//115.29.191.198:8080/activateAccount" + window.location.search, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);

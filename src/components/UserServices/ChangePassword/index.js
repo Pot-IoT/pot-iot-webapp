@@ -89,7 +89,7 @@ export default function ChangePassword(props) {
     let requestObj = { password: newPwd };
     if (needOldPwd) requestObj.oldPassword = oldPwd;
     let token = window.location.search;
-    fetch(`http://api.pot-iot.com:8080/resetPassword${token}`, {
+    fetch(`//115.29.191.198:8080/resetPassword${token}`, {
       method: "POST",
       body: JSON.stringify(requestObj),
     })

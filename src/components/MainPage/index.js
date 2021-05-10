@@ -53,7 +53,7 @@ const MainPage = (props) => {
       alert("Please enter a different username.");
       return;
     }
-    fetch("http://api.pot-iot.com:8080/changeUsername?token=" + userToken, {
+    fetch("//115.29.191.198:8080/changeUsername?token=" + userToken, {
       method: "POST",
       body: JSON.stringify({
         username: newUsername,
