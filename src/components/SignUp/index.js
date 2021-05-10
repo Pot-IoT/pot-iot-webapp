@@ -14,6 +14,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
+  Checkbox,
+  FormControlLabel,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
@@ -48,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   errMsg: {
     display: "block",
   },
+  checkbox: {
+    display: "flex",
+  },
 }));
 
 export default function SignUp(props) {
@@ -56,6 +61,7 @@ export default function SignUp(props) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [disclaimerChecked, setDisclaimerChecked] = useState(false);
 
   const [usernameErr, setUsernameErr] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
@@ -192,6 +198,20 @@ export default function SignUp(props) {
             }}
             helperText="Passwords don't match"
           />
+          <div className={classes.checkbox}>
+            <Checkbox
+              checked={disclaimerChecked}
+              required
+              onChange={() => setDisclaimerChecked(!disclaimerChecked)}
+              name="disclaimerCheck"
+              color="primary"
+            />
+            <div>
+              By checking this I hereby acknowledge that PotIoT is still in free
+              early access version, and it's not supposed to be used in any
+              production environment.
+            </div>
+          </div>
           <Button
             fullWidth
             variant="contained"
@@ -206,7 +226,8 @@ export default function SignUp(props) {
               username === "" ||
               email === "" ||
               pwd === "" ||
-              confirmPwd === ""
+              confirmPwd === "" ||
+              disclaimerChecked === false
             }
           >
             Sign Up
