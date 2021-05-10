@@ -15,7 +15,6 @@ import {
   DialogContent,
   DialogContentText,
   Checkbox,
-  FormControlLabel,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";

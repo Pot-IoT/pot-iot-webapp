@@ -3,99 +3,99 @@ import { TextField, Dialog, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./devices.scss";
 
-const useStyles = makeStyles((theme) => ({
-  modalButton: {
-    width: "25%",
-    margin: "0 auto 20px",
-    display: "inline-block",
-  },
-  hideErrMsg: {
-    display: "none",
-  },
-  errMsg: {
-    display: "block",
-  },
-  modalTitle: {
-    textAlign: "center",
-  },
-  buttonGroup: {
-    display: "flex",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   modalButton: {
+//     width: "25%",
+//     margin: "0 auto 20px",
+//     display: "inline-block",
+//   },
+//   hideErrMsg: {
+//     display: "none",
+//   },
+//   errMsg: {
+//     display: "block",
+//   },
+//   modalTitle: {
+//     textAlign: "center",
+//   },
+//   buttonGroup: {
+//     display: "flex",
+//   },
+// }));
 
 export default (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const { open, onClose, device, handleDeleteDevice } = props;
 
-  const [pincode, setPincode] = useState("");
-  const [confirmPinCode, setConfirmPinCode] = useState("");
-  const [pincodeErr, setPincodeErr] = useState(false);
-  const [confirmPincodeErr, setConfirmPincodeErr] = useState(false);
+  const [privateKey, setPrivateKey] = useState("");
+  // const [confirmPrivateKey, setConfirmPrivateKey] = useState("");
+  // const [privateKeyErr, setPrivateKeyErr] = useState(false);
+  // const [confirmPrivateKeyErr, setConfirmPrivateKeyErr] = useState(false);
 
-  const handlePincodeChange = (e) => {
-    setPincode(e.target.value);
-    setPincodeErr(!/^[A-Z0-9][A-Z0-9]{7}$/.test(e.target.value));
+  const handlePrivateKeyChange = (e) => {
+    setPrivateKey(e.target.value);
+    // setPrivateKeyErr(!/^[A-Z0-9][A-Z0-9]{7}$/.test(e.target.value));
   };
-  const handleConfirmPincodeChange = (e) => {
-    setConfirmPinCode(e.target.value);
-    setConfirmPincodeErr(e.target.value === pincode);
-  };
+  // const handleConfirmPrivateKeyChange = (e) => {
+  //   setConfirmPrivateKey(e.target.value);
+  //   setConfirmPrivateKeyErr(e.target.value === privateKey);
+  // };
 
   return (
     <Dialog
-      className="device-manager"
+      className="delete-device"
       open={open}
       fullWidth
       onClose={() => onClose(false)}
       maxWidth="sm"
     >
-      <div className="device-manager__title">Delete your device</div>
-      <div className="device-manager__textfield">
+      <div className="delete-device__title">Delete your device</div>
+      <div className="delete-device__textfield">
         <TextField
-          className="device-manager__textfield__box"
+          className="delete-device__textfield__box"
           variant="outlined"
           margin="normal"
           required
-          label="IMEI"
+          label="Device ID"
           value={device.imei}
           disabled
         />
       </div>
-      <div className="device-manager__textfield">
+      <div className="delete-device__textfield">
         <TextField
-          className="device-manager__textfield__box"
+          className="delete-device__textfield__box"
           variant="outlined"
           margin="normal"
           required
-          label="Pin"
-          placeholder="Please enter the 8 digits number on your device"
-          onChange={handlePincodeChange}
-          value={pincode}
-          error={pincodeErr}
-          FormHelperTextProps={{
-            className: pincodeErr ? classes.errMsg : classes.hideErrMsg,
-          }}
-          helperText="Pin Code is a 8 digits combination of numbers and letters"
+          label="Private Key"
+          placeholder="Please enter your device's private key"
+          onChange={handlePrivateKeyChange}
+          value={privateKey}
+          // error={privateKeyErr}
+          // FormHelperTextProps={{
+          //   className: privateKeyErr ? classes.errMsg : classes.hideErrMsg,
+          // }}
+          // helperText="Pin Code is a 8 digits combination of numbers and letters"
         />
       </div>
-      <div className="device-manager__textfield">
+      {/* <div className="delete-device__textfield">
         <TextField
-          className="device-manager__textfield__box"
+          className="delete-device__textfield__box"
           variant="outlined"
           margin="normal"
           required
           label="Confirm Pin"
           placeholder="Please confirm you PIN"
-          value={confirmPinCode}
-          onChange={handleConfirmPincodeChange}
-          error={confirmPincodeErr}
+          value={confirmPrivateKey}
+          onChange={handleConfirmPrivateKeyChange}
+          error={confirmPrivateKeyErr}
           FormHelperTextProps={{
-            className: confirmPincodeErr ? classes.errMsg : classes.hideErrMsg,
+            className: confirmPrivateKeyErr ? classes.errMsg : classes.hideErrMsg,
           }}
           helperText="Pin Codes don't match"
         />
-      </div>
-      <div className="device-manager__buttons">
+      </div> */}
+      <div className="delete-device__buttons">
         <Button
           variant="contained"
           color="primary"
@@ -106,12 +106,14 @@ export default (props) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleDeleteDevice}
+          onClick={() => handleDeleteDevice(privateKey)}
           disabled={
-            pincode === "" ||
-            pincodeErr ||
-            confirmPinCode === "" ||
-            confirmPincodeErr
+            privateKey === ""
+            //  ||
+            // privateKeyErr
+            //  ||
+            // confirmPrivateKey === "" ||
+            // confirmPrivateKeyErr
           }
         >
           Delete

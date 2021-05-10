@@ -22,6 +22,7 @@ import {
   getFileDownloadLink,
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
+import DeleteDeviceModal from "./DeleteDeviceModal";
 import "./devices.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,11 +42,11 @@ const useStyles = makeStyles((theme) => ({
 const DeviceManagerPage = (props) => {
   const classes = useStyles();
   const {
-    handleOpenDeleteDeviceModal,
     changeDeviceNameDispatch,
     changeDeviceDescriptionDispatch,
     addNewDeviceDispatch,
     getFileDownloadLinkDispatch,
+    removeDeviceDispatch,
   } = props;
   const userToken = window.localStorage.getItem("user_token");
   const deviceList = useSelector((state) => state.dashboard.deviceList);
@@ -97,6 +98,8 @@ const DeviceManagerPage = (props) => {
   const [editingProperty, setEditingProperty] = useState(null);
   const [hovering, setHovering] = useState({});
   const [editorOpen, setEditorOpen] = useState(false);
+  const [deleteDeviceModalOpen, setDeleteDeviceModalOpen] = useState(false);
+  const [page, setPage] = useState(0);
 
   const handleDevicenameChange = (e) => {
     setNewDeviceName(e.target.value);
@@ -136,13 +139,13 @@ const DeviceManagerPage = (props) => {
     setEditingProperty(property);
     setEditorOpen(true);
   };
-  // const { data } = useDemoData({
-  //   dataSet: "Commodity",
-  //   rowLength: 100,
-  //   maxColumns: 6,
-  // });
-  // console.log("edp", JSON.stringify(data));
-  const [page, setPage] = React.useState(0);
+  const handleOpenDeleteDeviceModal = () => {
+    setDeleteDeviceModalOpen(true);
+  };
+  const handleDeleteDevice = (privateKey) => {
+    removeDeviceDispatch(device.imei, privateKey, userToken);
+  };
+
   const DeviceInfoEditor = () => (
     <Dialog
       open={editorOpen}
@@ -217,6 +220,14 @@ const DeviceManagerPage = (props) => {
     <div className="device-manager-page">
       <div className="device-manager-page__path">
         <a href="/devices">Device List</a>&nbsp;/&nbsp;{device.name}
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpenDeleteDeviceModal}
+          className="device-manager-page__path__delet-btn"
+        >
+          Delete Device
+        </Button>
       </div>
       <div className="device-manager-page__section-title">Device Info</div>
       <div className="device-manager-page__flex-row">
@@ -318,6 +329,14 @@ const DeviceManagerPage = (props) => {
         />
       </div>
       {DeviceInfoEditor()}
+      {deleteDeviceModalOpen && (
+        <DeleteDeviceModal
+          open={deleteDeviceModalOpen}
+          onClose={setDeleteDeviceModalOpen}
+          device={device}
+          handleDeleteDevice={handleDeleteDevice}
+        />
+      )}
     </div>
   );
 };
