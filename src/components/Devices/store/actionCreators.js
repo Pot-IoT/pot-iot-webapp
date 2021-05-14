@@ -13,15 +13,15 @@ export const updateFileDownloadLinks = (data) => ({
   data,
 });
 
-export const removeDevice = (imei, pin_code, userToken) => {
+export const removeDevice = (args) => {
   return (dispatch) => {
-    removeDeviceRequest(imei, pin_code, userToken)
+    removeDeviceRequest(args)
       .then((response) => response.json())
       .then((data) => {
         dispatch(toggleIsLoading(false));
         if (data.success === true) {
           alert("Device is successfully deleted!");
-          window.location.reload();
+          window.location.href = "/devices";
         } else {
           switch (data.result.message) {
             case "TOKEN_AURHENTICATION_ERROR":

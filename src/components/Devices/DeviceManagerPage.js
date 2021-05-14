@@ -142,8 +142,8 @@ const DeviceManagerPage = (props) => {
   const handleOpenDeleteDeviceModal = () => {
     setDeleteDeviceModalOpen(true);
   };
-  const handleDeleteDevice = (privateKey) => {
-    removeDeviceDispatch(device.imei, privateKey, userToken);
+  const handleDeleteDevice = () => {
+    removeDeviceDispatch({ imei: device.imei, userToken });
   };
 
   const DeviceInfoEditor = () => (

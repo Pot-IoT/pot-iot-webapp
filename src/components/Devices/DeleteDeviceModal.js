@@ -61,7 +61,7 @@ export default (props) => {
           disabled
         />
       </div>
-      <div className="delete-device__textfield">
+      {/* <div className="delete-device__textfield">
         <TextField
           className="delete-device__textfield__box"
           variant="outlined"
@@ -77,7 +77,7 @@ export default (props) => {
           // }}
           // helperText="Pin Code is a 8 digits combination of numbers and letters"
         />
-      </div>
+      </div> */}
       {/* <div className="delete-device__textfield">
         <TextField
           className="delete-device__textfield__box"
@@ -107,14 +107,14 @@ export default (props) => {
           variant="contained"
           color="secondary"
           onClick={() => handleDeleteDevice(privateKey)}
-          disabled={
-            privateKey === ""
-            //  ||
-            // privateKeyErr
-            //  ||
-            // confirmPrivateKey === "" ||
-            // confirmPrivateKeyErr
-          }
+          // disabled={
+          //   privateKey === ""
+          //    ||
+          //   privateKeyErr
+          //    ||
+          //   confirmPrivateKey === "" ||
+          //   confirmPrivateKeyErr
+          // }
         >
           Delete
         </Button>
