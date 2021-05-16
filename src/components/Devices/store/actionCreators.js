@@ -5,6 +5,7 @@ import {
   modifyDeviceDescription,
   newDeviceCommand,
   getFileDownloadLinkRequest,
+  deleteFileRequest,
 } from "../../../api/devices";
 import { toggleIsLoading } from "../../Dashboard/store/actionCreators";
 
@@ -126,10 +127,29 @@ export const addNewDevice = (args) => {
 
 export const getFileDownloadLink = (args) => {
   return (dispatch) => {
+    dispatch(toggleIsLoading(true));
     getFileDownloadLinkRequest(args)
       .then((response) => response.json())
       .then((data) => {
+        dispatch(toggleIsLoading(false));
         dispatch(updateFileDownloadLinks(data));
+      });
+  };
+};
+
+export const deleteFile = (args) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true));
+    deleteFileRequest(args)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(toggleIsLoading(false));
+        if (data.error) {
+          console.log(data);
+        } else {
+          alert("File is deleted successfully!");
+          window.location.reload();
+        }
       });
   };
 };

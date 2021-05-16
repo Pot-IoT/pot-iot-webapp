@@ -1,13 +1,13 @@
 import * as actionTypes from "./constants";
 
 const defaultState = {
-  fileDownloadLink: [],
+  fileDownloadList: [],
 };
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_FILE_DOWNLOAD_LINKS:
-      return Object.assign(state, { fileDownloadLink: action.data });
+      return Object.assign(state, { fileDownloadList: action.data });
     default:
       return state;
   }

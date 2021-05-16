@@ -75,6 +75,7 @@ function Login(props) {
       .then((data) => {
         setIsLoading(false);
         if (data.success === true) {
+          document.cookie = "Authorization=" + data.data.token;
           localStorage.setItem("user_token", data.data.token);
           // setUsernameDispatch(data.data.username);
           localStorage.setItem("username", data.data.username);

@@ -20,6 +20,7 @@ import {
   changeDeviceDescription,
   addNewDevice,
   getFileDownloadLink,
+  deleteFile,
 } from "./store/actionCreators";
 import { showDeviceStatus, showBatteryRemaining } from "../common/helpers";
 import DeleteDeviceModal from "./DeleteDeviceModal";
@@ -47,40 +48,13 @@ const DeviceManagerPage = (props) => {
     addNewDeviceDispatch,
     getFileDownloadLinkDispatch,
     removeDeviceDispatch,
+    deleteFileDispatch,
   } = props;
   const userToken = window.localStorage.getItem("user_token");
   const deviceList = useSelector((state) => state.dashboard.deviceList);
-  const fileDownloadLink = useSelector(
-    (state) => state.device.fileDownloadLink
+  const fileDownloadList = useSelector(
+    (state) => state.device.fileDownloadList
   ).map((element, id) => ({ id, ...element }));
-  const data = {
-    columns: [
-      { field: "fileName", headerName: "File Name", width: 300 },
-      {
-        field: "lastModifiedTime",
-        headerName: "Last Modification",
-        width: 300,
-        valueGetter: (params) => {
-          let timeStamp = new Date(params.getValue("lastModified"));
-          return timeStamp.toUTCString();
-        },
-      },
-      {
-        field: "fileSize",
-        headerName: "File Size",
-        width: 200,
-        valueGetter: (params) =>
-          Math.floor(params.getValue("size") / 1000) + "kb",
-      },
-      {
-        field: "downloadUrl",
-        headerName: "Download",
-        width: "300",
-        renderCell: (params) => <a href={params.getValue("url")}>Download</a>,
-      },
-    ],
-    rows: fileDownloadLink,
-  };
   const curID = window.location.search.split("=")[1];
   useEffect(() => getFileDownloadLinkDispatch({ curID, userToken }), []);
   const device = deviceList.filter((item) => item.imei === curID)[0] || {
@@ -144,6 +118,59 @@ const DeviceManagerPage = (props) => {
   };
   const handleDeleteDevice = () => {
     removeDeviceDispatch({ imei: device.imei, userToken });
+  };
+  // const handleDeleteFile = () => {
+  //   deleteFileDispatch();
+  // };
+
+  const tableData = {
+    columns: [
+      { field: "fileName", headerName: "File Name", width: 300 },
+      {
+        field: "lastModifiedTime",
+        headerName: "Last Modification",
+        width: 300,
+        valueGetter: (params) => {
+          let timeStamp = new Date(params.getValue("lastModified"));
+          return timeStamp.toUTCString();
+        },
+      },
+      {
+        field: "fileSize",
+        headerName: "File Size",
+        width: 150,
+        valueGetter: (params) =>
+          Math.floor(params.getValue("size") / 1000) + "kb",
+      },
+      {
+        field: "downloadUrl",
+        headerName: "Download",
+        width: 200,
+        renderCell: (params) => <a href={params.getValue("url")}>Download</a>,
+      },
+      {
+        field: "deleteBtn",
+        headerName: "Delete",
+        width: 200,
+        renderCell: (params) => (
+          <Button
+            variant="contained"
+            color="primary"
+            // className={classes.modalButton}
+            onClick={() =>
+              deleteFileDispatch({
+                curID,
+                fileName: params.getValue("fileName"),
+                userToken,
+              })
+            }
+          >
+            Delete
+          </Button>
+        ),
+      },
+    ],
+    rows: fileDownloadList,
   };
 
   const DeviceInfoEditor = () => (
@@ -325,7 +352,7 @@ const DeviceManagerPage = (props) => {
           }}
           pageSize={5}
           pagination
-          {...data}
+          {...tableData}
         />
       </div>
       {DeviceInfoEditor()}
@@ -348,5 +375,6 @@ const mapDispatchToProps = {
   changeDeviceDescriptionDispatch: changeDeviceDescription,
   addNewDeviceDispatch: addNewDevice,
   getFileDownloadLinkDispatch: getFileDownloadLink,
+  deleteFileDispatch: deleteFile,
 };
 export default connect(null, mapDispatchToProps)(DeviceManagerPage);

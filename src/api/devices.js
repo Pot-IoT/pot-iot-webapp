@@ -34,3 +34,9 @@ export const getFileDownloadLinkRequest = ({ curID, userToken }) =>
     `https://w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/fileList/${curID}`,
     { method: "GET", headers: { Authorization: userToken } }
   );
+
+export const deleteFileRequest = ({ curID, fileName, userToken }) =>
+  fetch(
+    `https://w0zawosezd.execute-api.eu-west-2.amazonaws.com/prod/fileList/${curID}/${fileName}`,
+    { method: "DELETE", headers: { Authorization: userToken } }
+  );

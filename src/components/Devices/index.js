@@ -24,6 +24,7 @@ const Devices = (props) => {
   const [selectedDevice, setSelectedDevice] = useState({});
   const history = useHistory();
   const { deviceList } = useSelector((state) => state.dashboard);
+  deviceList.sort((a, b) => b.update_time - a.update_time);
 
   const handleAddNewDevice = () => {
     setNewDeviceModalOpen(true);
