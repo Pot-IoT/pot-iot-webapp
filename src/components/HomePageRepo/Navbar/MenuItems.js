@@ -1,6 +1,6 @@
 export const MenuItems = [
   {
-    title: "Documentation",
+    title: "QuickStart",
     url: "/documentation",
     cName: "nav-links",
   },
