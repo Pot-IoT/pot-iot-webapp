@@ -73,6 +73,8 @@ export const newDevice = (deviceDetails, userToken) => {
             case "DEVICE_ALREADY_REGISTERED_ERROR":
               alert("Device is already added");
               break;
+            case "DEVICE_CAPACITY_EXCEED_ERROR":
+              alert("You can only add up to 10 devices!");
             default:
               console.log(data.result.message);
           }

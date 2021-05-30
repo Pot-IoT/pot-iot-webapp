@@ -98,7 +98,7 @@ export const changeDeviceDescription = (args) => {
   };
 };
 
-export const addNewDevice = (args) => {
+export const addNewDeviceCommand = (args) => {
   return (dispatch) => {
     newDeviceCommand(args)
       .then((response) => response.json())
@@ -132,7 +132,11 @@ export const getFileDownloadLink = (args) => {
       .then((response) => response.json())
       .then((data) => {
         dispatch(toggleIsLoading(false));
-        dispatch(updateFileDownloadLinks(data));
+        if (data.error) {
+          alert(data.message);
+        } else {
+          dispatch(updateFileDownloadLinks(data));
+        }
       });
   };
 };

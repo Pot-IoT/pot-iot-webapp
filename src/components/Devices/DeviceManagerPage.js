@@ -18,7 +18,7 @@ import {
   removeDevice,
   changeDeviceName,
   changeDeviceDescription,
-  addNewDevice,
+  addNewDeviceCommand,
   getFileDownloadLink,
   deleteFile,
 } from "./store/actionCreators";
@@ -45,7 +45,7 @@ const DeviceManagerPage = (props) => {
   const {
     changeDeviceNameDispatch,
     changeDeviceDescriptionDispatch,
-    addNewDeviceDispatch,
+    addNewDeviceCommandDispatch,
     getFileDownloadLinkDispatch,
     removeDeviceDispatch,
     deleteFileDispatch,
@@ -74,6 +74,7 @@ const DeviceManagerPage = (props) => {
   const [editorOpen, setEditorOpen] = useState(false);
   const [deleteDeviceModalOpen, setDeleteDeviceModalOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const [newCommand, setNewCommand] = useState("");
 
   const handleDevicenameChange = (e) => {
     setNewDeviceName(e.target.value);
@@ -109,6 +110,7 @@ const DeviceManagerPage = (props) => {
       case "description":
         setNewDescription(device.description);
         break;
+      case "command":
     }
     setEditingProperty(property);
     setEditorOpen(true);
@@ -118,6 +120,16 @@ const DeviceManagerPage = (props) => {
   };
   const handleDeleteDevice = () => {
     removeDeviceDispatch({ imei: device.imei, userToken });
+  };
+  const handleNewCommandChange = (e) => {
+    setNewCommand(e.target.value);
+  };
+  const handleAddNewCommand = () => {
+    addNewDeviceCommandDispatch({
+      imei: device.imei,
+      command: newCommand,
+      userToken,
+    });
   };
   // const handleDeleteFile = () => {
   //   deleteFileDispatch();
@@ -240,6 +252,30 @@ const DeviceManagerPage = (props) => {
           </Button>
         </>
       )}
+      {editingProperty === "command" && (
+        <>
+          <DialogTitle className="device-manager-page__dialog__title">
+            Add Device Command
+          </DialogTitle>
+          <TextField
+            className="device-manager-page__dialog__textfield"
+            variant="outlined"
+            margin="normal"
+            label="New Command"
+            value={newCommand}
+            onChange={handleNewCommandChange}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.modalButton}
+            onClick={handleAddNewCommand}
+            disabled={newCommand === ""}
+          >
+            Add
+          </Button>
+        </>
+      )}
     </Dialog>
   );
 
@@ -343,6 +379,16 @@ const DeviceManagerPage = (props) => {
           />
         </div>
       </div>
+      <div className="device-manager-page__section-title">Device Command</div>
+
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.modalButton}
+        onClick={() => handleClickEdit("command")}
+      >
+        Add New Command
+      </Button>
       <div className="device-manager-page__section-title">Device Data</div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
@@ -373,7 +419,7 @@ const mapDispatchToProps = {
   removeDeviceDispatch: removeDevice,
   changeDeviceNameDispatch: changeDeviceName,
   changeDeviceDescriptionDispatch: changeDeviceDescription,
-  addNewDeviceDispatch: addNewDevice,
+  addNewDeviceCommandDispatch: addNewDeviceCommand,
   getFileDownloadLinkDispatch: getFileDownloadLink,
   deleteFileDispatch: deleteFile,
 };

@@ -3,7 +3,7 @@ import { connect, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { newDevice, toggleIsLoading } from "../Dashboard/store/actionCreators";
-import { removeDevice, addNewDevice } from "./store/actionCreators";
+import { removeDevice } from "./store/actionCreators";
 import EmptyDeviceList from "../common/EmptyDeviceList";
 import NewDeviceModal from "../common/NewDeviceModal";
 import DeleteDeviceModal from "./DeleteDeviceModal";
@@ -117,6 +117,5 @@ const mapDispatchToProps = {
   toggleIsLoadingDispatch: toggleIsLoading,
   newDeviceDispatch: newDevice,
   removeDeviceDispatch: removeDevice,
-  addNewDeviceDispatch: addNewDevice,
 };
 export default connect(null, mapDispatchToProps)(Devices);
