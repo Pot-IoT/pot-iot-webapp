@@ -8,7 +8,7 @@ import UserServices from "./components/UserServices";
 import ScrollToTop from "./components/HomePageRepo/ScrollToTop";
 import Home from "./components/HomePageRepo/HomePage/Home";
 import Documentation from "./components/HomePageRepo/Documentation/Documentation";
-import Pricing from "./components/HomePageRepo/Pricing/Pricing";
+// import Pricing from "./components/HomePageRepo/Pricing/Pricing";
 import "./App.scss";
 import store from "./store/index";
 

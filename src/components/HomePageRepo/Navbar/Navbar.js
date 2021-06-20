@@ -29,7 +29,7 @@ function Navbar() {
     return (
         <nav className='NavbarItems'>
             <Link className='navbar-logo' to='/'>
-                <GiCookingPot class="navbar-icon" /> PoT-IoT
+                <GiCookingPot className="navbar-icon" /> PoT-IoT
             </Link>
             <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
                 {MenuItems.map((item, index) => {

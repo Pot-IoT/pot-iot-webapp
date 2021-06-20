@@ -41,11 +41,12 @@ export const homeObjThree = {
     description:
         "- Keep data with Amazon S3, the giant is guarding your fortune. \n" +
         " \n" +
+        "- SSL and HTTPS are enabled, data transmission has basic protection. \n" +
+        " \n" +
         "- PSK is under developping, we are currently using pravite key to make sure the one-of-a-kind connection. \n" +
         " \n" +
-        "- Working on injecting SSL into server, trying to enabled HTTPS in the near future. \n" +
         " \n" +
-        "- At the current stage, we encourage users to do the testing/POC first, and place improtant data later.",
+        "At the current stage, we encourage users to do the testing/POC first, and place improtant data later.",
     buttonLabel: 'none',
     butLink: '',
     imgStart: 'start',

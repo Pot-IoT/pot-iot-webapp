@@ -10,7 +10,7 @@ function Footer() {
                 <div className='social-media-wrap'>
                     <div className='footer-logo'>
                         <Link to='/' className='social-logo'>
-                            <GiCookingPot class="navbar-icon" /> PoT-IoT
+                            <GiCookingPot className="navbar-icon" /> PoT-IoT
                         </Link>
                     </div>
                     <small className='website-rights'>Email: support@pot-iot.com</small>
